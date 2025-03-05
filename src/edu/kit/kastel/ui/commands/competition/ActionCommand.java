@@ -26,7 +26,7 @@ public class ActionCommand extends CompetitionCommand {
     @Override
     protected String getArgsRegex() {
         return RegexConstructor.groupAND(null, "",
-                RegexConstructor.groupOR(null, competition.getCurrentMonster().getSample().getActions().toArray(String[]::new)),
+                RegexConstructor.groupOR(null, competition.getCurrentMonster().getSample().getActions().toArray(new String[0])),
                 "(?: \\w+)?"
         );
     }
