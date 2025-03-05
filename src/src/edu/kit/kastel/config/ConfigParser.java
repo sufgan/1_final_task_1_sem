@@ -1,0 +1,142 @@
+package edu.kit.kastel.config;
+
+import edu.kit.kastel.game.actions.Action;
+import edu.kit.kastel.game.actions.effects.*;
+import edu.kit.kastel.game.monsters.MonsterSample;
+import edu.kit.kastel.game.types.count.Count;
+import edu.kit.kastel.game.types.power.Power;
+import edu.kit.kastel.game.types.Condition;
+import edu.kit.kastel.game.types.Element;
+import edu.kit.kastel.game.types.StatType;
+import edu.kit.kastel.game.utils.RegexConstructor;
+
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class ConfigParser {
+    public static void parse(String config) {
+        Matcher matcher = Pattern.compile(getRegex()).matcher(config);
+        if (!matcher.find() || matcher.groupCount() == 2 || matcher.group().isEmpty()) { // 2 bcs empty match in the end
+            throw new ConfigPatternException();
+        }
+        MonsterSample.clearSamples();
+        Action.clearActions();
+
+        int loadedActionsCount = parseActions(config);
+        int loadedMonstersCount = parseMonsters(config);
+        System.out.printf("%s%nLoaded %d actions, %d monsters.%n", config, loadedActionsCount, loadedMonstersCount);
+    }
+
+    private static int parseActions(String rawActions) {
+        Matcher matcher = Pattern.compile(Action.getRegex(true)).matcher(rawActions);
+        int count = 0;
+        while (matcher.find()) {
+            String name = matcher.group("name");
+            if (Action.find(name) == null) {
+                Element element = Element.valueOf(matcher.group(Element.class.getSimpleName()));
+                new Action(name, element, parseEffects(matcher.group(EffectType.class.getSimpleName()), element));
+                count++;
+            } else {
+                // TODO" make error for this case
+                System.err.printf("Duplicating action name %s%n", name);
+            }
+        }
+        return count;
+    }
+
+    private static List<Effect> parseEffects(String rawEffects, Element actionElement) {
+        List<Effect> effectList = new LinkedList<>();
+        Matcher matcher = Pattern.compile(EffectType.getRegex(false)).matcher(rawEffects);
+        while (matcher.find()) {
+            effectList.add(parseEffect(matcher.group(), actionElement));
+        }
+        return effectList;
+    }
+
+    private static List<ApplyableEffect> parseApplyableEffect(String rawEffects, Element actionElement) {
+        List<ApplyableEffect> applyableEffectList = new LinkedList<>();
+        for (Effect effect : parseEffects(rawEffects, actionElement)) {
+            if (effect instanceof ApplyableEffect) {
+                applyableEffectList.add((ApplyableEffect) effect);
+            }
+        }
+        return applyableEffectList;
+    }
+
+    private static Effect parseEffect(String rawEffect, Element actionElement) {
+        EffectType type = EffectType.valueOfRegexName(rawEffect.substring(0, rawEffect.indexOf(' ')));
+        Matcher matcher = Pattern.compile(type.toRegex(true)).matcher(rawEffect);
+        matcher.find();
+        return switch (type) {
+            case DAMAGE, HEAL -> {
+                int hitRate = Integer.parseInt(matcher.group(ValueType.RATE.name()));
+                TargetType target = TargetType.valueOfRegexName(matcher.group(TargetType.class.getSimpleName()));
+                Power power = Power.create(matcher.group(Power.class.getSimpleName()).split(" "));
+                if (type == EffectType.DAMAGE) {
+                    yield new DamageEffect(hitRate, target, actionElement, power);
+                }
+                yield new HealEffect(hitRate, target, actionElement, power);
+            }
+            case INFLICT_STATUS_CONDITION -> new StatusConditionEffect(
+                    Integer.parseInt(matcher.group(ValueType.RATE.name())),
+                    TargetType.valueOfRegexName(matcher.group(TargetType.class.getSimpleName())),
+                    Condition.valueOf(matcher.group(Condition.class.getSimpleName()))
+            );
+            case INFLICT_STAT_CHANGE -> new StatChangeEffect(
+                    Integer.parseInt(matcher.group(ValueType.RATE.name())),
+                    TargetType.valueOfRegexName(matcher.group(TargetType.class.getSimpleName())),
+                    StatType.valueOf(matcher.group(StatType.class.getSimpleName())),
+                    Integer.parseInt(matcher.group(ValueType.CHANGE.name()))
+            );
+            case PROTECT_STAT -> new ProtectEffect(
+                    Integer.parseInt(matcher.group(ValueType.RATE.name())),
+                    ProtectionType.valueOfRegexName(matcher.group(ProtectionType.class.getSimpleName())),
+                    Count.create(matcher.group(Count.class.getSimpleName()).split(" "))
+            );
+            case CONTINUE -> new ContinueEffect(Integer.parseInt(matcher.group(ValueType.RATE.name())));
+            case REPEAT -> new RepeatEffect(
+                    Count.create(matcher.group(Count.class.getSimpleName()).split(" ")),
+                    parseApplyableEffect(matcher.group(EffectType.class.getSimpleName()), actionElement)
+            );
+        };
+    }
+
+    private static int parseMonsters(String rawMonsters) {
+        Matcher matcher = Pattern.compile(MonsterSample.getRegex(false, true)).matcher(rawMonsters);
+        int count = 0;
+        while (matcher.find()) {
+            String name = matcher.group("name");
+            if (MonsterSample.find(name) == null) {
+                new MonsterSample(name,
+                        Element.valueOf(matcher.group(Element.class.getSimpleName())),
+                        Integer.parseInt(matcher.group(ValueType.HEALTH.name())),
+                        Integer.parseInt(matcher.group(ValueType.ATK.name())),
+                        Integer.parseInt(matcher.group(ValueType.DEF.name())),
+                        Integer.parseInt(matcher.group(ValueType.SPD.name())),
+                        matcher.group("actions").split(" ")
+                );
+                count++;
+            } else {
+                // TODO" make error for this case
+                System.err.printf("Duplicating monster name %s%n", name);
+            }
+        }
+        return count;
+    }
+
+    public static String getRegex() {
+        return RegexConstructor.groupAND(null, "",
+                "(?:",
+                RegexConstructor.group(null, Action.getRegex(false)),
+                "*)",
+                RegexConstructor.group(null, MonsterSample.getRegex(false, false)),
+                "*"
+        );
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Action.getRegex(true));
+    }
+
+}
