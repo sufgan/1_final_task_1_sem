@@ -5,7 +5,6 @@ import edu.kit.kastel.game.types.count.Count;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public final class RepeatEffect extends Effect {
     private final List<ApplyableEffect> effects;

@@ -5,8 +5,6 @@ import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.utils.RandomGenerator;
 import edu.kit.kastel.game.types.StatType;
 
-import java.util.Queue;
-
 public abstract class ApplyableEffect extends Effect {
     private static final String DEBUG_MESSAGE = "apply action effect";
 

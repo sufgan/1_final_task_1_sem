@@ -1,14 +1,7 @@
 package edu.kit.kastel.ui;
 
 import edu.kit.kastel.Application;
-import edu.kit.kastel.game.actions.Action;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.util.Scanner;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Reader {

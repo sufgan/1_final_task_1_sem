@@ -1,6 +1,5 @@
 package edu.kit.kastel.game.types;
 
-import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.utils.RegexConstructor;
 import edu.kit.kastel.game.utils.RegexProvider;
 

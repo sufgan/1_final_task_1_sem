@@ -2,8 +2,6 @@ package edu.kit.kastel.ui.commands;
 
 import edu.kit.kastel.game.utils.RegexConstructor;
 
-import java.util.List;
-
 public abstract class Command {
     public static final String SEPARATOR = " ";
 //    private final static int DEFAULT_TYPE = 0x01;
