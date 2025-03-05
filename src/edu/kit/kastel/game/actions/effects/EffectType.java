@@ -9,6 +9,7 @@ import edu.kit.kastel.game.utils.RegexProvider;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public enum EffectType implements RegexProvider {
@@ -81,7 +82,7 @@ public enum EffectType implements RegexProvider {
         List<EffectType> effectTypes = new LinkedList<>(List.of(values()));
         effectTypes.removeAll(Set.of(excludeEffects));
         return RegexConstructor.groupAND(nameGroup ? EffectType.class.getSimpleName() : null, "",
-                RegexConstructor.groupOR(null, false, effectTypes.toArray(EffectType[]::new)),
+                RegexConstructor.groupOR(null, false, effectTypes.toArray(new EffectType[0])),
                 RegexConstructor.REGEX_NEW_LINE
         );
     }
