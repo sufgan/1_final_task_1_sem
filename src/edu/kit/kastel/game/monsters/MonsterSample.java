@@ -130,17 +130,6 @@ public class MonsterSample {
         return List.copyOf(actions);
     }
 
-    // TODO delete if isn't needed
-    /**
-     * Checks if this monster sample has a specific action by name.
-     *
-     * @param actionName the name of the action to check
-     * @return {@code true} if the monster has this action; {@code false} otherwise
-     */
-    public boolean hasAction(String actionName) {
-        return actions.contains(actionName);
-    }
-
     /**
      * Gets the number of {@link Monster} instances already created from this sample.
      *
@@ -168,7 +157,7 @@ public class MonsterSample {
                         ValueType.ATK.toRegex(nameSubGroup),
                         ValueType.DEF.toRegex(nameSubGroup),
                         ValueType.SPD.toRegex(nameSubGroup),
-                        "(?%s\\w+(?:%s\\w+){0,3})".formatted( // action names
+                        "(?%s\\w+(?:%s\\w+){0,3})".formatted(
                                 nameSubGroup ? "<actions>" : ":",
                                 RegexConstructor.REGEX_SPACE
                         )

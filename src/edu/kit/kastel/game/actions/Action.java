@@ -1,6 +1,9 @@
 package edu.kit.kastel.game.actions;
 
-import edu.kit.kastel.game.actions.effects.*;
+
+import edu.kit.kastel.game.actions.effects.DamageEffect;
+import edu.kit.kastel.game.actions.effects.Effect;
+import edu.kit.kastel.game.actions.effects.EffectType;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.Element;
 import edu.kit.kastel.game.utils.RegexConstructor;
@@ -100,7 +103,7 @@ public class Action {
      * @return a regex {@code String} used to parse action definitions
      */
     public static String getRegex(boolean nameGroup) {
-        return RegexConstructor.groupAND( nameGroup ? Action.class.getSimpleName() : null, "",
+        return RegexConstructor.groupAND(nameGroup ? Action.class.getSimpleName() : null, "",
                 RegexConstructor.groupAND(null, RegexConstructor.REGEX_SPACE,
                         "action",
                         "(?%s\\w+)".formatted(nameGroup ? "<name>" : ":"),

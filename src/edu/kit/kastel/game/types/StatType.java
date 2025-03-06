@@ -10,10 +10,38 @@ import edu.kit.kastel.game.utils.RegexProvider;
  * @author uyqbd
  */
 public enum StatType implements RegexProvider {
+    /**
+     * Represents the ATK (Attack) stat type for a monster.
+     * This stat determines the offensive scaling of a monster's abilities.
+     * A scaling factor is associated with this stat to calculate its contribution
+     * within the game's mechanics.
+     */
     ATK(2),
+    /**
+     * Represents the defense (DEF) stat type, which is used to determine
+     * scaling factors related to a character's or entity's defensive attributes.
+     * This stat uses a scaling factor of 2, indicating its influence on related
+     * calculations such as damage resistance.
+     */
     DEF(2),
+    /**
+     * Represents the Speed (SPD) stat type for a monster.
+     * This stat influences the turn order or actions of a monster
+     * and scales based on its associated factor.
+     */
     SPD(2),
+    /**
+     * Represents the Precision (PRC) stat type, used to define a specific attribute
+     * or property of a monster within the system. Precision is scaled with a
+     * factor of 3, influencing its relative impact in calculations.
+     */
     PRC(3),
+    /**
+     * Represents the "AGL" (Agility) stat type used for defining a monster's agility,
+     * typically influencing its speed or evasiveness in-game mechanics.
+     *
+     * Associated with a scaling factor of 3 to determine its contribution in various calculations.
+     */
     AGL(3);
 
     private final double factor;

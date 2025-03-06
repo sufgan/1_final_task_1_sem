@@ -12,7 +12,7 @@ import edu.kit.kastel.game.monsters.Monster;
  *
  * @author uyqbd
  */
-public class ShowStatsCommand extends CompetitionCommand{
+public class ShowStatsCommand extends CompetitionCommand {
     /**
      * Constructs a new ShowStatsCommand with the given competition context.
      *

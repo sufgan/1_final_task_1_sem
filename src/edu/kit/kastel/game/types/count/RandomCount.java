@@ -11,7 +11,7 @@ import edu.kit.kastel.game.utils.RegexConstructor;
  * @author uyqbd
  */
 public final class RandomCount extends Count {
-    private final static String DEBUG_MESSAGE = "duration or count of repeating";
+    private static final String DEBUG_MESSAGE = "duration or count of repeating";
 
     private final int min;
     private final int max;

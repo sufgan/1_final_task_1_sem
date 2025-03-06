@@ -14,8 +14,12 @@ import java.util.regex.Pattern;
  *
  * @author uyqbd
  */
-public class Reader {
+public final class Reader {
     private static final String ERROR_MESSAGE = "Error, wrong value.";
+
+    private Reader() {
+
+    }
 
     /**
      * Reads a boolean value from the user.
@@ -34,6 +38,7 @@ public class Reader {
             switch (answer.charAt(0)) {
                 case 'y': return true;
                 case 'n': return false;
+                default: break;
             }
         }
         System.out.println("Error, enter y or n.");

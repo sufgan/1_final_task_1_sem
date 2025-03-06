@@ -14,8 +14,25 @@ package edu.kit.kastel.game.types;
  * @author uyqbd
  */
 public enum ElementEfficiency {
+    /**
+     * Represents standard effectiveness with no damage modification.
+     * The {@code NORMAL} constant corresponds to a default interaction
+     * where neither amplified nor reduced damage multipliers are applied.
+     */
     NORMAL(1),
+    /**
+     * Represents an enhanced level of effectiveness in elemental interactions.
+     * When an interaction is deemed "POWERFUL," it indicates that the damage
+     * inflicted is increased based on the associated scaling factor.
+     * The scaling value for "POWERFUL" effectiveness is {@code 2}, signifying
+     * that the damage output is doubled compared to "NORMAL" effectiveness interactions.
+     */
     POWERFUL(2),
+    /**
+     * Represents reduced effectiveness, resulting in diminished damage during an
+     * interaction between elements. The damage scale for this interaction is 0.5,
+     * indicating that it is "not very effective."
+     */
     POWERLESS(0.5);
 
     private final double damageScale;

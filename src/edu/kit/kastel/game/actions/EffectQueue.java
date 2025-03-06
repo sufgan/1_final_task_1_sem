@@ -3,6 +3,7 @@ package edu.kit.kastel.game.actions;
 import edu.kit.kastel.game.actions.effects.ApplyableEffect;
 import edu.kit.kastel.game.actions.effects.BurnDamageEffect;
 import edu.kit.kastel.game.monsters.Monster;
+import edu.kit.kastel.game.types.Condition;
 import edu.kit.kastel.game.types.StatType;
 
 import java.util.Collection;
@@ -79,10 +80,12 @@ public class EffectQueue implements Comparable<EffectQueue> {
      */
     public void apply() {
         printMessage();
-        if (user.getCondition() != null) {
-            switch (user.getCondition()) {
-                case SLEEP -> actionEffects.clear();
-                case BURN -> constantEffects.add(new BurnDamageEffect());
+        Condition userCondition = user.getCondition();
+        if (userCondition != null) {
+            if (userCondition == Condition.SLEEP) {
+                actionEffects.clear();
+            } else if (userCondition == Condition.BURN) {
+                constantEffects.add(new BurnDamageEffect());
             }
         }
 

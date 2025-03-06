@@ -9,7 +9,16 @@ import edu.kit.kastel.game.utils.RegexProvider;
  * @author uyqbd
  */
 public enum TargetType implements RegexProvider {
+    /**
+     * Represents a target type for an effect within the game. This target type
+     * specifies that the effect is intended to be directed at an entity
+     * distinct from the user.
+     */
     TARGET,
+    /**
+     * Represents an effect target type where the effect is applied to the user
+     * who initiated it.
+     */
     USER;
 
     /**

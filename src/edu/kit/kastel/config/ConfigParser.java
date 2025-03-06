@@ -1,7 +1,19 @@
 package edu.kit.kastel.config;
 
 import edu.kit.kastel.game.actions.Action;
-import edu.kit.kastel.game.actions.effects.*;
+import edu.kit.kastel.game.actions.effects.Effect;
+import edu.kit.kastel.game.actions.effects.EffectType;
+import edu.kit.kastel.game.actions.effects.TargetType;
+import edu.kit.kastel.game.actions.effects.ValueType;
+import edu.kit.kastel.game.actions.effects.ApplyableEffect;
+import edu.kit.kastel.game.actions.effects.DamageEffect;
+import edu.kit.kastel.game.actions.effects.ContinueEffect;
+import edu.kit.kastel.game.actions.effects.HealEffect;
+import edu.kit.kastel.game.actions.effects.ProtectEffect;
+import edu.kit.kastel.game.actions.effects.StatusConditionEffect;
+import edu.kit.kastel.game.actions.effects.ProtectionType;
+import edu.kit.kastel.game.actions.effects.RepeatEffect;
+import edu.kit.kastel.game.actions.effects.StatChangeEffect;
 import edu.kit.kastel.game.monsters.MonsterSample;
 import edu.kit.kastel.game.types.count.Count;
 import edu.kit.kastel.game.types.power.Power;
@@ -29,7 +41,11 @@ import java.util.regex.Pattern;
  *
  * @author uyqbd
  */
-public class ConfigParser {
+public final class ConfigParser {
+    private ConfigParser() {
+
+    }
+
     /**
      * Parses the given config string, extracting and creating {@link Action} and
      * {@link MonsterSample} instances.
@@ -42,21 +58,16 @@ public class ConfigParser {
      * @param config the string containing the configuration data.
      * @throws ConfigPatternException if the config string does not match the expected pattern.
      */
-    public static void parse(String config) {
-//        Matcher matcher = Pattern.compile(getRegex()).matcher(config);
-        System.out.println(getRegex());
-        System.out.println(Pattern.matches(getRegex(), config));
-//        System.out.println(matcher.group());
-//        System.out.println(getRegex());
-//        if (!matcher.matches()) {
-//            throw new ConfigPatternException();
-//        }
-//        MonsterSample.clearSamples();
-//        Action.clearActions();
-//
-//        int loadedActionsCount = parseActions(config);
-//        int loadedMonstersCount = parseMonsters(config);
-//        System.out.printf("%s%nLoaded %d actions, %d monsters.%n", config, loadedActionsCount, loadedMonstersCount);
+    public static void parse(String config) throws ConfigPatternException {
+        if (!Pattern.matches(getRegex(), config)) {
+            throw new ConfigPatternException();
+        }
+        MonsterSample.clearSamples();
+        Action.clearActions();
+
+        int loadedActionsCount = parseActions(config);
+        int loadedMonstersCount = parseMonsters(config);
+        System.out.printf("%s%nLoaded %d actions, %d monsters.%n", config, loadedActionsCount, loadedMonstersCount);
     }
 
     private static int parseActions(String rawActions) {
@@ -69,7 +80,6 @@ public class ConfigParser {
                 new Action(name, element, parseEffects(matcher.group(EffectType.class.getSimpleName()), element));
                 count++;
             } else {
-                // TODO make error for this case
                 System.err.printf("Duplicating action name %s%n", name);
             }
         }
@@ -149,7 +159,6 @@ public class ConfigParser {
                 );
                 count++;
             } else {
-                // TODO: make error for this case
                 System.err.printf("Duplicating monster name %s%n", name);
             }
         }

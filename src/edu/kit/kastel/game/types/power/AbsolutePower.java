@@ -13,8 +13,20 @@ import edu.kit.kastel.game.utils.RegexConstructor;
  * @author uyqbd
  */
 public final class AbsolutePower extends Power {
+    /**
+     * A predefined constant representing the name of the AbsolutePower type.
+     * This value is used as an identifier for the power type in various contexts,
+     * such as dynamic power creation and pattern matching.
+     */
     public static final String NAME = "abs";
 
+    /**
+     * Constructs an instance of the AbsolutePower class with a specified value.
+     * This class represents a power type characterized by its absolute value effect,
+     * and is identified by a predefined name and value during its instantiation.
+     *
+     * @param value the numeric value representing the strength or effect of this AbsolutePower instance
+     */
     public AbsolutePower(int value) {
         super(value, "a");
     }

@@ -16,6 +16,8 @@ import edu.kit.kastel.ui.commands.ShowMonstersCommand;
  * @author uyqbd
  */
 public class DefaultCommandHandler extends CommandHandler {
+    private boolean running;
+
     /**
      * Constructs a DefaultCommandHandler by registering the default commands:
      * <ul>
@@ -32,6 +34,26 @@ public class DefaultCommandHandler extends CommandHandler {
                 new CompetitionCreateCommand(),
                 new ShowMonstersCommand()
         );
+        running = true;
+    }
+
+    /**
+     * Indicates whether the command handling process is currently active.
+     *
+     * @return true if the command handling is ongoing, false otherwise
+     */
+    protected boolean isRunning() {
+        return running;
+    }
+
+    /**
+     * Stops the command handling process by setting the running state to false.
+     * <p>
+     * This method is typically invoked to terminate the loop that processes commands,
+     * effectively halting further handling until explicitly restarted, if supported.
+     */
+    public void stop() {
+        running = false;
     }
 
 }

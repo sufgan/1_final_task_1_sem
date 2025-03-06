@@ -1,7 +1,6 @@
 package edu.kit.kastel.ui.handlers;
 
 import edu.kit.kastel.Application;
-import edu.kit.kastel.config.ConfigPatternException;
 import edu.kit.kastel.ui.commands.Command;
 import edu.kit.kastel.ui.commands.CommandException;
 
@@ -25,7 +24,6 @@ public abstract class CommandHandler {
     private static final String ERROR_UNKNOWN_COMMAND_FORMAT = "unknown command or wrong count/type of arguments: %s";
 
     private final Map<String, Command> commands;
-    private boolean running;
 
     /**
      * Constructs a CommandHandler with the specified commands.
@@ -47,15 +45,13 @@ public abstract class CommandHandler {
      * </p>
      */
     public void startHandling() {
-        running = true;
-        while (running) {
+        while (isRunning()) {
             try {
                 handleCommand(Application.readInputLine());
-            } catch (CommandException | ConfigPatternException e) {
+            } catch (CommandException e) {
                 System.err.println(e.getMessage());
             }
         }
-        // TODO: add config didn't found exception
     }
 
     /**
@@ -82,10 +78,10 @@ public abstract class CommandHandler {
     }
 
     /**
-     * Stops the command handling loop.
+     * Determines whether the command handling loop should continue running.
+     *
+     * @return true if the loop is active and should continue, false otherwise
      */
-    public void stop() {
-        running = false;
-    }
+    protected abstract boolean isRunning();
 
 }

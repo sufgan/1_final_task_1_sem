@@ -7,7 +7,7 @@ package edu.kit.kastel.config;
  *
  * @author uyqbd
  */
-public class ConfigPatternException extends RuntimeException {
+public class ConfigPatternException extends Exception {
     private static final String MESSAGE = "Config error, wrong pattern";
 
     /**

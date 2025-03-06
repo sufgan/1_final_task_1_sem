@@ -57,8 +57,9 @@ public class Competition {
      *
      * @param action           the {@link Action} to be performed
      * @param targetMonsterName the name of the target monster (if required)
+     * @throws GameRuntimeException if action need the monster and it was not given
      */
-    public void selectAction(Action action, String targetMonsterName) {
+    public void selectAction(Action action, String targetMonsterName) throws GameRuntimeException {
         Monster targetMonster = findMonster(targetMonsterName);
         if (action.needTarget() && targetMonsterName == null) {
             List<Monster> aliveMonsters = getAliveMonsters();

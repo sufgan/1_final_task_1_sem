@@ -11,8 +11,8 @@ package edu.kit.kastel.game;
  *
  * @author uyqbd
  */
-public class GameRuntimeException extends RuntimeException {
-    public static String MESSAGE_PREFIX = "Game error, ";
+public class GameRuntimeException extends Exception {
+    private static final String MESSAGE_PREFIX = "Game error, ";
 
     /**
      * Constructs a new {@code GameRuntimeException} with a detailed error message,

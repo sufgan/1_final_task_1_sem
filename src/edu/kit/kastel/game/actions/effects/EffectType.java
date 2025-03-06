@@ -9,7 +9,6 @@ import edu.kit.kastel.game.utils.RegexProvider;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -19,13 +18,59 @@ import java.util.Set;
  * @author uyqbd
  */
 public enum EffectType implements RegexProvider {
+    /**
+     * Represents a specific type of effect related to health reduction in the game,
+     * commonly applied when a damaging action is executed.
+     *
+     * DAMAGE effects typically mitigate a target's health based on various parameters
+     * such as hit rate, elemental type, and damage power.
+     */
     DAMAGE("damage"),
+    /**
+     * Represents a condition to inflict a specific status effect on a target.
+     * Typically used within the context of actions or abilities that involve
+     * altering the target's state by imposing a status condition.
+     */
     INFLICT_STATUS_CONDITION("inflictStatusCondition"),
+    /**
+     * A variable representing the action of modifying a character's or entity's stats
+     * within the game environment.
+     *
+     * This identifier is associated with effects that influence attributes like attack,
+     * defense, speed, or other numerical statistics. The change can be an increase
+     * or decrease, depending on the applied effect's configuration.
+     */
     INFLICT_STAT_CHANGE("inflictStatChange"),
+    /**
+     * Represents a unique identifier for the protection status effect.
+     * <p>
+     * Used to specify protection against certain types of in-game effects,
+     * such as damage or status changes. This variable acts as a key
+     * for referencing the protection status within the game mechanics or
+     * effects queue.
+     */
     PROTECT_STAT("protectStat"),
+    /**
+     * Represents a healing effect type within the game's action effects.
+     * This effect increases the health of the specified target when applied successfully.
+     * Associated with the {@link HealEffect} implementation, which determines the
+     * healing amount based on provided parameters such as power, target type, and element.
+     */
     HEAL("heal"),
+    /**
+     * Represents the string identifier "repeat" used to specify the action
+     * of repeating an effect or a sequence of effects.
+     */
     REPEAT("repeat"),
-    CONTINUE("continue"),;
+    /**
+     * Constant representing the "continue" action or keyword.
+     * <p>
+     * This variable is intended to signify the continuation of
+     * an operation, process, or effect within the game's logic.
+     * It may be used in contexts where continuation of behavior
+     * or state progression is required.
+     */
+    CONTINUE("continue");
 
     private final String regexName;
 

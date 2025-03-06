@@ -34,7 +34,7 @@ public class LoadCommand extends Command {
 
     @Override
     protected String getArgsRegex() {
-        return "\\S+"; // TODO: add regex to file
+        return "\\S+";
     }
 
 }

@@ -9,7 +9,16 @@ import edu.kit.kastel.game.utils.RegexProvider;
  * @author uyqbd
  */
 public enum ProtectionType implements RegexProvider {
+    /**
+     * Represents a type of protection focused on preserving or restoring health.
+     * This protection type ensures that effects targeting health can be absorbed
+     * or negated based on the specific implementation within the game mechanics.
+     */
     HEALTH,
+    /**
+     * Represents a type of protection that can shield a monster by affecting its statistics.
+     * This includes modifications or immunities related to attributes such as attack, defense, speed, etc.
+     */
     STATS;
 
     /**

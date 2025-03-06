@@ -9,10 +9,30 @@ import edu.kit.kastel.game.utils.RegexProvider;
  * @author uyqbd
  */
 public enum Element implements RegexProvider {
+    /**
+     * Represents the "NORMAL" elemental type without any dominant or yielding
+     * elemental relationships. The NORMAL type is neutral and does not exhibit
+     * effectiveness or weaknesses against other elemental types.
+     */
     NORMAL(null,    null),
-    WATER ("EARTH", "FIRE"),
-    FIRE  ("WATER", "EARTH"), // и начал народ огня войну
-    EARTH ("FIRE",  "WATER");
+    /**
+     * Represents the WATER element within the elemental system, which has
+     * specific interactions with other elements.
+     *
+     * Dominates the EARTH element, making it very effective against it.
+     * Yields to the FIRE element, making it less effective in interactions with it.
+     */
+    WATER("EARTH", "FIRE"),
+    /**
+     * Represents the FIRE element in the elemental effectiveness system.
+     * FIRE is dominant over WATER and yielding to EARTH.
+     */
+    FIRE("WATER", "EARTH"), // и начал народ огня войну
+    /**
+     * Represents the EARTH element and its effectiveness against other elements.
+     * EARTH dominates FIRE and yields to WATER.
+     */
+    EARTH("FIRE",  "WATER");
 
     private final String dominant;
     private final String yielding;

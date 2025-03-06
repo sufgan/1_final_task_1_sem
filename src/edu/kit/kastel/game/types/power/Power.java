@@ -15,6 +15,13 @@ public abstract class Power {
     private final double value;
     private final String type;
 
+    /**
+     * Constructs an instance of the Power class, representing a generic power
+     * with a specified numeric value and type identifier.
+     *
+     * @param value the numeric value representing the magnitude or strength of the power
+     * @param type  the string identifier representing the type of the power
+     */
     protected Power(double value, String type) {
         this.value = value;
         this.type = type;

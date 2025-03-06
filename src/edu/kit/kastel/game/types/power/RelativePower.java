@@ -18,6 +18,9 @@ import edu.kit.kastel.game.utils.RegexConstructor;
  * @author uyqbd
  */
 public final class RelativePower extends Power {
+    /**
+     * Represents name for type of the power.
+     */
     public static final String NAME = "rel";
 
     /**
