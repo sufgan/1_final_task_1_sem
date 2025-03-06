@@ -3,14 +3,9 @@ package edu.kit.kastel;
 import edu.kit.kastel.config.ConfigPatternException;
 import edu.kit.kastel.config.ConfigParser;
 import edu.kit.kastel.game.utils.RandomGenerator;
-import edu.kit.kastel.ui.handlers.CommandHandler;
 import edu.kit.kastel.ui.handlers.DefaultCommandHandler;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -33,7 +28,7 @@ public final class Application {
     private static final InputStream DEFAULT_INPUT_STREAM = System.in;
     private static final Scanner SCANNER = new Scanner(DEFAULT_INPUT_STREAM);
 
-    private static CommandHandler commandHandler;
+    private static DefaultCommandHandler commandHandler;
 
     private Application() {
 
@@ -58,18 +53,10 @@ public final class Application {
     }
 
     private static boolean handleArguments(String[] args) {
-        Path path = Paths.get(args[0]);
-        if (Files.notExists(path)) {
-            System.err.println(WRONG_FIRST_ARGUMENT_MESSAGE);
-            return false;
-        }
         try {
-            ConfigParser.parse(Files.readString(path));
+            ConfigParser.parse(args[0]);
         } catch (ConfigPatternException e) {
             System.err.printf(e.getMessage());
-            return false;
-        } catch (IOException e) {
-            System.err.printf(WRONG_FIRST_ARGUMENT_MESSAGE);
             return false;
         }
 

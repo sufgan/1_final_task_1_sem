@@ -8,13 +8,19 @@ package edu.kit.kastel.config;
  * @author uyqbd
  */
 public class ConfigPatternException extends Exception {
-    private static final String MESSAGE = "Config error, wrong pattern";
+    private static final String MESSAGE = "Config error, ";
 
     /**
-     * Constructs a new {@code ConfigPatternException} with a default message.
+     * Constructs a {@code ConfigPatternException} with a detailed error message.
+     * This exception is thrown when configuration data does not adhere to the
+     * expected format or pattern.
+     *
+     * @param message a {@code String} specifying the details of the error.
+     *                This message will be appended to a predefined prefix
+     *                indicating a configuration error.
      */
-    public ConfigPatternException() {
-        super(MESSAGE);
+    public ConfigPatternException(String message) {
+        super(MESSAGE + message);
     }
 
 }

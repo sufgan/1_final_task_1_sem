@@ -22,6 +22,9 @@ import edu.kit.kastel.game.types.Element;
 import edu.kit.kastel.game.types.StatType;
 import edu.kit.kastel.game.utils.RegexConstructor;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -55,12 +58,18 @@ public final class ConfigParser {
      *   <li>Parses actions, then monsters from the config</li>
      * </ul>
      *
-     * @param config the string containing the configuration data.
+     * @param configPath the string containing the path to configuration data.
      * @throws ConfigPatternException if the config string does not match the expected pattern.
      */
-    public static void parse(String config) throws ConfigPatternException {
+    public static void parse(String configPath) throws ConfigPatternException {
+        String config = null;
+        try {
+            config = Files.readString(Path.of(configPath));
+        } catch (IOException e) {
+            throw new ConfigPatternException("config file not found");
+        }
         if (!Pattern.matches(getRegex(), config)) {
-            throw new ConfigPatternException();
+            throw new ConfigPatternException("invalid config format");
         }
         MonsterSample.clearSamples();
         Action.clearActions();

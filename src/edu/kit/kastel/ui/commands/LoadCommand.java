@@ -3,10 +3,6 @@ package edu.kit.kastel.ui.commands;
 import edu.kit.kastel.config.ConfigPatternException;
 import edu.kit.kastel.config.ConfigParser;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 /**
  * Command to load a configuration file and parse it using the ConfigParser.
  * <p>
@@ -18,12 +14,11 @@ import java.nio.file.Path;
  */
 public class LoadCommand extends Command {
     @Override
-    public void execute(String[] args) throws CommandException, ConfigPatternException {
+    public void execute(String[] args) throws CommandException {
         try {
-            String config = Files.readString(Path.of(args[0]));
-            ConfigParser.parse(config);
-        } catch (IOException e) {
-            throw new ConfigPatternException();
+            ConfigParser.parse(args[0]);
+        } catch (ConfigPatternException e) {
+            System.err.println(e.getMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package edu.kit.kastel.ui.commands;
 
 import edu.kit.kastel.game.Competition;
+import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.game.types.Element;
 
@@ -32,7 +33,11 @@ public class PassCommand extends CompetitionCommand {
 
     @Override
     public void execute(String[] args) throws CommandException {
-        competition.selectAction(Action.find(""));
+        try {
+            competition.selectAction(Action.find(""));
+        } catch (GameRuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

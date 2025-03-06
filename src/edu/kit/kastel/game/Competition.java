@@ -46,8 +46,9 @@ public class Competition {
      * <p>Automatically proceeds to the next monster.</p>
      *
      * @param action the {@link Action} to be performed
+     * @throws GameRuntimeException if action target wasn't specified
      */
-    public void selectAction(Action action) {
+    public void selectAction(Action action) throws GameRuntimeException {
         selectAction(action, null);
     }
 
