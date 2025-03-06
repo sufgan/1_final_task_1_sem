@@ -7,6 +7,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Command to load a configuration file and parse it using the ConfigParser.
+ * <p>
+ * This command reads a configuration file from a specified path and processes it.
+ * If the file cannot be read, a ConfigPatternException is thrown.
+ * </p>
+ *
+ * @author uyqbd
+ */
 public class LoadCommand extends Command {
     @Override
     public void execute(String[] args) throws CommandException, ConfigPatternException {

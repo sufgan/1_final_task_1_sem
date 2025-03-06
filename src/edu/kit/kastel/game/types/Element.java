@@ -3,6 +3,11 @@ package edu.kit.kastel.game.types;
 import edu.kit.kastel.game.utils.RegexConstructor;
 import edu.kit.kastel.game.utils.RegexProvider;
 
+/**
+ * Defines elemental types and their effectiveness relationships.
+ *
+ * @author uyqbd
+ */
 public enum Element implements RegexProvider {
     NORMAL(null,    null),
     WATER ("EARTH", "FIRE"),
@@ -17,6 +22,13 @@ public enum Element implements RegexProvider {
         this.yielding = yielding;
     }
 
+    /**
+     * Determines how this element interacts with the specified element
+     * (very effective, normal, or not very effective).
+     *
+     * @param element the element to compare against
+     * @return the resulting {@link ElementEfficiency}
+     */
     public ElementEfficiency getEfficiency(Element element) {
         if (element.name().equals(this.dominant)) {
             System.out.println("It is not very effective...");
@@ -29,6 +41,12 @@ public enum Element implements RegexProvider {
 
     }
 
+    /**
+     * Returns a regex pattern that matches any {@code Element} value.
+     *
+     * @param nameGroup {@code true} to include a named group in the regex
+     * @return a regex pattern for elements
+     */
     public static String getRegex(boolean nameGroup) {
         return RegexConstructor.groupOR(
                 nameGroup ? Element.class.getSimpleName() : null,
@@ -40,4 +58,5 @@ public enum Element implements RegexProvider {
     public String toRegex(boolean nameGroup) {
         return name();
     }
+
 }

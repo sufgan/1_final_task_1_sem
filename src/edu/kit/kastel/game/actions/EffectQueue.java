@@ -8,6 +8,14 @@ import edu.kit.kastel.game.types.StatType;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * A queue for handling action and constant effects applied by a monster.
+ * <p>
+ * Applies action effects first; then applies any constant effects (e.g., burn damage).
+ * </p>
+ *
+ * @author uyqbd
+ */
 public class EffectQueue implements Comparable<EffectQueue> {
     private static final String USE_ACTION_MESSAGE_FORMAT = "%s uses %s action!%n";
     private static final String ACTION_FAIL_MESSAGE = "The action failed...";
@@ -19,12 +27,25 @@ public class EffectQueue implements Comparable<EffectQueue> {
     private final Monster user;
     private final Monster target;
 
+    /**
+     * Constructs a new {@code EffectQueue} for the given action name and monsters.
+     *
+     * @param actionName name of the action being performed
+     * @param user       the monster performing this action
+     * @param target     the monster targeted by this action
+     */
     public EffectQueue(String actionName, Monster user, Monster target) {
         this.actionName = actionName;
         this.user = user;
         this.target = target;
     }
 
+    /**
+     * Adds a single effect to either the action effect list or the constant effect list.
+     *
+     * @param effect       the {@link ApplyableEffect} to be added
+     * @param actionEffect if {@code true}, adds to the action effect list; otherwise adds to the constant effect list
+     */
     public void add(ApplyableEffect effect, boolean actionEffect) {
         if (actionEffect) {
             actionEffects.add(effect);
@@ -33,6 +54,12 @@ public class EffectQueue implements Comparable<EffectQueue> {
         }
     }
 
+    /**
+     * Adds multiple effects to either the action effect list or the constant effect list.
+     *
+     * @param effect       a collection of {@link ApplyableEffect} instances to be added
+     * @param actionEffect if {@code true}, adds to the action effect list; otherwise adds to the constant effect list
+     */
     public void addAll(Collection<ApplyableEffect> effect, boolean actionEffect) {
         if (actionEffect) {
             actionEffects.addAll(effect);
@@ -41,6 +68,15 @@ public class EffectQueue implements Comparable<EffectQueue> {
         }
     }
 
+    /**
+     * Applies all effects in this queue to the appropriate monsters.
+     * <p>
+     * Prints action usage or pass messages. If the user is asleep, action effects are cleared;
+     * if burned, a {@link BurnDamageEffect} is added to constant effects.
+     * Action effects are applied first. If the first action effect fails,
+     * remaining action effects are skipped. Constant effects are always applied.
+     * </p>
+     */
     public void apply() {
         printMessage();
         if (user.getCondition() != null) {
@@ -81,6 +117,11 @@ public class EffectQueue implements Comparable<EffectQueue> {
         }
     }
 
+    /**
+     * Returns the monster performing the action.
+     *
+     * @return the user monster
+     */
     public Monster getUser() {
         return user;
     }
@@ -94,4 +135,5 @@ public class EffectQueue implements Comparable<EffectQueue> {
     public String toString() {
         return "%s:%nAE -> %s%nCE -> %s".formatted(actionName, actionEffects, constantEffects);
     }
+
 }

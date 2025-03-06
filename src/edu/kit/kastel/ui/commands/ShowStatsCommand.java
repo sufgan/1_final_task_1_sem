@@ -1,10 +1,23 @@
-package edu.kit.kastel.ui.commands.competition;
+package edu.kit.kastel.ui.commands;
 
 import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.monsters.Monster;
-import edu.kit.kastel.ui.commands.CommandException;
 
+/**
+ * Command to display the current statistics of the active monster in the competition.
+ * <p>
+ * This command prints the name and the current status (health, stats, etc.) of the monster
+ * whose turn it is.
+ * </p>
+ *
+ * @author uyqbd
+ */
 public class ShowStatsCommand extends CompetitionCommand{
+    /**
+     * Constructs a new ShowStatsCommand with the given competition context.
+     *
+     * @param competition the competition instance providing the current monster
+     */
     public ShowStatsCommand(Competition competition) {
         super(competition);
     }

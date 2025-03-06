@@ -3,12 +3,17 @@ package edu.kit.kastel.game.actions.effects;
 import edu.kit.kastel.game.utils.RegexConstructor;
 import edu.kit.kastel.game.utils.RegexProvider;
 
+/**
+ * Specifies different types of numerical values used in effects,
+ * such as health, attack, defense, rate, or percentage.
+ *
+ * @author uyqbd
+ */
 public enum ValueType implements RegexProvider {
     VALUE,
     MIN,
     MAX,
     HEALTH,
-//    STATS,
     ATK,
     DEF,
     SPD,
@@ -16,26 +21,20 @@ public enum ValueType implements RegexProvider {
     PERCENTAGE,
     CHANGE;
 
-    // TODO
     @Override
     public String toRegex(boolean nameGroup) {
         String regex = switch (this) {
-            case VALUE, MIN, MAX -> RegexConstructor.groupOR( // [0, inf)
-                    null,
+            case VALUE, MIN, MAX -> RegexConstructor.groupOR(null,
                     "0",
                     "[1-9]\\d*"
             ) ;
-            case HEALTH, ATK, DEF, SPD -> "[1-9]\\d*"; // [1, inf)
-            case RATE, PERCENTAGE -> RegexConstructor.groupOR( // [0, 100]
-                    null,
+            case HEALTH, ATK, DEF, SPD -> "[1-9]\\d*";
+            case RATE, PERCENTAGE -> RegexConstructor.groupOR(null,
                     "0", "100", "[1-9]\\d?"
             );
-            case CHANGE -> "[+-]\\d+"; // TODO: check working props
+            case CHANGE -> "[+-]\\d+";
         };
-        if (nameGroup) {
-            return RegexConstructor.group(this.name(), regex);
-        }
-        return regex;
+        return nameGroup ? RegexConstructor.group(this.name(), regex) : regex;
     }
 
 }

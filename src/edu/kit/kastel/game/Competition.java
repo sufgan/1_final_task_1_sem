@@ -5,19 +5,34 @@ import edu.kit.kastel.game.actions.EffectQueue;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.monsters.MonsterSample;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
+/**
+ * Manages a competition among multiple monsters.
+ * <p>
+ * Provides methods to select actions for the current monster,
+ * apply actions in turn order, and maintain states (e.g. health, protections).
+ * </p>
+ *
+ * @author uyqbd
+ */
 public class Competition {
-    private static final String MONSTER_DONT_HAVE_ACTION_MESSAGE_FORMAT = "%s doesn't have this action%n";
-
     private final List<Monster> monsters;
     private final List<EffectQueue> effectQueues;
 
     private int currentMonsterIndex = 0;
 
+    /**
+     * Creates a new {@code Competition} and initializes monsters from the provided samples.
+     *
+     * @param monstersSamples the list of monster samples to instantiate
+     */
     public Competition(List<MonsterSample> monstersSamples) {
         System.out.printf("The %d monsters enter the competition!%n", monstersSamples.size());
-        effectQueues = new LinkedList<>(); // TODO: add comparator, вроде сделано
+        effectQueues = new LinkedList<>();
         monsters = new ArrayList<>();
         MonsterSample.clearCreatedCounts();
         for (MonsterSample ms : monstersSamples) {
@@ -26,10 +41,23 @@ public class Competition {
         }
     }
 
+    /**
+     * Selects an action for the current monster without specifying a target monster.
+     * <p>Automatically proceeds to the next monster.</p>
+     *
+     * @param action the {@link Action} to be performed
+     */
     public void selectAction(Action action) {
         selectAction(action, null);
     }
 
+    /**
+     * Selects an action for the current monster, specifying an optional target.
+     * <p>Automatically proceeds to the next monster.</p>
+     *
+     * @param action           the {@link Action} to be performed
+     * @param targetMonsterName the name of the target monster (if required)
+     */
     public void selectAction(Action action, String targetMonsterName) {
         Monster targetMonster = findMonster(targetMonsterName);
         if (action.needTarget() && targetMonsterName == null) {
@@ -73,6 +101,11 @@ public class Competition {
         }
     }
 
+    /**
+     * Retrieves a list of all monsters that are not fainted.
+     *
+     * @return a list of alive monsters
+     */
     public List<Monster> getAliveMonsters() {
         List<Monster> result = new LinkedList<>();
         for (Monster monster : monsters) {
@@ -83,6 +116,12 @@ public class Competition {
         return result;
     }
 
+    /**
+     * Searches for a monster by name in the competition.
+     *
+     * @param monsterName the name to match
+     * @return the matching {@link Monster}, or {@code null} if not found
+     */
     public Monster findMonster(String monsterName) {
         for (Monster monster : monsters) {
             if (monster.getName().equals(monsterName)) {
@@ -92,10 +131,19 @@ public class Competition {
         return null;
     }
 
+    /**
+     * Retrieves the monster whose turn it currently is.
+     *
+     * @return the {@link Monster} at the current index
+     */
     public Monster getCurrentMonster() {
         return monsters.get(currentMonsterIndex);
     }
 
+    /**
+     * Prints a summary of all monsters in the competition,
+     * including their current health and status.
+     */
     public void printMonsters() {
         int i = 0;
         for (Monster monster : monsters) {

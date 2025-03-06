@@ -3,8 +3,8 @@ package edu.kit.kastel;
 import edu.kit.kastel.config.ConfigPatternException;
 import edu.kit.kastel.config.ConfigParser;
 import edu.kit.kastel.game.utils.RandomGenerator;
-import edu.kit.kastel.ui.CommandHandler;
-import edu.kit.kastel.ui.DefaultCommandHandler;
+import edu.kit.kastel.ui.handlers.CommandHandler;
+import edu.kit.kastel.ui.handlers.DefaultCommandHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,9 +15,14 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
- * The class offering the entry point for the application.
+ * The main application class that provides the entry point for the program.
+ * <p>
+ * It handles command line arguments to load a configuration file and optionally set
+ * a seed for the random number generator or activate debug mode. After parsing the configuration,
+ * the default command handler is started to process user commands.
+ * </p>
  *
- * @author i
+ * @author uyqbd
  */
 public final class Application {
     private static final String COMMAND_LINE_ARGUMENTS_MESSAGE = "Wrong arguments count, 1 or 2 line arguments expected.";
@@ -31,7 +36,7 @@ public final class Application {
     private static CommandHandler commandHandler;
 
     private Application() {
-        // utility class
+
     }
 
     /**
@@ -53,7 +58,6 @@ public final class Application {
     }
 
     private static boolean handleArguments(String[] args) {
-        // TODO check args count 1
         Path path = Paths.get(args[0]);
         if (Files.notExists(path)) {
             System.err.println(WRONG_FIRST_ARGUMENT_MESSAGE);
@@ -87,10 +91,18 @@ public final class Application {
         return true;
     }
 
+    /**
+     * Reads a line of input from scanner.
+     *
+     * @return the next line entered by the user
+     */
     public static String readInputLine() {
         return SCANNER.nextLine();
     }
 
+    /**
+     * Stops the command handler, effectively terminating the application.
+     */
     public static void stop() {
         commandHandler.stop();
     }

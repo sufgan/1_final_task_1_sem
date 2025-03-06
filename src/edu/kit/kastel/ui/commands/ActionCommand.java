@@ -1,12 +1,20 @@
-package edu.kit.kastel.ui.commands.competition;
+package edu.kit.kastel.ui.commands;
 
 import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.game.utils.RegexConstructor;
-import edu.kit.kastel.ui.commands.CommandException;
 
-
+/**
+ * A command to select an action for the current monster, with an optional target.
+ *
+ * @author uyqbd
+ */
 public class ActionCommand extends CompetitionCommand {
+    /**
+     * Constructs an {@code ActionCommand} with the given competition.
+     *
+     * @param competition the current competition context
+     */
     public ActionCommand(Competition competition) {
         super(competition);
     }

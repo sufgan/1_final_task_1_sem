@@ -3,6 +3,12 @@ package edu.kit.kastel.game.types;
 import edu.kit.kastel.game.utils.RegexConstructor;
 import edu.kit.kastel.game.utils.RegexProvider;
 
+/**
+ * Represents different monster stats with associated factors
+ * for scaling (e.g., ATK, DEF, SPD, PRC, AGL).
+ *
+ * @author uyqbd
+ */
 public enum StatType implements RegexProvider {
     ATK(2),
     DEF(2),
@@ -16,36 +22,21 @@ public enum StatType implements RegexProvider {
         this.factor = factor;
     }
 
-//    private static final Map<String, Map<BaseState, Integer>> stats = new HashMap<>();
-
-//    public static void addBaseState(String monsterName, BaseState baseState, int value) {
-//        if (!BaseState.stats.containsKey(monsterName)) {
-//            BaseState.stats.put(monsterName, new HashMap<>());
-//        }
-//        BaseState.stats.get(monsterName).put(baseState, value);
-//    }
-
-//    public int getFor(String monsterName) {
-//        return BaseState.stats.getOrDefault(monsterName, new HashMap<>()).getOrDefault(this, 1);
-//    }
-
-//    public int getFor(Monster monster) {
-//        return getFor(monster.getName());
-//    }
+    /**
+     * Retrieves the base factor used for scaling this stat.
+     *
+     * @return the scaling factor as a double
+     */
     public double getFactor() {
         return factor;
     }
 
-//    private double getScaledFor(String monsterName, int scale) {
-//        double value = getFor(monsterName);
-//        if (scale >= 0){
-//            value *= (scaleFactor + scale) / scaleFactor;
-//        } else {
-//            value *= scaleFactor / (scale - scaleFactor);
-//        }
-//        return value;
-//    }
-
+    /**
+     * Builds a regex pattern matching any {@code StatType}.
+     *
+     * @param nameGroup {@code true} to include a named group in the pattern
+     * @return a regex string for all possible {@code StatType} values
+     */
     public static String getRegex(boolean nameGroup) {
         return RegexConstructor.groupOR(
                 nameGroup ? StatType.class.getSimpleName() : null,

@@ -12,6 +12,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Defines the various types of effects that can appear in the game.
+ * <p>Each enum constant has an associated regex name used for matching in configuration.</p>
+ *
+ * @author uyqbd
+ */
 public enum EffectType implements RegexProvider {
     DAMAGE("damage"),
     INFLICT_STATUS_CONDITION("inflictStatusCondition"),
@@ -23,6 +29,11 @@ public enum EffectType implements RegexProvider {
 
     private final String regexName;
 
+    /**
+     * Constructs an {@code EffectType} with the specified regex name.
+     *
+     * @param regexName the string used to identify this effect type in regex patterns
+     */
     EffectType(String regexName) {
         this.regexName = regexName;
     }
@@ -59,9 +70,14 @@ public enum EffectType implements RegexProvider {
         };
     }
 
-    // adds to regex name and hit rate regexes
+    /**
+     * Builds a default regex pattern string for this effect type.
+     *
+     * @param nameSubGroups whether named groups should be included
+     * @param components    additional regex components required for this effect type
+     * @return a combined regex pattern incorporating all provided parts
+     */
     private String toDefaultRegex(boolean nameSubGroups, String... components) {
-        // TODO: rename all this things
         String[] fullComponents = new String[components.length + 2];
         fullComponents[0] = regexName;
         fullComponents[fullComponents.length - 1] = ValueType.RATE.toRegex(nameSubGroups);
@@ -69,6 +85,12 @@ public enum EffectType implements RegexProvider {
         return RegexConstructor.groupAND(null, RegexConstructor.REGEX_SPACE, fullComponents);
     }
 
+    /**
+     * Returns an {@code EffectType} whose {@code regexName} matches the given string.
+     *
+     * @param regexName the string to match against each enum constant's regex name
+     * @return the matching {@code EffectType}, or {@code null} if none matches
+     */
     public static EffectType valueOfRegexName(String regexName) {
         for (EffectType type : EffectType.values()) {
             if (type.regexName.equals(regexName)) {
@@ -78,6 +100,13 @@ public enum EffectType implements RegexProvider {
         return null;
     }
 
+    /**
+     * Builds a combined regex pattern for all effect types, optionally excluding some.
+     *
+     * @param nameGroup      whether to include a named group for the overall pattern
+     * @param excludeEffects the effect types to exclude from the pattern
+     * @return a regex pattern that matches any of the included effect types
+     */
     public static String getRegex(boolean nameGroup, EffectType... excludeEffects) {
         List<EffectType> effectTypes = new LinkedList<>(List.of(values()));
         effectTypes.removeAll(Set.of(excludeEffects));

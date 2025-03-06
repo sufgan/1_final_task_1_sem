@@ -10,22 +10,53 @@ import edu.kit.kastel.game.types.Element;
 import edu.kit.kastel.game.types.StatType;
 import edu.kit.kastel.game.utils.RegexConstructor;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The {@code ConfigParser} class is responsible for parsing configuration data
+ * to load and create {@link Action} and {@link MonsterSample} objects based on
+ * a string input. It relies on various regex patterns defined in external classes
+ * to structure the config correctly.
+ *
+ * <p>
+ * The class primarily uses the regex patterns provided by {@link Action} and
+ * {@link MonsterSample} to detect and parse valid actions and monster definitions.
+ * If the input does not match these patterns, it throws a {@link ConfigPatternException}.
+ * </p>
+ *
+ * @author uyqbd
+ */
 public class ConfigParser {
+    /**
+     * Parses the given config string, extracting and creating {@link Action} and
+     * {@link MonsterSample} instances.
+     * <ul>
+     *   <li>Clears all existing samples in {@link MonsterSample}</li>
+     *   <li>Clears all existing actions in {@link Action}</li>
+     *   <li>Parses actions, then monsters from the config</li>
+     * </ul>
+     *
+     * @param config the string containing the configuration data.
+     * @throws ConfigPatternException if the config string does not match the expected pattern.
+     */
     public static void parse(String config) {
-        Matcher matcher = Pattern.compile(getRegex()).matcher(config);
-        if (!matcher.find() || matcher.groupCount() == 2 || matcher.group().isEmpty()) { // 2 bcs empty match in the end
-            throw new ConfigPatternException();
-        }
-        MonsterSample.clearSamples();
-        Action.clearActions();
-
-        int loadedActionsCount = parseActions(config);
-        int loadedMonstersCount = parseMonsters(config);
-        System.out.printf("%s%nLoaded %d actions, %d monsters.%n", config, loadedActionsCount, loadedMonstersCount);
+//        Matcher matcher = Pattern.compile(getRegex()).matcher(config);
+        System.out.println(getRegex());
+        System.out.println(Pattern.matches(getRegex(), config));
+//        System.out.println(matcher.group());
+//        System.out.println(getRegex());
+//        if (!matcher.matches()) {
+//            throw new ConfigPatternException();
+//        }
+//        MonsterSample.clearSamples();
+//        Action.clearActions();
+//
+//        int loadedActionsCount = parseActions(config);
+//        int loadedMonstersCount = parseMonsters(config);
+//        System.out.printf("%s%nLoaded %d actions, %d monsters.%n", config, loadedActionsCount, loadedMonstersCount);
     }
 
     private static int parseActions(String rawActions) {
@@ -38,7 +69,7 @@ public class ConfigParser {
                 new Action(name, element, parseEffects(matcher.group(EffectType.class.getSimpleName()), element));
                 count++;
             } else {
-                // TODO" make error for this case
+                // TODO make error for this case
                 System.err.printf("Duplicating action name %s%n", name);
             }
         }
@@ -118,13 +149,19 @@ public class ConfigParser {
                 );
                 count++;
             } else {
-                // TODO" make error for this case
+                // TODO: make error for this case
                 System.err.printf("Duplicating monster name %s%n", name);
             }
         }
         return count;
     }
 
+    /**
+     * Builds and returns the aggregated regex pattern used to identify valid
+     * configuration data. It combines the patterns needed for actions and monsters.
+     *
+     * @return a {@link String} representing the overall regex pattern.
+     */
     public static String getRegex() {
         return RegexConstructor.groupAND(null, "",
                 "(?:",
@@ -133,10 +170,6 @@ public class ConfigParser {
                 RegexConstructor.group(null, MonsterSample.getRegex(false, false)),
                 "*"
         );
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Action.getRegex(true));
     }
 
 }

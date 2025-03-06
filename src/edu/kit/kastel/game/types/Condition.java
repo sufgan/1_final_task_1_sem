@@ -7,6 +7,12 @@ import edu.kit.kastel.game.utils.RegexProvider;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a status condition that can affect a monster.
+ * Each condition may modify certain stats and can end with a fixed probability per turn.
+ *
+ * @author uyqbd
+ */
 public enum Condition implements RegexProvider {
     WET(new String[] {
             "%s becomes soaking wet!",
@@ -45,42 +51,46 @@ public enum Condition implements RegexProvider {
         this.messages = messages;
         this.stateFactor = new HashMap<>();
         for (StateFactor stateFactor : stateFactors) {
-            this.stateFactor.put(stateFactor.getState(), stateFactor.getFactor());
+            this.stateFactor.put(stateFactor.state(), stateFactor.factor());
         }
     }
 
+    /**
+     * Retrieves the factor by which this condition modifies a specified stat.
+     *
+     * @param state the stat being checked
+     * @return a multiplier for the stat's value
+     */
     public double getStateFactor(StatType state) {
         return stateFactor.getOrDefault(state, 1.0);
     }
 
+    /**
+     * Provides the message associated with this condition at a given index.
+     *
+     * @param messageIndex an index for condition messages
+     * @return the formatted message string
+     */
     public String getMessage(int messageIndex) {
         return messages[messageIndex] + "%n";
     }
 
-    private static class StateFactor {
-        private final StatType state;
-        private final double factor;
-
-        StateFactor(StatType state, double factor) {
-            this.state = state;
-            this.factor = factor;
-        }
-
-        public StatType getState() {
-            return state;
-        }
-
-        public double getFactor() {
-            return factor;
-        }
-
-    }
-
+    /**
+     * Advances the condition, potentially removing it with a certain probability.
+     *
+     * @return this condition if it remains; {@code null} if it ends
+     */
     public Condition step() {
         return RandomGenerator.probabilityGood(FINISH_PROBABILITY, END_CONDITION_DEBUG_MESSAGE) ?
                 null : this;
     }
 
+    /**
+     * Builds a regex pattern to match any valid {@code Condition} constant.
+     *
+     * @param nameGroup {@code true} to include a named group
+     * @return a regex pattern representing all conditions
+     */
     public static String getRegex(boolean nameGroup) {
         return RegexConstructor.groupOR(
                 nameGroup ? Condition.class.getSimpleName() : null,
@@ -92,4 +102,18 @@ public enum Condition implements RegexProvider {
     public String toRegex(boolean nameGroup) {
         return name();
     }
+
+    /**
+     * Represents a factor associated with a specific stat type.
+     * This immutable record is used to encapsulate a {@link StatType} and a corresponding
+     * scaling factor, which can be used in various computations or adjustments
+     * within the game, such as stat calculations or scaling mechanisms.
+     *
+     * The {@link StatType} indicates the specific statistic type (e.g., attack, defense),
+     * while the factor represents a multiplier or adjustment value for that type.
+     */
+    private record StateFactor(StatType state, double factor) {
+
+    }
+
 }
