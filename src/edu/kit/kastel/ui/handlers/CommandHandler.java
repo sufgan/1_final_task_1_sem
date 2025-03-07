@@ -5,6 +5,7 @@ import edu.kit.kastel.ui.commands.Command;
 import edu.kit.kastel.ui.commands.CommandException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,19 +24,47 @@ import java.util.regex.Pattern;
 public abstract class CommandHandler {
     private static final String ERROR_UNKNOWN_COMMAND_FORMAT = "unknown command or wrong count/type of arguments: %s";
 
+    private final CommandHandler outerCommandHandler;
     private final Map<String, Command> commands;
+    private boolean running;
 
     /**
-     * Constructs a CommandHandler with the specified commands.
-     *
-     * @param commands an array of Command instances to be handled
+     * Protected constructor for the {@code CommandHandler} class.
+     * <p>
+     * This no-argument constructor initializes a {@code CommandHandler} instance with a
+     * {@code null} outer command handler. It delegates to the parameterized constructor.
+     * </p>
      */
-    protected CommandHandler(Command... commands) {
+    protected CommandHandler() {
+        this(null);
+    }
+
+    /**
+     * Constructs a CommandHandler with the specified outer command handler.
+     * This constructor initializes the internal command map and populates it
+     * with commands obtained from the {@link #getAvailableCommands()} method.
+     * The handler is set to a running state upon creation.
+     *
+     * @param outerCommandHandler the parent CommandHandler instance, or null if this is the root handler
+     */
+    protected CommandHandler(CommandHandler outerCommandHandler) {
+        this.outerCommandHandler = outerCommandHandler;
         this.commands = new HashMap<>();
-        for (Command command : commands) {
+        for (Command command : getAvailableCommands()) {
             this.commands.put(command.getName(), command);
         }
+        running = true;
     }
+
+    /**
+     * Retrieves the list of commands that are available for execution with
+     * the current command handler context. This method is meant to provide
+     * access to all commands that can be processed at the given state.
+     *
+     * @return a list of {@link Command} instances representing the commands
+     *         that can currently be executed by the command handler
+     */
+    protected abstract List<Command> getAvailableCommands();
 
     /**
      * Starts the command handling loop.
@@ -78,10 +107,26 @@ public abstract class CommandHandler {
     }
 
     /**
-     * Determines whether the command handling loop should continue running.
+     * Checks whether the command handling process is currently active.
      *
-     * @return true if the loop is active and should continue, false otherwise
+     * @return true if the command handling loop is running, false otherwise
      */
-    protected abstract boolean isRunning();
+    protected boolean isRunning() {
+        return running;
+    }
+
+    /**
+     * Stops the current command handler and optionally delegates the stop action
+     * to its outer (parent) CommandHandler.
+     *
+     * @param level the stop level indicating the depth of the handler hierarchy to stop;
+     *              if 0, only the current handler stops; if negative, all outer handlers stop recursively
+     */
+    public void stop(int level) {
+        running = false;
+        if (level != 0 && outerCommandHandler != null) {
+            outerCommandHandler.stop(level - 1);
+        }
+    }
 
 }

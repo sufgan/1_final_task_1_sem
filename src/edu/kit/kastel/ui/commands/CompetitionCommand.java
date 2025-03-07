@@ -1,23 +1,26 @@
 package edu.kit.kastel.ui.commands;
 
-import edu.kit.kastel.game.Competition;
+import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 
 /**
- * Abstract base class for competition-related commands.
- * Provides access to the current {@link Competition} instance for command execution.
+ * Abstract class representing a command within the context of a competition.
+ * Subclasses are expected to define specific competition-related commands.
+ * These commands utilize a CompetitionCommandHandler to manage the competition.
+ * This class provides a foundational structure for commands that operate
+ * on competition-specific logic.
  *
  * @author uyqbd
  */
 public abstract class CompetitionCommand extends Command {
-    protected final Competition competition;
+    protected final CompetitionCommandHandler handler;
 
     /**
-     * Constructs a CompetitionCommand with the given competition context.
+     * Constructs a CompetitionCommand with the specified handler for managing competition-related commands.
      *
-     * @param competition the current competition instance
+     * @param handler the CompetitionCommandHandler responsible for handling commands within the competition context
      */
-    public CompetitionCommand(Competition competition) {
-        this.competition = competition;
+    public CompetitionCommand(CompetitionCommandHandler handler) {
+        this.handler = handler;
     }
 
 }

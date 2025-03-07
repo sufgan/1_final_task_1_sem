@@ -93,7 +93,7 @@ public final class Application {
      * Stops the command handler, effectively terminating the application.
      */
     public static void stop() {
-        commandHandler.stop();
+        commandHandler.stop(-1);
     }
 
 }

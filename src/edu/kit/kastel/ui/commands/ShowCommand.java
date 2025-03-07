@@ -1,6 +1,6 @@
 package edu.kit.kastel.ui.commands;
 
-import edu.kit.kastel.game.Competition;
+import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 
 /**
  * Displays the current status of all monsters in the competition.
@@ -11,18 +11,21 @@ import edu.kit.kastel.game.Competition;
  * @author uyqbd
  */
 public class ShowCommand extends CompetitionCommand {
+
     /**
-     * Constructs a ShowCommand with the given competition context.
+     * Constructs a ShowCommand that displays the current status of all monsters in the competition.
+     * This command is used to print detailed information about each monster, including health
+     * and status, during the competition.
      *
-     * @param competition the current competition instance
+     * @param handler the CompetitionCommandHandler responsible for managing commands within the competition context
      */
-    public ShowCommand(Competition competition) {
-        super(competition);
+    public ShowCommand(CompetitionCommandHandler handler) {
+        super(handler);
     }
 
     @Override
     public void execute(String[] args) throws CommandException {
-        competition.printMonsters();
+        handler.getCompetition().printMonsters();
     }
 
     @Override

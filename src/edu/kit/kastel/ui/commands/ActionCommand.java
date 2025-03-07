@@ -1,8 +1,8 @@
 package edu.kit.kastel.ui.commands;
 
-import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
+import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 import edu.kit.kastel.utils.RegexConstructor;
 
 /**
@@ -11,13 +11,14 @@ import edu.kit.kastel.utils.RegexConstructor;
  * @author uyqbd
  */
 public class ActionCommand extends CompetitionCommand {
+
     /**
-     * Constructs an {@code ActionCommand} with the given competition.
+     * Constructs an ActionCommand for managing the selection of actions in a competition.
      *
-     * @param competition the current competition context
+     * @param handler the CompetitionCommandHandler responsible for handling competition-related commands
      */
-    public ActionCommand(Competition competition) {
-        super(competition);
+    public ActionCommand(CompetitionCommandHandler handler) {
+        super(handler);
     }
 
     @Override
@@ -25,7 +26,7 @@ public class ActionCommand extends CompetitionCommand {
         Action action = Action.find(args[0]);
         String targetMonsterName = args.length == 2 ? args[1] : null;
         try {
-            competition.selectAction(action, targetMonsterName);
+            handler.getCompetition().selectAction(action, targetMonsterName);
         } catch (GameRuntimeException e) {
             System.err.println(e.getMessage());
         }
@@ -39,7 +40,9 @@ public class ActionCommand extends CompetitionCommand {
     @Override
     protected String getArgsRegex() {
         return RegexConstructor.groupAND(null, "",
-                RegexConstructor.groupOR(null, competition.getCurrentMonster().getSample().getActions().toArray(new String[0])),
+                RegexConstructor.groupOR(null,
+                        handler.getCompetition().getCurrentMonster().getSample().getActions().toArray(new String[0])
+                ),
                 "(?: \\w+(?:#\\d+)?)?"
         );
     }

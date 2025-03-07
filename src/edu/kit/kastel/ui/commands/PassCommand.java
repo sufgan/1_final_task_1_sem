@@ -1,9 +1,9 @@
 package edu.kit.kastel.ui.commands;
 
-import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.game.types.Element;
+import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 
 import java.util.List;
 
@@ -17,24 +17,22 @@ import java.util.List;
  * @author uyqbd
  */
 public class PassCommand extends CompetitionCommand {
+
     /**
-     * Constructs a PassCommand for the given competition.
-     * <p>
-     * A new Action with an empty name, NORMAL element, and no effects is created
-     * to represent the pass action.
-     * </p>
+     * Constructs a PassCommand that skips the current monster's action during a competition.
+     * The associated action is predefined as a "pass" action with no additional effects or behavior.
      *
-     * @param competition the current competition instance
+     * @param handler the CompetitionCommandHandler responsible for managing commands within the competition context
      */
-    public PassCommand(Competition competition) {
-        super(competition);
+    public PassCommand(CompetitionCommandHandler handler) {
+        super(handler);
         new Action("", Element.NORMAL, List.of());
     }
 
     @Override
     public void execute(String[] args) throws CommandException {
         try {
-            competition.selectAction(Action.find(""));
+            handler.getCompetition().selectAction(Action.find(""));
         } catch (GameRuntimeException e) {
             throw new RuntimeException(e);
         }

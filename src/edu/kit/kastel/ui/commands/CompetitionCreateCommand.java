@@ -2,6 +2,7 @@ package edu.kit.kastel.ui.commands;
 
 import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.monsters.MonsterSample;
+import edu.kit.kastel.ui.handlers.CommandHandler;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 
 import java.util.LinkedList;
@@ -17,6 +18,17 @@ import java.util.List;
  * @author uyqbd
  */
 public class CompetitionCreateCommand extends Command {
+    private final CommandHandler handler;
+
+    /**
+     * Constructs a new CompetitionCreateCommand instance.
+     * This command is used to create a new competition using specified monster names.
+     *
+     * @param handler the CommandHandler responsible for managing this command
+     */
+    public CompetitionCreateCommand(CommandHandler handler) {
+        this.handler = handler;
+    }
 
     @Override
     public void execute(String[] args) throws CommandException {
@@ -30,7 +42,7 @@ public class CompetitionCreateCommand extends Command {
             }
         }
         Competition competition = new Competition(monsterSamples);
-        new CompetitionCommandHandler(competition).startHandling();
+        new CompetitionCommandHandler(handler, competition).startHandling();
     }
 
     @Override
