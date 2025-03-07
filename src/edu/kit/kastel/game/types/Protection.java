@@ -33,7 +33,7 @@ public class Protection {
      *         or {@code null} if the effect has ended
      */
     public Protection step() {
-        return --duration == 0 ? null : this;
+        return duration-- == 0 ? null : this;
     }
 
     /**
