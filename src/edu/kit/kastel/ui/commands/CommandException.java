@@ -9,7 +9,7 @@ package edu.kit.kastel.ui.commands;
  * @author uyqbd
  */
 public class CommandException extends Exception {
-    private static final String MESSAGE_PREFIX = "Command error, ";
+    private static final String MESSAGE_PREFIX = "Error, ";
 
     /**
      * Constructs a new CommandException with the specified error message.
