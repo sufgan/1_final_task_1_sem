@@ -4,6 +4,7 @@ package edu.kit.kastel.game.actions;
 import edu.kit.kastel.game.actions.effects.DamageEffect;
 import edu.kit.kastel.game.actions.effects.Effect;
 import edu.kit.kastel.game.actions.effects.EffectType;
+import edu.kit.kastel.game.actions.effects.RepeatEffect;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.Element;
 import edu.kit.kastel.utils.RegexConstructor;
@@ -136,10 +137,16 @@ public class Action {
     }
 
     private List<String> findDamages() {
+        return findDamages(effects);
+    }
+
+    private List<String> findDamages(List<Effect> effects) {
         List<String> damages = new LinkedList<>();
         for (Effect effect : effects) {
             if (effect instanceof DamageEffect) {
                 damages.add(((DamageEffect) effect).getPower().toString());
+            } else if (effect instanceof RepeatEffect) {
+                damages.addAll(findDamages(((RepeatEffect) effect).getEffects()));
             }
         }
         if (damages.isEmpty()) {

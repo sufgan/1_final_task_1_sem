@@ -20,9 +20,12 @@ import java.util.regex.Pattern;
  * @author uyqbd
  */
 public final class Application {
-    private static final String COMMAND_LINE_ARGUMENTS_MESSAGE = "Wrong arguments count, 1 or 2 line arguments expected.";
-    private static final String WRONG_SECOND_ARGUMENT_MESSAGE = "Wrong second argument, number or 'debug' expected.";
-    private static final String ERROR_WRONG_NUMBER_FORMAT = "Seed has to be between %d and %d".formatted(Long.MIN_VALUE, Long.MAX_VALUE);
+    private static final String COMMAND_LINE_ARGUMENTS_MESSAGE = "Error, wrong arguments count, 1 or 2 line arguments expected.";
+    private static final String WRONG_SECOND_ARGUMENT_MESSAGE = "Error, wrong second argument, number or 'debug' expected.";
+    private static final String ERROR_WRONG_NUMBER_FORMAT = "Error, seed has to be between %d and %d".formatted(
+            Long.MIN_VALUE,
+            Long.MAX_VALUE
+    );
 
     private static final InputStream DEFAULT_INPUT_STREAM = System.in;
     private static final Scanner SCANNER = new Scanner(DEFAULT_INPUT_STREAM);

@@ -131,7 +131,7 @@ public class EffectQueue implements Comparable<EffectQueue> {
 
     @Override
     public int compareTo(EffectQueue o) {
-        return Double.compare(user.getStat(StatType.AGL), o.user.getStat(StatType.AGL));
+        return -Double.compare(user.getStat(StatType.AGL), o.user.getStat(StatType.AGL));
     }
 
     @Override

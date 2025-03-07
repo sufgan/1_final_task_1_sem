@@ -18,7 +18,7 @@ public final class BurnDamageEffect extends HealthShiftEffect {
      * a 10% health reduction to the user each turn.
      */
     public BurnDamageEffect() {
-        super(0, TargetType.USER, null, new RelativePower(0.1), -1, REASON);
+        super(0, TargetType.USER, null, new RelativePower(10), -1, REASON);
     }
 
     @Override

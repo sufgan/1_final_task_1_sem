@@ -51,4 +51,14 @@ public final class RepeatEffect extends Effect {
         return effects.get(0).getHitRate();
     }
 
+    /**
+     * Retrieves the list of {@link ApplyableEffect} contained in this RepeatEffect.
+     *
+     * @return the list of effects
+     */
+    public List<Effect> getEffects() {
+        return new LinkedList<>(effects);
+    }
+    
+    
 }

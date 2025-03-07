@@ -40,7 +40,7 @@ public class ActionCommand extends CompetitionCommand {
     protected String getArgsRegex() {
         return RegexConstructor.groupAND(null, "",
                 RegexConstructor.groupOR(null, competition.getCurrentMonster().getSample().getActions().toArray(new String[0])),
-                "(?: \\w+)?"
+                "(?: \\w+(?:#\\d+)?)?"
         );
     }
 

@@ -29,8 +29,8 @@ public final class RelativePower extends Power {
      * @param value the percentage value used to compute the power relative to
      *              the target's maximum health
      */
-    public RelativePower(double value) {
-        super(value, "r");
+    public RelativePower(int value) {
+        super(value / 100., "r");
     }
 
     @Override

@@ -97,7 +97,7 @@ public enum ValueType implements RegexProvider {
             case RATE, PERCENTAGE -> RegexConstructor.groupOR(null,
                     "0", "100", "[1-9]\\d?"
             );
-            case CHANGE -> "[+-]\\d+";
+            case CHANGE -> "[+-]?\\d+";
         };
         return nameGroup ? RegexConstructor.group(this.name(), regex) : regex;
     }
