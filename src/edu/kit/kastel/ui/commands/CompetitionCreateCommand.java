@@ -32,7 +32,7 @@ public class CompetitionCreateCommand extends Command {
             }
         }
         Competition competition = new Competition(monsterSamples);
-        if (!(handler instanceof DefaultCommandHandler)) {
+        if (handler instanceof DefaultCommandHandler) {
             new CompetitionCommandHandler(handler, competition).startHandling();
         } else {
             handler.stop(1);
