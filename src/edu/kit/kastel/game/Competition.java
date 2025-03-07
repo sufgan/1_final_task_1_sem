@@ -89,7 +89,7 @@ public class Competition {
         Collections.sort(effectQueues);
         for (EffectQueue effectQueue : effectQueues) {
             if (!effectQueue.getUser().isFainted()) {
-                System.out.printf("%nIt’s %s’s turn.%n", effectQueue.getUser().getName());
+                System.out.printf("%nIt's %s's turn.%n", effectQueue.getUser().getName());
                 effectQueue.getUser().updateCondition();
                 effectQueue.apply();
             }
