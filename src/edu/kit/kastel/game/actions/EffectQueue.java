@@ -20,7 +20,7 @@ import java.util.LinkedList;
 public class EffectQueue implements Comparable<EffectQueue> {
     private static final String USE_ACTION_MESSAGE_FORMAT = "%s uses %s!%n";
     private static final String ACTION_FAIL_MESSAGE = "The action failed...";
-    private static final String PASS_MESSAGE_FORMAT = "%s passes%n";
+    private static final String PASS_MESSAGE_FORMAT = "%s passes!%n";
 
     private final LinkedList<ApplyableEffect> actionEffects = new LinkedList<>();
     private final LinkedList<ApplyableEffect> constantEffects = new LinkedList<>();
