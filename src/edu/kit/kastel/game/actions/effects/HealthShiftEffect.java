@@ -70,6 +70,15 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
         return true;
     }
 
+    /**
+     * Determines if the effect can be applied based on the user's and target's
+     * conditions and the presence of protections.
+     *
+     * @param user the monster initiating the effect
+     * @param target the monster receiving the effect
+     * @param damage whether the effect inflicts damage or not
+     * @return {@code true} if the effect can be applied, {@code false} otherwise
+     */
     public boolean canBeApplied(Monster user, Monster target, boolean damage) {
         if (!this.isOnUser() && damage && target.getProtectionType() == ProtectionType.HEALTH) { // check protection
             System.out.printf(MASSAGE_PROTECTED_FORMAT, (this.isOnUser() ? user : target).getName());
