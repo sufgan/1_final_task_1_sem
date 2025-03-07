@@ -80,7 +80,7 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
     }
 
     private String getMessageFormat(int shiftValue) {
-        return (shiftValue < 0 ? "%%s takes %%d damage%s%%n" : "%%s gains back %%d health%s!%%n").formatted(
+        return (shiftValue < 0 ? "%%s takes %%d damage%s!%%n" : "%%s gains back %%d health%s!%%n").formatted(
                 reason == null ? "" : " from %s".formatted(reason)
         );
     }
