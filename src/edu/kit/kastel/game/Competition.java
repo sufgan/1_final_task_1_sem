@@ -151,7 +151,7 @@ public class Competition {
         for (Monster monster : monsters) {
             int healthCount = -Math.floorDiv(20 * -monster.getHealth(), monster.getSample().getMaxHealth());
             System.out.printf("[%s%s] %d %s%s (%s)%n",
-                    "#".repeat(healthCount),
+                    "X".repeat(healthCount),
                     "_".repeat(20 - healthCount),
                     i + 1,
                     i == currentMonsterIndex ? "*" : "",
