@@ -42,17 +42,6 @@ public class Competition {
     }
 
     /**
-     * Selects an action for the current monster without specifying a target monster.
-     * <p>Automatically proceeds to the next monster.</p>
-     *
-     * @param action the {@link Action} to be performed
-     * @throws GameRuntimeException if action target wasn't specified
-     */
-    public void selectAction(Action action) throws GameRuntimeException {
-        selectAction(action, null);
-    }
-
-    /**
      * Selects an action for the current monster, specifying an optional target.
      * <p>Automatically proceeds to the next monster.</p>
      *

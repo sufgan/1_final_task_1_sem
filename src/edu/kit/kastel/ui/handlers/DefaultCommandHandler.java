@@ -27,8 +27,8 @@ public class DefaultCommandHandler extends CommandHandler {
         return List.of(
                 new LoadCommand(),
                 new ShowMonstersCommand(),
-                new CompetitionCreateCommand(this),
-                new QuitCommand(this)
+                new CompetitionCreateCommand(),
+                new QuitCommand()
         );
     }
 }

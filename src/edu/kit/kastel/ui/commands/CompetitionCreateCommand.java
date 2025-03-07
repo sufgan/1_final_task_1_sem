@@ -4,6 +4,7 @@ import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.monsters.MonsterSample;
 import edu.kit.kastel.ui.handlers.CommandHandler;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
+import edu.kit.kastel.ui.handlers.DefaultCommandHandler;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,20 +19,9 @@ import java.util.List;
  * @author uyqbd
  */
 public class CompetitionCreateCommand extends Command {
-    private final CommandHandler handler;
-
-    /**
-     * Constructs a new CompetitionCreateCommand instance.
-     * This command is used to create a new competition using specified monster names.
-     *
-     * @param handler the CommandHandler responsible for managing this command
-     */
-    public CompetitionCreateCommand(CommandHandler handler) {
-        this.handler = handler;
-    }
 
     @Override
-    public void execute(String[] args) throws CommandException {
+    public void execute(CommandHandler handler, String[] args) throws CommandException {
         List<MonsterSample> monsterSamples = new LinkedList<>();
         for (String arg : args) {
             MonsterSample monsterSample = MonsterSample.find(arg);
@@ -42,7 +32,12 @@ public class CompetitionCreateCommand extends Command {
             }
         }
         Competition competition = new Competition(monsterSamples);
-        new CompetitionCommandHandler(handler, competition).startHandling();
+        if (!(handler instanceof DefaultCommandHandler)) {
+            new CompetitionCommandHandler(handler, competition).startHandling();
+        } else {
+            handler.stop(1);
+            new CompetitionCommandHandler(handler.getOuterCommandHandler(), competition).startHandling();
+        }
     }
 
     @Override
@@ -51,8 +46,8 @@ public class CompetitionCreateCommand extends Command {
     }
 
     @Override
-    protected String getArgsRegex() {
-        return "\\w+(?:%s\\w+)+".formatted(SEPARATOR);
+    public String getArgsRegex() {
+        return "\\w+(\\s\\w+){1,}" + super.getArgsRegex();
     }
 
 }

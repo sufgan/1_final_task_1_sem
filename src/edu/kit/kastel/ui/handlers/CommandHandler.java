@@ -4,9 +4,7 @@ import edu.kit.kastel.Application;
 import edu.kit.kastel.ui.commands.Command;
 import edu.kit.kastel.ui.commands.CommandException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,10 +20,11 @@ import java.util.regex.Pattern;
  * @author uyqbd
  */
 public abstract class CommandHandler {
-    private static final String ERROR_UNKNOWN_COMMAND_FORMAT = "unknown command or wrong count/type of arguments: %s";
+    private static final String ERROR_UNKNOWN_COMMAND_FORMAT = "unknown command %s";
 
     private final CommandHandler outerCommandHandler;
     private final Map<String, Command> commands;
+
     private boolean running;
 
     /**
@@ -49,7 +48,7 @@ public abstract class CommandHandler {
      */
     protected CommandHandler(CommandHandler outerCommandHandler) {
         this.outerCommandHandler = outerCommandHandler;
-        this.commands = new HashMap<>();
+        this.commands = new TreeMap<>(Comparator.reverseOrder());
         for (Command command : getAvailableCommands()) {
             this.commands.put(command.getName(), command);
         }
@@ -96,10 +95,17 @@ public abstract class CommandHandler {
      */
     public void handleCommand(String line) throws CommandException {
         for (Command command : commands.values()) {
-            Matcher matcher = Pattern.compile(command.toRegex()).matcher(line);
-            if (matcher.find()) {
-                String[] args = matcher.group(1).split(Command.SEPARATOR);
-                command.execute(args);
+            if (line.startsWith(command.getName())) {
+                String[] args = new String[0];
+                if (line.length() > command.getName().length()) {
+                    String rawArgs = line.substring(command.getName().length() + 1);
+                    if (Pattern.matches(command.getArgsRegex(), rawArgs)) {
+                        args = line.substring(command.getName().length() + 1).split(Command.SEPARATOR);
+                    } else {
+                        throw new CommandException("wrong count or types of arguments");
+                    }
+                }
+                command.execute(this, args);
                 return;
             }
         }
@@ -129,4 +135,14 @@ public abstract class CommandHandler {
         }
     }
 
+    /**
+     * Retrieves the outer command handler associated with the current CommandHandler.
+     * The outer command handler acts as the parent or context from which the current
+     * handler was derived, allowing hierarchical command processing or delegation.
+     *
+     * @return the outer CommandHandler instance, or null if this handler does not have a parent
+     */
+    public CommandHandler getOuterCommandHandler() {
+        return outerCommandHandler;
+    }
 }

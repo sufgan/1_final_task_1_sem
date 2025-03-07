@@ -1,6 +1,6 @@
 package edu.kit.kastel.game.actions;
 
-
+import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.effects.DamageEffect;
 import edu.kit.kastel.game.actions.effects.Effect;
 import edu.kit.kastel.game.actions.effects.EffectType;
@@ -23,6 +23,8 @@ import java.util.Map;
  * @author uyqbd
  */
 public class Action {
+    public static final Action EMPTY_ACTION = new Action(null, null, List.of());
+
     private static final Map<String, Action> ACTIONS = new HashMap<>();
 
     private final String name;
@@ -62,8 +64,21 @@ public class Action {
      * @param actionName the name of the action to look up
      * @return the {@code Action} if found; otherwise {@code null}
      */
-    public static Action find(String actionName) {
-        return ACTIONS.getOrDefault(actionName, null);
+    public static Action find(String actionName) throws GameRuntimeException {
+        if (ACTIONS.containsKey(actionName)) {
+            return ACTIONS.get(actionName);
+        }
+        throw new GameRuntimeException("action %s not found".formatted(actionName));
+    }
+
+    /**
+     * Checks if an action with the provided name exists in the internal storage.
+     *
+     * @param actionName the name of the action to check
+     * @return {@code true} if the action exists; otherwise {@code false}
+     */
+    public static boolean hasAction(String actionName) {
+        return ACTIONS.containsKey(actionName);
     }
 
     /**
@@ -172,6 +187,10 @@ public class Action {
                 String.join(",", findDamages()),
                 effects.get(0).getHitRate()
         );
+    }
+
+    public static void main(String[] args) {
+        Action.getRegex(true);
     }
 
 }

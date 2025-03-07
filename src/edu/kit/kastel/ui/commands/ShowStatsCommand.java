@@ -1,6 +1,7 @@
 package edu.kit.kastel.ui.commands;
 
 import edu.kit.kastel.game.monsters.Monster;
+import edu.kit.kastel.ui.handlers.CommandHandler;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 
 /**
@@ -14,18 +15,8 @@ import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
  */
 public class ShowStatsCommand extends CompetitionCommand {
 
-    /**
-     * Constructs a ShowStatsCommand instance to display the statistics of the currently
-     * active monster in the given competition context.
-     *
-     * @param handler the CompetitionCommandHandler responsible for managing commands and competition context
-     */
-    public ShowStatsCommand(CompetitionCommandHandler handler) {
-        super(handler);
-    }
-
     @Override
-    public void execute(String[] args) throws CommandException {
+    public void execute(CompetitionCommandHandler handler, String[] args) throws CommandException {
         Monster currentMonster = handler.getCompetition().getCurrentMonster();
         System.out.printf("STATS OF %s%n%s%n",
                 currentMonster.getName(),

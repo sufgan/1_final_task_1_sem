@@ -2,6 +2,7 @@ package edu.kit.kastel.ui.handlers;
 
 import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.monsters.Monster;
+import edu.kit.kastel.ui.commands.*;
 import edu.kit.kastel.ui.commands.Command;
 import edu.kit.kastel.ui.commands.PassCommand;
 import edu.kit.kastel.ui.commands.ShowActionsCommand;
@@ -41,12 +42,13 @@ public class CompetitionCommandHandler extends CommandHandler {
     @Override
     protected List<Command> getAvailableCommands() {
         return List.of(
-                new ShowCommand(this),
-                new ShowActionsCommand(this),
-                new PassCommand(this),
-                new ActionCommand(this),
-                new ShowStatsCommand(this),
-                new QuitCommand(this)
+                new ShowStatsCommand(),
+                new ShowCommand(),
+                new ShowActionsCommand(),
+                new PassCommand(),
+                new ActionCommand(),
+                new CompetitionCreateCommand(),
+                new QuitCommand()
         );
     }
 

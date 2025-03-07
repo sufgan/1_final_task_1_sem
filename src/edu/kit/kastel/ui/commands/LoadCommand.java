@@ -2,6 +2,7 @@ package edu.kit.kastel.ui.commands;
 
 import edu.kit.kastel.config.ConfigPatternException;
 import edu.kit.kastel.config.ConfigParser;
+import edu.kit.kastel.ui.handlers.CommandHandler;
 
 /**
  * Command to load a configuration file and parse it using the ConfigParser.
@@ -14,7 +15,10 @@ import edu.kit.kastel.config.ConfigParser;
  */
 public class LoadCommand extends Command {
     @Override
-    public void execute(String[] args) throws CommandException {
+    public void execute(CommandHandler handler, String[] args) throws CommandException {
+        if (args.length != 1) {
+            throw new CommandException("wrong number of arguments");
+        }
         try {
             ConfigParser.parse(args[0]);
         } catch (ConfigPatternException e) {
@@ -28,8 +32,7 @@ public class LoadCommand extends Command {
     }
 
     @Override
-    protected String getArgsRegex() {
-        return "\\S+";
+    public String getArgsRegex() {
+        return "\\S+" + super.getArgsRegex();
     }
-
 }

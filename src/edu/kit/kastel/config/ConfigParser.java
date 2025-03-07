@@ -1,5 +1,6 @@
 package edu.kit.kastel.config;
 
+import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.game.actions.effects.Effect;
 import edu.kit.kastel.game.actions.effects.EffectType;
@@ -87,12 +88,12 @@ public final class ConfigParser {
         int count = 0;
         while (matcher.find()) {
             String name = matcher.group("name");
-            if (Action.find(name) == null) {
+            if (Action.hasAction(name)) {
+                System.err.printf("Duplicating action name %s%n", name);
+            } else {
                 Element element = Element.valueOf(matcher.group(Element.class.getSimpleName()));
                 new Action(name, element, parseEffects(matcher.group(EffectType.class.getSimpleName()), element));
                 count++;
-            } else {
-                System.err.printf("Duplicating action name %s%n", name);
             }
         }
         return count;

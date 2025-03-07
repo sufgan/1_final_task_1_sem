@@ -1,6 +1,7 @@
 package edu.kit.kastel.ui.commands;
 
 import edu.kit.kastel.game.monsters.MonsterSample;
+import edu.kit.kastel.ui.handlers.CommandHandler;
 
 /**
  * Command to display all available monster samples.
@@ -13,7 +14,7 @@ import edu.kit.kastel.game.monsters.MonsterSample;
  */
 public class ShowMonstersCommand extends Command {
     @Override
-    public void execute(String[] args) {
+    public void execute(CommandHandler handler, String[] args) {
         System.out.println(MonsterSample.allToString());
     }
 

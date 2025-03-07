@@ -94,7 +94,7 @@ public class EffectQueue implements Comparable<EffectQueue> {
     }
 
     private void printMessage() {
-        if (!actionName.isEmpty()) { // else is empty action that is needed for pass command
+        if (actionName != null) { // else is pass command
             System.out.printf(USE_ACTION_MESSAGE_FORMAT, user.getName(), actionName);
         } else {
             System.out.printf(PASS_MESSAGE_FORMAT, user.getName());

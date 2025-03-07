@@ -1,5 +1,6 @@
 package edu.kit.kastel.ui.commands;
 
+import edu.kit.kastel.ui.handlers.CommandHandler;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 
 /**
@@ -12,15 +13,16 @@ import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
  * @author uyqbd
  */
 public abstract class CompetitionCommand extends Command {
-    protected final CompetitionCommandHandler handler;
 
-    /**
-     * Constructs a CompetitionCommand with the specified handler for managing competition-related commands.
-     *
-     * @param handler the CompetitionCommandHandler responsible for handling commands within the competition context
-     */
-    public CompetitionCommand(CompetitionCommandHandler handler) {
-        this.handler = handler;
+    @Override
+    public void execute(CommandHandler handler, String[] args) throws CommandException {
+        if (handler instanceof CompetitionCommandHandler) {
+            execute((CompetitionCommandHandler) handler, args);
+        } else {
+            throw new CommandException("you have to start competition first");
+        }
     }
+
+    public abstract void execute(CompetitionCommandHandler handler, String[] args) throws CommandException;
 
 }

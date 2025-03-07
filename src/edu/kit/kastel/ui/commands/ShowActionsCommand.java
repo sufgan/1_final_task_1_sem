@@ -1,5 +1,6 @@
 package edu.kit.kastel.ui.commands;
 
+import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 
@@ -14,22 +15,15 @@ import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
  */
 public class ShowActionsCommand extends CompetitionCommand {
 
-    /**
-     * Constructs a ShowActionsCommand instance to display the available actions
-     * of the current monster during the competition.
-     *
-     * @param handler the CompetitionCommandHandler responsible for managing commands
-     *                within the competition context
-     */
-    public ShowActionsCommand(CompetitionCommandHandler handler) {
-        super(handler);
-    }
-
     @Override
-    public void execute(String[] args) {
+    public void execute(CompetitionCommandHandler handler, String[] args) {
         System.out.printf("ACTIONS OF %s%n", handler.getCompetition().getCurrentMonster().getName());
         for (String actionName : handler.getCompetition().getCurrentMonster().getSample().getActions()) {
-            System.out.println(Action.find(actionName));
+            try {
+                System.out.println(Action.find(actionName));
+            } catch (GameRuntimeException e) {
+                System.err.println(e.getMessage() + " (how do you did this?)");
+            }
         }
     }
 
