@@ -1,6 +1,6 @@
 package edu.kit.kastel.ui.commands;
 
-import edu.kit.kastel.game.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexConstructor;
 
 /**
  * Abstract base class for commands.

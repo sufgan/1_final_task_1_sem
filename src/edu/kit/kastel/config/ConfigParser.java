@@ -20,7 +20,7 @@ import edu.kit.kastel.game.types.power.Power;
 import edu.kit.kastel.game.types.Condition;
 import edu.kit.kastel.game.types.Element;
 import edu.kit.kastel.game.types.StatType;
-import edu.kit.kastel.game.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexConstructor;
 
 import java.io.IOException;
 import java.nio.file.Files;

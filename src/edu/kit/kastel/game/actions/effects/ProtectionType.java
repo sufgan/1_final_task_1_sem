@@ -1,7 +1,7 @@
 package edu.kit.kastel.game.actions.effects;
 
-import edu.kit.kastel.game.utils.RegexConstructor;
-import edu.kit.kastel.game.utils.RegexProvider;
+import edu.kit.kastel.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexProvider;
 
 /**
  * Specifies protection types that can shield a monster from certain effects.

@@ -1,4 +1,4 @@
-package edu.kit.kastel.game.utils;
+package edu.kit.kastel.utils;
 
 /**
  * Represents an interface for converting objects into regular expressions.

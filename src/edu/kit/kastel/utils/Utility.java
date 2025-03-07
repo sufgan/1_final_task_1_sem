@@ -1,4 +1,4 @@
-package edu.kit.kastel.game.utils;
+package edu.kit.kastel.utils;
 
 import edu.kit.kastel.game.types.StatType;
 

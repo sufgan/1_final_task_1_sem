@@ -3,7 +3,7 @@ package edu.kit.kastel.game.monsters;
 import edu.kit.kastel.game.actions.effects.ValueType;
 import edu.kit.kastel.game.types.Element;
 import edu.kit.kastel.game.types.StatType;
-import edu.kit.kastel.game.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexConstructor;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;

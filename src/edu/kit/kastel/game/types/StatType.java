@@ -1,7 +1,7 @@
 package edu.kit.kastel.game.types;
 
-import edu.kit.kastel.game.utils.RegexConstructor;
-import edu.kit.kastel.game.utils.RegexProvider;
+import edu.kit.kastel.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexProvider;
 
 /**
  * Represents different monster stats with associated factors

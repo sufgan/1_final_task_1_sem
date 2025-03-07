@@ -1,4 +1,4 @@
-package edu.kit.kastel.game.utils;
+package edu.kit.kastel.utils;
 
 /**
  * Utility class for constructing complex regex patterns in a structured way.

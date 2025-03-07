@@ -4,8 +4,8 @@ import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.actions.effects.ValueType;
 import edu.kit.kastel.game.types.StatType;
 import edu.kit.kastel.game.types.Element;
-import edu.kit.kastel.game.utils.RandomGenerator;
-import edu.kit.kastel.game.utils.RegexConstructor;
+import edu.kit.kastel.utils.RandomGenerator;
+import edu.kit.kastel.utils.RegexConstructor;
 
 /**
  * Represents a basic implementation of the Power class with specific

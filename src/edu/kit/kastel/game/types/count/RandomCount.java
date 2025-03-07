@@ -1,8 +1,8 @@
 package edu.kit.kastel.game.types.count;
 
 import edu.kit.kastel.game.actions.effects.ValueType;
-import edu.kit.kastel.game.utils.RandomGenerator;
-import edu.kit.kastel.game.utils.RegexConstructor;
+import edu.kit.kastel.utils.RandomGenerator;
+import edu.kit.kastel.utils.RegexConstructor;
 
 /**
  * A {@code Count} implementation that returns a random integer between

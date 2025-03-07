@@ -3,7 +3,7 @@ package edu.kit.kastel.game.types.power;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.actions.effects.ValueType;
 import edu.kit.kastel.game.types.Element;
-import edu.kit.kastel.game.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexConstructor;
 
 /**
  * The AbsolutePower class represents a type of power characterized by its absolute value effect.

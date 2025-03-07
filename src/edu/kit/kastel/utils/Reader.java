@@ -1,4 +1,4 @@
-package edu.kit.kastel.ui;
+package edu.kit.kastel.utils;
 
 import edu.kit.kastel.Application;
 
@@ -32,6 +32,7 @@ public final class Reader {
      * @return {@code true} if the user enters 'y'; {@code false} if the user enters 'n'
      */
     public static boolean readBoolean(String message) {
+        System.out.println();
         System.out.println(message);
         String answer = Application.readInputLine();
         if (answer.length() == 1) {
@@ -57,6 +58,7 @@ public final class Reader {
      * @return the double value entered by the user
      */
     public static double readDouble(String message) {
+        System.out.println();
         System.out.println(message);
         String answer = Application.readInputLine();
         if (Pattern.matches("\\d+\\.\\d+", answer)) {
@@ -77,6 +79,7 @@ public final class Reader {
      * @return the integer value entered by the user
      */
     public static int readInteger(String message) {
+        System.out.println();
         System.out.println(message);
         String answer = Application.readInputLine();
         if (Pattern.matches("\\d+", answer)) {

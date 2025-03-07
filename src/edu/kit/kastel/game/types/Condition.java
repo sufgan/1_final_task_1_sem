@@ -1,8 +1,8 @@
 package edu.kit.kastel.game.types;
 
-import edu.kit.kastel.game.utils.RandomGenerator;
-import edu.kit.kastel.game.utils.RegexConstructor;
-import edu.kit.kastel.game.utils.RegexProvider;
+import edu.kit.kastel.utils.RandomGenerator;
+import edu.kit.kastel.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexProvider;
 
 import java.util.HashMap;
 import java.util.Map;

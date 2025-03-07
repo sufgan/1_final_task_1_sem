@@ -4,8 +4,8 @@ import edu.kit.kastel.game.types.count.Count;
 import edu.kit.kastel.game.types.power.Power;
 import edu.kit.kastel.game.types.StatType;
 import edu.kit.kastel.game.types.Condition;
-import edu.kit.kastel.game.utils.RegexConstructor;
-import edu.kit.kastel.game.utils.RegexProvider;
+import edu.kit.kastel.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexProvider;
 
 import java.util.LinkedList;
 import java.util.List;

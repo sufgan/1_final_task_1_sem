@@ -6,7 +6,7 @@ import edu.kit.kastel.game.actions.effects.Effect;
 import edu.kit.kastel.game.actions.effects.EffectType;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.Element;
-import edu.kit.kastel.game.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexConstructor;
 
 import java.util.HashMap;
 import java.util.LinkedList;

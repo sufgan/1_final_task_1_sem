@@ -4,7 +4,7 @@ import edu.kit.kastel.game.types.StatType;
 import edu.kit.kastel.game.types.Condition;
 import edu.kit.kastel.game.types.Protection;
 import edu.kit.kastel.game.actions.effects.ProtectionType;
-import edu.kit.kastel.game.utils.Utility;
+import edu.kit.kastel.utils.Utility;
 
 import java.util.HashMap;
 import java.util.LinkedList;

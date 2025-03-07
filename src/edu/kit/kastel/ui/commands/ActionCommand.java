@@ -3,7 +3,7 @@ package edu.kit.kastel.ui.commands;
 import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
-import edu.kit.kastel.game.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexConstructor;
 
 /**
  * A command to select an action for the current monster, with an optional target.

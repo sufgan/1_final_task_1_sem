@@ -1,6 +1,4 @@
-package edu.kit.kastel.game.utils;
-
-import edu.kit.kastel.ui.Reader;
+package edu.kit.kastel.utils;
 
 import java.util.Random;
 

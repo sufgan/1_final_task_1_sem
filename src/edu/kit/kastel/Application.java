@@ -2,7 +2,7 @@ package edu.kit.kastel;
 
 import edu.kit.kastel.config.ConfigPatternException;
 import edu.kit.kastel.config.ConfigParser;
-import edu.kit.kastel.game.utils.RandomGenerator;
+import edu.kit.kastel.utils.RandomGenerator;
 import edu.kit.kastel.ui.handlers.DefaultCommandHandler;
 
 import java.io.InputStream;
@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
  */
 public final class Application {
     private static final String COMMAND_LINE_ARGUMENTS_MESSAGE = "Wrong arguments count, 1 or 2 line arguments expected.";
-    private static final String WRONG_FIRST_ARGUMENT_MESSAGE = "Wrong first argument, path doesn't exist.";
     private static final String WRONG_SECOND_ARGUMENT_MESSAGE = "Wrong second argument, number or 'debug' expected.";
     private static final String ERROR_WRONG_NUMBER_FORMAT = "Seed has to be between %d and %d".formatted(Long.MIN_VALUE, Long.MAX_VALUE);
 
@@ -56,7 +55,7 @@ public final class Application {
         try {
             ConfigParser.parse(args[0]);
         } catch (ConfigPatternException e) {
-            System.err.printf(e.getMessage());
+            System.err.println(e.getMessage());
             return false;
         }
 

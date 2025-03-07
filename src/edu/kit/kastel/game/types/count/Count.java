@@ -1,6 +1,6 @@
 package edu.kit.kastel.game.types.count;
 
-import edu.kit.kastel.game.utils.RegexConstructor;
+import edu.kit.kastel.utils.RegexConstructor;
 
 /**
  * Base class for counting mechanics (fixed or random).
