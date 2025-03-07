@@ -62,7 +62,7 @@ public final class ConfigParser {
      * @throws ConfigPatternException if the config string does not match the expected pattern.
      */
     public static void parse(String configPath) throws ConfigPatternException {
-        String config = null;
+        String config;
         try {
             config = Files.readString(Path.of(configPath));
         } catch (IOException e) {
@@ -166,6 +166,7 @@ public final class ConfigParser {
                         Integer.parseInt(matcher.group(ValueType.SPD.name())),
                         matcher.group("actions").split(" ")
                 );
+                System.out.printf("Loaded monster %s%n", name);
                 count++;
             } else {
                 System.err.printf("Duplicating monster name %s%n", name);

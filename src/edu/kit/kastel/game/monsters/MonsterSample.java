@@ -151,7 +151,7 @@ public class MonsterSample {
                 nameGroup ? Monster.class.getSimpleName() : null, "",
                 RegexConstructor.groupAND(null, RegexConstructor.REGEX_SPACE,
                         "monster",
-                        "(?%s\\w+)".formatted(nameSubGroup ? "<name>" : ":"), // name
+                        "(?%s\\w+)".formatted(nameSubGroup ? "<name>" : ":"),
                         Element.getRegex(nameSubGroup),
                         ValueType.HEALTH.toRegex(nameSubGroup),
                         ValueType.ATK.toRegex(nameSubGroup),
