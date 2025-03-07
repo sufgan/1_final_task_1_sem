@@ -5,10 +5,10 @@ import edu.kit.kastel.game.types.Element;
 import edu.kit.kastel.game.types.StatType;
 import edu.kit.kastel.game.utils.RegexConstructor;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * A template defining base stats, element type, and available actions for a monster.
@@ -19,7 +19,7 @@ import java.util.Map;
  * @author uyqbd
  */
 public class MonsterSample {
-    private static final Map<String, MonsterSample> SAMPLES = new HashMap<>();
+    private static final Map<String, MonsterSample> SAMPLES = new TreeMap<>();
 
     private final Map<StatType, Integer> stats;
     private final List<String> actions;
@@ -190,4 +190,5 @@ public class MonsterSample {
                 stats.get(StatType.SPD)
         );
     }
+
 }
