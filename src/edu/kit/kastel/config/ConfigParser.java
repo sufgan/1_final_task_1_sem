@@ -79,7 +79,7 @@ public final class ConfigParser {
 
         int loadedActionsCount = parseActions(config);
         int loadedMonstersCount = parseMonsters(config);
-        System.out.printf("%sLoaded %d actions, %d monsters.%n", config, loadedActionsCount, loadedMonstersCount);
+        System.out.printf("%s%nLoaded %d actions, %d monsters.%n", config, loadedActionsCount, loadedMonstersCount);
     }
 
     private static int parseActions(String config) {
