@@ -33,6 +33,13 @@ public abstract class Command {
      */
     public abstract String getName();
 
+    /**
+     * Constructs and returns a regular expression pattern for validating
+     * the arguments of a command. This pattern is used to define the expected
+     * structure of arguments that the command can accept.
+     *
+     * @return a regular expression as a String for matching command arguments
+     */
     public String getArgsRegex() {
         return "$";
     }

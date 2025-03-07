@@ -2,11 +2,7 @@ package edu.kit.kastel.ui.commands;
 
 import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
-import edu.kit.kastel.game.types.Element;
-import edu.kit.kastel.ui.handlers.CommandHandler;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
-
-import java.util.List;
 
 /**
  * Command to pass a turn in the competition.

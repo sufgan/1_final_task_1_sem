@@ -23,6 +23,11 @@ import java.util.Map;
  * @author uyqbd
  */
 public class Action {
+    /**
+     * A predefined, immutable instance of {@code Action} with no name, no elemental type,
+     * and an empty list of effects. This represents an action that performs no operation,
+     * often used as a placeholder or default value.
+     */
     public static final Action EMPTY_ACTION = new Action(null, null, List.of());
 
     private static final Map<String, Action> ACTIONS = new HashMap<>();
@@ -59,10 +64,11 @@ public class Action {
     }
 
     /**
-     * Finds an existing {@code Action} by its name.
+     * Finds and retrieves an {@code Action} instance by its name from the internal storage.
      *
-     * @param actionName the name of the action to look up
-     * @return the {@code Action} if found; otherwise {@code null}
+     * @param actionName the name of the action to retrieve
+     * @return the {@code Action} instance associated with the provided name
+     * @throws GameRuntimeException if the action with the given name cannot be found
      */
     public static Action find(String actionName) throws GameRuntimeException {
         if (ACTIONS.containsKey(actionName)) {
@@ -187,10 +193,6 @@ public class Action {
                 String.join(",", findDamages()),
                 effects.get(0).getHitRate()
         );
-    }
-
-    public static void main(String[] args) {
-        Action.getRegex(true);
     }
 
 }

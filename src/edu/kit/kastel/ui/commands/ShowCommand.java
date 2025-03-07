@@ -1,6 +1,5 @@
 package edu.kit.kastel.ui.commands;
 
-import edu.kit.kastel.ui.handlers.CommandHandler;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 
 /**

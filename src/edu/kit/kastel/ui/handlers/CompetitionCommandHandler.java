@@ -2,7 +2,7 @@ package edu.kit.kastel.ui.handlers;
 
 import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.monsters.Monster;
-import edu.kit.kastel.ui.commands.*;
+import edu.kit.kastel.ui.commands.CompetitionCreateCommand;
 import edu.kit.kastel.ui.commands.Command;
 import edu.kit.kastel.ui.commands.PassCommand;
 import edu.kit.kastel.ui.commands.ShowActionsCommand;
