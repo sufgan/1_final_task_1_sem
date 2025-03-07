@@ -57,10 +57,11 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
     @Override
     public boolean apply(Monster userMonster, Monster targetMonster) {
         Monster target = isOnUser() ? userMonster : targetMonster;
-        int shiftValue = powerScale * power.getValue(userMonster, target, actionElement);
-        if (!canBeApplied(userMonster, target, shiftValue < 0)) {
+        if (!canBeApplied(userMonster, target, power.getValue() < 0)) {
             return false;
         }
+
+        int shiftValue = powerScale * power.getValue(userMonster, target, actionElement);
         target.shiftHealth(shiftValue);
         System.out.printf((getMessageFormat(shiftValue)), target.getName(), Math.abs(shiftValue));
 
@@ -84,7 +85,7 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
             System.out.printf(MASSAGE_PROTECTED_FORMAT, (this.isOnUser() ? user : target).getName());
             return false;
         }
-        return super.canBeApplied(user, target); // check hit
+        return canBeApplied(user, target); // check hit
     }
 
     private String getMessageFormat(int shiftValue) {
