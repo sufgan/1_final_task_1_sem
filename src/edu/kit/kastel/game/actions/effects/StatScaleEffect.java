@@ -11,7 +11,7 @@ import edu.kit.kastel.game.types.StatType;
  *
  * @author uyqbd
  */
-public final class StatChangeEffect extends ApplyableEffect {
+public final class StatScaleEffect extends ApplyableEffect {
     private static final String MASSAGE_PROTECTED_FORMAT = "%s is protected and is unaffected!%n";
     private static final String POSITIVE_SHIFT_MESSAGE_END = "rises!";
     private static final String NEGATIVE_SHIFT_MESSAGE_END = "decreases...";
@@ -29,7 +29,7 @@ public final class StatChangeEffect extends ApplyableEffect {
      * @param state         the stat to be increased or decreased
      * @param scaleShift    the amount by which to modify the stat (negative for decrease, positive for increase)
      */
-    public StatChangeEffect(int effectHitRate, TargetType target, StatType state, int scaleShift) {
+    public StatScaleEffect(int effectHitRate, TargetType target, StatType state, int scaleShift) {
         super(effectHitRate, target);
         this.state = state;
         this.scaleShift = scaleShift;

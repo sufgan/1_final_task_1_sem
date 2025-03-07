@@ -13,7 +13,7 @@ import edu.kit.kastel.game.actions.effects.ProtectEffect;
 import edu.kit.kastel.game.actions.effects.StatusConditionEffect;
 import edu.kit.kastel.game.actions.effects.ProtectionType;
 import edu.kit.kastel.game.actions.effects.RepeatEffect;
-import edu.kit.kastel.game.actions.effects.StatChangeEffect;
+import edu.kit.kastel.game.actions.effects.StatScaleEffect;
 import edu.kit.kastel.game.monsters.MonsterSample;
 import edu.kit.kastel.game.types.count.Count;
 import edu.kit.kastel.game.types.power.Power;
@@ -133,7 +133,7 @@ public final class ConfigParser {
                     TargetType.valueOfRegexName(matcher.group(TargetType.class.getSimpleName())),
                     Condition.valueOf(matcher.group(Condition.class.getSimpleName()))
             );
-            case INFLICT_STAT_CHANGE -> new StatChangeEffect(
+            case INFLICT_STAT_CHANGE -> new StatScaleEffect(
                     Integer.parseInt(matcher.group(ValueType.RATE.name())),
                     TargetType.valueOfRegexName(matcher.group(TargetType.class.getSimpleName())),
                     StatType.valueOf(matcher.group(StatType.class.getSimpleName())),

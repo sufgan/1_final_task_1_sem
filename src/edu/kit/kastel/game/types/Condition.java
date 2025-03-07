@@ -53,7 +53,7 @@ public enum Condition implements RegexProvider {
     BURN(new String[] {
         "%s caught on fire!",
         "%s is burning!",
-        "%s’s burning has faded!"},
+        "%s's burning has faded!"},
         new StateFactor(StatType.ATK, 0.75)),
 
     /**
