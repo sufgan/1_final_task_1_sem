@@ -18,7 +18,7 @@ import java.util.LinkedList;
  * @author uyqbd
  */
 public class EffectQueue implements Comparable<EffectQueue> {
-    private static final String USE_ACTION_MESSAGE_FORMAT = "%s uses %s action!%n";
+    private static final String USE_ACTION_MESSAGE_FORMAT = "%s uses %s!%n";
     private static final String ACTION_FAIL_MESSAGE = "The action failed...";
     private static final String PASS_MESSAGE_FORMAT = "%s passes%n";
 
