@@ -79,8 +79,8 @@ public final class ConfigParser {
         System.out.printf("%s%nLoaded %d actions, %d monsters.%n", config, loadedActionsCount, loadedMonstersCount);
     }
 
-    private static int parseActions(String rawActions) {
-        Matcher matcher = Pattern.compile(Action.getRegex(true)).matcher(rawActions);
+    private static int parseActions(String config) {
+        Matcher matcher = Pattern.compile(Action.getRegex(true)).matcher(config);
         int count = 0;
         while (matcher.find()) {
             String name = matcher.group("name");
@@ -152,8 +152,9 @@ public final class ConfigParser {
         };
     }
 
-    private static int parseMonsters(String rawMonsters) {
-        Matcher matcher = Pattern.compile(MonsterSample.getRegex(false, true)).matcher(rawMonsters);
+    private static int parseMonsters(String config) {
+        List<String> loadedNames = new LinkedList<>();
+        Matcher matcher = Pattern.compile(MonsterSample.getRegex(false, true)).matcher(config);
         int count = 0;
         while (matcher.find()) {
             String name = matcher.group("name");
@@ -166,12 +167,13 @@ public final class ConfigParser {
                         Integer.parseInt(matcher.group(ValueType.SPD.name())),
                         matcher.group("actions").split(" ")
                 );
+                loadedNames.add(name);
                 count++;
             } else {
                 System.err.printf("Duplicating monster name %s%n", name);
             }
         }
-        System.out.printf(rawMonsters);
+        System.out.println(loadedNames);
         return count;
     }
 
