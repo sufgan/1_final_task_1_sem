@@ -69,7 +69,8 @@ public final class ConfigParser {
             throw new ConfigPatternException("config file not found");
         }
         if (!Pattern.matches(getRegex(), config)) {
-            throw new ConfigPatternException("invalid config format");
+            throw new ConfigPatternException(config.replace("\n", "\\n").replace("\r", "\\r"));
+//            throw new ConfigPatternException("invalid config format");
         }
         MonsterSample.clearSamples();
         Action.clearActions();
