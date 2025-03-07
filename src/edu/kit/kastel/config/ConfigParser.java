@@ -153,7 +153,6 @@ public final class ConfigParser {
     }
 
     private static int parseMonsters(String config) {
-        List<String> loadedNames = new LinkedList<>();
         Matcher matcher = Pattern.compile(MonsterSample.getRegex(false, true)).matcher(config);
         int count = 0;
         while (matcher.find()) {
@@ -167,13 +166,11 @@ public final class ConfigParser {
                         Integer.parseInt(matcher.group(ValueType.SPD.name())),
                         matcher.group("actions").split(" ")
                 );
-                loadedNames.add(name);
                 count++;
             } else {
                 System.err.printf("Duplicating monster name %s%n", name);
             }
         }
-        System.out.println(loadedNames);
         return count;
     }
 

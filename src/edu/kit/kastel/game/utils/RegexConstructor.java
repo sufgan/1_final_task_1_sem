@@ -25,13 +25,13 @@ public final class RegexConstructor {
     /**
      * Represents a pattern that matches one or more whitespace characters.
      */
-    public static final String REGEX_MULTI_NEW_LINE = "\\s+";
+    public static final String REGEX_MULTI_NEW_LINE = "(?:\\n|\\r\\n)+\\s*";
 
     /**
      * Represents a pattern that matches one or more whitespace characters.
      * Can be used for new lines or spacing in multi-line patterns.
      */
-    public static final String REGEX_NEW_LINE = "\\s+";
+    public static final String REGEX_NEW_LINE = "(?:\\n|\\r\\n)\\s*";
 
     /**
      * Private constructor to prevent instantiation.
