@@ -64,7 +64,8 @@ public final class ConfigParser {
     public static void parse(String configPath) throws ConfigPatternException {
         String config;
         try {
-            config = Files.readString(Path.of(configPath)) + "\n";
+            String preConfig = Files.readString(Path.of(configPath));
+            config = preConfig + (preConfig.endsWith("\n") ? "" : "\n");
         } catch (IOException e) {
             throw new ConfigPatternException("config file not found");
         }
