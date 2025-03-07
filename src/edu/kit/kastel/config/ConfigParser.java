@@ -166,12 +166,12 @@ public final class ConfigParser {
                         Integer.parseInt(matcher.group(ValueType.SPD.name())),
                         matcher.group("actions").split(" ")
                 );
-                System.out.printf("Loaded monster %s%n", name);
                 count++;
             } else {
                 System.err.printf("Duplicating monster name %s%n", name);
             }
         }
+        System.out.printf(rawMonsters);
         return count;
     }
 
