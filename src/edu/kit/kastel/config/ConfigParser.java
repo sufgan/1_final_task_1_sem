@@ -64,13 +64,13 @@ public final class ConfigParser {
     public static void parse(String configPath) throws ConfigPatternException {
         String config;
         try {
-            config = Files.readString(Path.of(configPath));
+            config = Files.readString(Path.of(configPath)) + "\n";
         } catch (IOException e) {
             throw new ConfigPatternException("config file not found");
         }
         if (!Pattern.matches(getRegex(), config)) {
-            throw new ConfigPatternException(config.replace("\n", "\\n").replace("\r", "\\r"));
-//            throw new ConfigPatternException("invalid config format");
+//            throw new ConfigPatternException(config.replace("\n", "\\n").replace("\r", "\\r"));
+            throw new ConfigPatternException("invalid config format");
         }
         MonsterSample.clearSamples();
         Action.clearActions();
