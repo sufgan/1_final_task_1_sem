@@ -181,7 +181,7 @@ public class MonsterSample {
 
     @Override
     public String toString() {
-        return String.format("%s: Element %s, HP %d, ATK %d, DEF %d, SPD %d",
+        return String.format("%s: ELEMENT %s, HP %d, ATK %d, DEF %d, SPD %d",
                 name,
                 element,
                 maxHealth,
