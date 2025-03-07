@@ -63,7 +63,7 @@ public final class Application {
         }
 
         if (args.length == 2) {
-            if (Pattern.matches("\\d+", args[1])) {
+            if (Pattern.matches("-?\\d+", args[1])) {
                 try {
                     RandomGenerator.setSeed(Long.parseLong(args[1]));
                 } catch (NumberFormatException e) {
