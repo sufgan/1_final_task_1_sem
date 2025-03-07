@@ -2,6 +2,7 @@ package edu.kit.kastel.ui.handlers;
 
 import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.monsters.Monster;
+import edu.kit.kastel.ui.commands.QuitCommand;
 import edu.kit.kastel.ui.commands.ShowStatsCommand;
 import edu.kit.kastel.ui.commands.ActionCommand;
 import edu.kit.kastel.ui.commands.PassCommand;
@@ -35,7 +36,8 @@ public class CompetitionCommandHandler extends CommandHandler {
                 new ShowActionsCommand(competition),
                 new PassCommand(competition),
                 new ActionCommand(competition),
-                new ShowStatsCommand(competition)
+                new ShowStatsCommand(competition),
+                new QuitCommand()
         );
         this.competition = competition;
     }
