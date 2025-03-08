@@ -2,9 +2,9 @@ package edu.kit.kastel.game.actions;
 
 import edu.kit.kastel.game.actions.effects.ApplyableEffect;
 import edu.kit.kastel.game.actions.effects.BurnDamageEffect;
-import edu.kit.kastel.game.actions.effects.HealthShiftEffect;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.Condition;
+import edu.kit.kastel.game.types.power.BasicPower;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -89,7 +89,7 @@ public class EffectQueue implements Comparable<EffectQueue> {
 
         }
 
-        HealthShiftEffect.printElementEfficiency();
+        BasicPower.printElementEfficiency();
         for (ApplyableEffect effect : effects) {
             if (effect.canBeApplied(user, target)) {
                 effect.apply(user, target);

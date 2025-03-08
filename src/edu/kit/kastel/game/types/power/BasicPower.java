@@ -30,6 +30,8 @@ public final class BasicPower extends Power {
     private static final String CRITICAL_HIT_DEBUG_MESSAGE = "critical hit";
     private static final String RANDOM_FACTOR_DEBUG_MESSAGE = "random factor";
 
+    private static boolean printElementEfficiency = false;
+
     /**
      * Constructs an instance of the BasicPower class with a specified value.
      *
@@ -40,8 +42,9 @@ public final class BasicPower extends Power {
     }
 
     @Override
-    public int getValue(Monster user, Monster target, Element actionElement, boolean first) {
-        double elementFactor = actionElement.getEfficiency(target.getSample().getElement(), first).getDamageScale();
+    public int getValue(Monster user, Monster target, Element actionElement) {
+        double elementFactor = actionElement.getEfficiency(target.getSample().getElement(), printElementEfficiency).getDamageScale();
+        printElementEfficiency = false;
         double statusFactor = user.getStat(StatType.ATK) / target.getStat(StatType.DEF);
         double criticalHitProbability = Math.pow(10, -target.getStat(StatType.SPD) / user.getStat(StatType.SPD)) * 100;
         int criticalHitFactor;
@@ -64,6 +67,12 @@ public final class BasicPower extends Power {
         );
     }
 
+    /**
+     * Next call of this class will print element efficiency.
+     */
+    public static void printElementEfficiency() {
+        printElementEfficiency = true;
+    }
 
     /**
      * Constructs a regular expression pattern based on specified parameters.

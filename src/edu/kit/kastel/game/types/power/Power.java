@@ -31,13 +31,12 @@ public abstract class Power {
      * Calculates and returns an integer value based on the provided user, target,
      * action element, and a flag indicating if it's the first calculation.
      *
-     * @param user the monster using the power; its stats or condition may influence the result
-     * @param target the target monster affected by the power; its stats or condition may influence the result
+     * @param user          the monster using the power; its stats or condition may influence the result
+     * @param target        the target monster affected by the power; its stats or condition may influence the result
      * @param actionElement the element associated with the action, which may affect the value calculation
-     * @param first a boolean flag indicating if this is the first application of the power, potentially altering the result
      * @return an integer representing the calculated value of the power for this interaction
      */
-    public abstract int getValue(Monster user, Monster target, Element actionElement, boolean first);
+    public abstract int getValue(Monster user, Monster target, Element actionElement);
 
     /**
      * Retrieves the base value of the power instance.

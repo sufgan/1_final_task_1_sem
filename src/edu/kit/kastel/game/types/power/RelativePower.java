@@ -34,7 +34,7 @@ public final class RelativePower extends Power {
     }
 
     @Override
-    public int getValue(Monster user, Monster target, Element actionElement, boolean first) {
+    public int getValue(Monster user, Monster target, Element actionElement) {
         return (int) Math.ceil(target.getSample().getMaxHealth() * getValue() / 100.);
     }
 
