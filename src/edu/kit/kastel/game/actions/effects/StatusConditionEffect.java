@@ -29,11 +29,12 @@ public final class StatusConditionEffect extends ApplyableEffect {
     @Override
     public void apply(Monster user, Monster targetMonster) {
         Monster target = isOnUser() ? user : targetMonster;
-
-        if (target.getCondition() == null) {
-            System.out.printf(condition.getMessage(Condition.CREATING_MESSAGE), target.getName());
-            target.setCondition(condition);
-        }
+        System.out.printf(condition.getMessage(Condition.CREATING_MESSAGE), target.getName());
+        target.setCondition(condition);
     }
 
+    @Override
+    public boolean canBeApplied(Monster user, Monster target) {
+        return target.getCondition() == null && super.canBeApplied(user, target);
+    }
 }
