@@ -5,10 +5,7 @@ import edu.kit.kastel.game.actions.EffectQueue;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.monsters.MonsterSample;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Manages a competition among multiple monsters.
@@ -70,13 +67,14 @@ public class Competition {
         } while (monsters.get(currentMonsterIndex).isFainted());
         if (currentMonsterIndex < lastMonsterIndex) {
             applyActions();
-            updateProtections();
         }
     }
 
     private void applyActions() {
         Collections.sort(effectQueues);
+        List<Monster> monstersOrder = new LinkedList<>();
         for (EffectQueue effectQueue : effectQueues) {
+            monstersOrder.add(effectQueue.getUser());
             if (!effectQueue.getUser().isFainted()) {
                 System.out.printf("%nIt's %s's turn.%n", effectQueue.getUser().getName());
                 effectQueue.getUser().updateCondition();
@@ -84,11 +82,14 @@ public class Competition {
             }
         }
         effectQueues.clear();
+        updateProtections(monstersOrder);
     }
 
-    private void updateProtections() {
+    private void updateProtections(List<Monster> monsters) {
         for (Monster monster : monsters) {
-            monster.updateProtection();
+            if (!monster.isFainted()) {
+                monster.updateProtection();
+            }
         }
     }
 
