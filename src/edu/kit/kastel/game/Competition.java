@@ -5,7 +5,11 @@ import edu.kit.kastel.game.actions.EffectQueue;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.monsters.MonsterSample;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 
 /**
  * Manages a competition among multiple monsters.
