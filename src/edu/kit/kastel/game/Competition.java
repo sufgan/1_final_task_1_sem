@@ -4,6 +4,7 @@ import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.game.actions.EffectQueue;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.monsters.MonsterSample;
+import edu.kit.kastel.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +22,12 @@ import java.util.List;
  * @author uyqbd
  */
 public class Competition {
+    private static final String MONSTER_TURN_FORMAT = "%nIt's %s's turn.%n";
+    private static final String MONSTER_TABLE_FORMAT = "[%s%s] %d %s%s (%s)%n";
+    private static final String MONSTER_HEALTH_SIGN = "X";
+    private static final String MONSTER_EMPTY_HEALTH_SIGN = "_";
+
+
     private final List<Monster> monsters;
     private final List<EffectQueue> effectQueues;
 
@@ -71,26 +78,25 @@ public class Competition {
         } while (monsters.get(currentMonsterIndex).isFainted());
         if (currentMonsterIndex < lastMonsterIndex) {
             applyActions();
+            updateProtections();
+            effectQueues.clear();
         }
     }
 
     private void applyActions() {
         Collections.sort(effectQueues);
-        List<Monster> monstersOrder = new LinkedList<>();
         for (EffectQueue effectQueue : effectQueues) {
-            monstersOrder.add(effectQueue.getUser());
             if (!effectQueue.getUser().isFainted()) {
-                System.out.printf("%nIt's %s's turn.%n", effectQueue.getUser().getName());
+                System.out.printf(MONSTER_TURN_FORMAT, effectQueue.getUser().getName());
                 effectQueue.getUser().updateCondition();
                 effectQueue.apply();
             }
         }
-        effectQueues.clear();
-        updateProtections(monstersOrder);
     }
 
-    private void updateProtections(List<Monster> monsters) {
-        for (Monster monster : monsters) {
+    private void updateProtections() {
+        for (EffectQueue effectQueue : effectQueues) {
+            Monster monster = effectQueue.getUser();
             if (!monster.isFainted()) {
                 monster.updateProtection();
             }
@@ -143,10 +149,10 @@ public class Competition {
     public void printMonsters() {
         int i = 0;
         for (Monster monster : monsters) {
-            int healthCount = -Math.floorDiv(20 * -monster.getHealth(), monster.getSample().getMaxHealth());
-            System.out.printf("[%s%s] %d %s%s (%s)%n",
-                    "X".repeat(healthCount),
-                    "_".repeat(20 - healthCount),
+            int healthCount = Utility.ceilDiv(20 * monster.getHealth(), monster.getSample().getMaxHealth());
+            System.out.printf(MONSTER_TABLE_FORMAT,
+                    MONSTER_HEALTH_SIGN.repeat(healthCount),
+                    MONSTER_EMPTY_HEALTH_SIGN.repeat(20 - healthCount),
                     i + 1,
                     i == currentMonsterIndex ? "*" : "",
                     monster.getName(),

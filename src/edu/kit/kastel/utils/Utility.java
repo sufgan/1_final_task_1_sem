@@ -60,4 +60,18 @@ public final class Utility {
         return result;
     }
 
+    /**
+     * Computes the ceiling division of two integers, which rounds the result of the
+     * division of {@code a} by {@code b} upwards to the nearest integer.
+     * This method avoids overflow issues that can occur with standard division operations.
+     *
+     * @param a the dividend
+     * @param b the divisor
+     * @return the smallest integer greater than or equal to the result of {@code a / b}
+     * @throws ArithmeticException if {@code b} is zero
+     */
+    public static int ceilDiv(int a, int b) {
+        return -Math.floorDiv(-a, b);
+    }
+
 }
