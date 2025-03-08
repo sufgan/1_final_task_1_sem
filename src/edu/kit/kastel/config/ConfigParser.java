@@ -212,9 +212,5 @@ public final class ConfigParser {
                 "*"
         );
     }
-
-    public static void main(String[] args) {
-        System.out.println(MonsterSample.getRegex(false, false));
-    }
-
+    
 }
