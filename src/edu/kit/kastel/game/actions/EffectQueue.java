@@ -53,11 +53,11 @@ public class EffectQueue implements Comparable<EffectQueue> {
         if (user.isFainted()) {
             return;
         }
+        System.out.printf(MONSTERS_TURN_FORMAT, user.getName()); // 4
 
-        System.out.printf(MONSTERS_TURN_FORMAT, user.getName());
         List<ApplyableEffect> effects = action.createEffects();
-        user.updateCondition();
-        printMessage();
+        user.updateCondition(); // 12 - 15
+        printMessage(); // 5, 6
         Condition userCondition = user.getCondition();
         if (userCondition != null) {
             if (userCondition == Condition.SLEEP) {
