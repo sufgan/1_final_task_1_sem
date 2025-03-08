@@ -167,7 +167,7 @@ public final class ConfigParser {
             String name = matcher.group("name");
             if (names.contains(name)) {
                 System.err.printf("Duplicating monster name %s%n", name);
-            }else {
+            } else {
                 new MonsterSample(name,
                         Element.valueOf(matcher.group(Element.class.getSimpleName())),
                         Integer.parseInt(matcher.group(ValueType.HEALTH.name())),
