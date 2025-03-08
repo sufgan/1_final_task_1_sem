@@ -68,14 +68,14 @@ public final class ConfigParser {
         try {
             String preConfig = Files.readString(Path.of(configPath));
             config = preConfig + (preConfig.endsWith("\n") ? "" : "\n");
+            System.out.print(config);
         } catch (IOException e) {
             throw new ConfigPatternException("config file not found");
         }
         if (!Pattern.matches(getRegex(), config)) {
-            System.out.println(config.replaceAll("\n", "|"));
+//            System.out.println(config.replaceAll("\n", "|"));
             throw new ConfigPatternException("invalid config format");
         }
-        System.out.print(config);
 
         MonsterSample.clearSamples();
         Action.clearActions();
