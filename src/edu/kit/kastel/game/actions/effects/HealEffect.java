@@ -24,5 +24,10 @@ public final class HealEffect extends HealthShiftEffect {
         super(effectHitRate, target, actionElement, power, 1);
     }
 
+    @Override
+    public ApplyableEffect copy() {
+        return new HealEffect(getHitRate(), getTarget(), getActionElement(), getPower());
+    }
+
 }
 

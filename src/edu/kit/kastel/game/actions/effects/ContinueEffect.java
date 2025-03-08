@@ -26,4 +26,9 @@ public final class ContinueEffect extends ApplyableEffect {
 
     }
 
+    @Override
+    public ApplyableEffect copy() {
+        return new ContinueEffect(getHitRate());
+    }
+
 }

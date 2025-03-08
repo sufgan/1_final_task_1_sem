@@ -94,4 +94,13 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
         return power;
     }
 
+    /**
+     * Retrieves the elemental type used to calculate the effectiveness of this effect.
+     *
+     * @return the {@link Element} representing the action element
+     */
+    public Element getActionElement() {
+        return actionElement;
+    }
+
 }

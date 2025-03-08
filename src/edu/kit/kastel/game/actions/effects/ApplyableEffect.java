@@ -91,6 +91,15 @@ public abstract class ApplyableEffect extends Effect {
     }
 
     /**
+     * Retrieves the target type of this effect.
+     *
+     * @return the target type indicating whether the effect is applied to the user or another entity
+     */
+    public TargetType getTarget() {
+        return target;
+    }
+
+    /**
      * Checks if this effect is meant to be applied to the user.
      *
      * @return {@code true} if the effect is on the user
@@ -98,5 +107,7 @@ public abstract class ApplyableEffect extends Effect {
     public boolean isOnUser() {
         return target == TargetType.USER;
     }
+    
+    public abstract ApplyableEffect copy();
 
 }

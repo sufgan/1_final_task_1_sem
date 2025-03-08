@@ -36,4 +36,10 @@ public final class StatusConditionEffect extends ApplyableEffect {
     public boolean canBeApplied(Monster user, Monster target) {
         return target.getCondition() == null && super.canBeApplied(user, target);
     }
+
+    @Override
+    public ApplyableEffect copy() {
+        return new StatusConditionEffect(getHitRate(), getTarget(), condition);
+    }
+
 }

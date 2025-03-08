@@ -23,4 +23,8 @@ public final class DamageEffect extends HealthShiftEffect {
         super(effectHitRate, target, actionElement, power, -1);
     }
 
+    @Override
+    public ApplyableEffect copy() {
+        return new DamageEffect(getHitRate(), getTarget(), getActionElement(), getPower());
+    }
 }

@@ -53,4 +53,9 @@ public final class StatScaleEffect extends ApplyableEffect {
         }
         return super.canBeApplied(user, target);
     }
+
+    @Override
+    public ApplyableEffect copy() {
+        return new StatScaleEffect(getHitRate(), getTarget(), state, scaleShift);
+    }
 }

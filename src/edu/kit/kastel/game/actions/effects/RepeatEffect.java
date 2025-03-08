@@ -32,7 +32,9 @@ public final class RepeatEffect extends Effect {
     public List<ApplyableEffect> create() {
         List<ApplyableEffect> effects = new LinkedList<>();
         for (int i = 0; i < count.getValue(); i++) {
-            effects.addAll(this.effects);
+            for (ApplyableEffect effect : this.effects) {
+                effects.add(effect.copy());
+            }
         }
         return effects;
     }

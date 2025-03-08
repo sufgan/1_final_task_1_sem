@@ -26,4 +26,8 @@ public final class BurnDamageEffect extends HealthShiftEffect {
         return true;
     }
 
+    @Override
+    public ApplyableEffect copy() {
+        return new BurnDamageEffect();
+    }
 }

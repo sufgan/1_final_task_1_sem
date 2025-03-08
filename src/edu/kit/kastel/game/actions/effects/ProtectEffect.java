@@ -33,4 +33,8 @@ public final class ProtectEffect extends ApplyableEffect {
         user.setProtection(protectionType, count.getValue());
     }
 
+    @Override
+    public ApplyableEffect copy() {
+        return new ProtectEffect(getHitRate(), protectionType, count);
+    }
 }
