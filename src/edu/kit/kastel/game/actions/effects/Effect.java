@@ -1,7 +1,5 @@
 package edu.kit.kastel.game.actions.effects;
 
-import edu.kit.kastel.game.actions.EffectQueue;
-
 import java.util.List;
 
 /**
@@ -15,6 +13,13 @@ import java.util.List;
  */
 public abstract class Effect {
 
+    /**
+     * Creates and returns a list of {@link ApplyableEffect} instances associated with this effect.
+     * The generated effects define the specific behaviors or consequences to be applied
+     * in the game context.
+     *
+     * @return a list of {@link ApplyableEffect} instances representing the effects to be applied
+     */
     public abstract List<ApplyableEffect> create();
 
     /**

@@ -1,6 +1,5 @@
 package edu.kit.kastel.game.monsters;
 
-import edu.kit.kastel.game.actions.EffectQueue;
 import edu.kit.kastel.game.types.StatType;
 import edu.kit.kastel.game.types.Condition;
 import edu.kit.kastel.game.types.Protection;

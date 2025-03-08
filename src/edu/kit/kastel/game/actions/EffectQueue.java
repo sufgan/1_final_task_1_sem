@@ -5,7 +5,6 @@ import edu.kit.kastel.game.actions.effects.BurnDamageEffect;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.Condition;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,6 +26,13 @@ public class EffectQueue {
     private final Monster user;
     private final Monster target;
 
+    /**
+     * Constructs an EffectQueue to handle effects applied by a monster's action.
+     *
+     * @param user   the monster performing the action
+     * @param target the target monster of the action
+     * @param action the action to be executed
+     */
     public EffectQueue(Monster user, Monster target, Action action) {
         this.action = action;
         this.user = user;

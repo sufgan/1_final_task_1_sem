@@ -63,6 +63,13 @@ public class Action {
         return false;
     }
 
+    /**
+     * Creates and retrieves a list of {@link ApplyableEffect} instances based on the current action's
+     * associated effects. It iterates through all {@link Effect} objects in the action, invoking
+     * their {@code create} method to generate applicable effects.
+     *
+     * @return a list of {@link ApplyableEffect} objects derived from the current action's effects
+     */
     public List<ApplyableEffect> createEffects() {
         List<ApplyableEffect> effects = new LinkedList<>();
         for (Effect effect : this.effects) {

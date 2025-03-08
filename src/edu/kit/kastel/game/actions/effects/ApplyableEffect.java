@@ -1,6 +1,5 @@
 package edu.kit.kastel.game.actions.effects;
 
-import edu.kit.kastel.game.actions.EffectQueue;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.utils.RandomGenerator;
 import edu.kit.kastel.game.types.StatType;
