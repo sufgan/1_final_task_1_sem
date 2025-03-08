@@ -102,7 +102,7 @@ public abstract class CommandHandler {
                 if (line.length() >= command.getName().length()) {
                     String rawArgs = line.substring(command.getName().length()).trim();
                     if (Pattern.matches(command.getArgsRegex(), rawArgs)) {
-                        args = line.substring(command.getName().length() + 1).split(Command.SEPARATOR);
+                        args = rawArgs.split(Command.SEPARATOR);
                     } else {
                         throw new CommandException("wrong count or types of arguments");
                     }
