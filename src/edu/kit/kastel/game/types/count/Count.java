@@ -29,9 +29,11 @@ public abstract class Count {
     }
 
     /**
-     * Returns the numeric count value.
+     * Retrieves a numeric count value based on the count implementation.
+     * The provided debug message can be used for logging or troubleshooting purposes.
      *
-     * @return the count value as an integer
+     * @param debugMessage a string message used for debugging or additional context
+     * @return the integer value of the count as determined by the specific implementation
      */
     public abstract int getValue(String debugMessage);
 
