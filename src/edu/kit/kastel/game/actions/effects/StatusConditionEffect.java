@@ -29,7 +29,6 @@ public final class StatusConditionEffect extends ApplyableEffect {
     @Override
     public void apply(Monster user, Monster targetMonster) {
         Monster target = isOnUser() ? user : targetMonster;
-        System.out.printf(condition.getMessage(Condition.CREATING_MESSAGE), target.getName());
         target.setCondition(condition);
     }
 

@@ -114,6 +114,7 @@ public class Monster {
      * @param condition a {@link Condition} (e.g., POISON, SLEEP)
      */
     public void setCondition(Condition condition) {
+        System.out.printf(condition.getMessage(Condition.CREATING_MESSAGE), getName());
         this.condition = condition;
     }
 

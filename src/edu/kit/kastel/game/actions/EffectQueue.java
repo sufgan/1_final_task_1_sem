@@ -111,7 +111,10 @@ public class EffectQueue implements Comparable<EffectQueue> {
             effect.apply(user, target);
 
             while (!actionEffects.isEmpty()) {
-                actionEffects.pollFirst().apply(user, target);
+                effect = actionEffects.pollFirst();
+                if (effect.canBeApplied(user, target)) {
+                    effect.apply(user, target);
+                }
             }
         }
     }
