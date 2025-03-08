@@ -103,15 +103,12 @@ public class EffectQueue implements Comparable<EffectQueue> {
 
     private void applyActionEffects() {
         if (!actionEffects.isEmpty()) {
-            ApplyableEffect effect = actionEffects.pollFirst();
-            if (!effect.hits(user, target)) {
+            if (!actionEffects.peekFirst().hits(user, target)) {
                 System.out.println(ACTION_FAIL_MESSAGE);
                 return;
             }
-            effect.apply(user, target);
 
-            while (!actionEffects.isEmpty()) {
-                effect = actionEffects.pollFirst();
+            for (ApplyableEffect effect = actionEffects.pollFirst(); effect != null; effect = actionEffects.pollFirst()) {
                 if (effect.canBeApplied(user, target)) {
                     effect.apply(user, target);
                 }
