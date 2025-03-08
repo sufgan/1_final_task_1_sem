@@ -55,10 +55,10 @@ public class EffectQueue implements Comparable<EffectQueue> {
         }
 
         System.out.printf(MONSTERS_TURN_FORMAT, user.getName());
+        List<ApplyableEffect> effects = action.createEffects();
         user.updateCondition();
         printMessage();
         Condition userCondition = user.getCondition();
-        List<ApplyableEffect> effects = action.createEffects();
         if (userCondition != null) {
             if (userCondition == Condition.SLEEP) {
                 effects.clear();

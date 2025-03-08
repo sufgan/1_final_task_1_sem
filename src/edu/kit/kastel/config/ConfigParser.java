@@ -212,5 +212,5 @@ public final class ConfigParser {
                 "*"
         );
     }
-    
+
 }
