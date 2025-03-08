@@ -131,9 +131,8 @@ public class Monster {
      */
     public void updateProtection() {
         if (protection != null) {
-            Protection lastProtection = protection;
-            protection = protection.step();
-            if (lastProtection != protection) {
+            if (protection.step() == null) {
+                protection = null;
                 System.out.printf("%s's protection fades away...%n", getName());
             }
         }
@@ -147,6 +146,9 @@ public class Monster {
      */
     public void setProtection(ProtectionType type, int duration) {
         this.protection = new Protection(type, duration);
+        System.out.printf("%s is now protected against %s!%n" + duration,
+                getName(),
+                type == ProtectionType.HEALTH ? "damage" : "status changes");
     }
 
     /**

@@ -34,10 +34,6 @@ public final class ProtectEffect extends ApplyableEffect {
             return false;
         }
         user.setProtection(protectionType, count.getValue());
-
-        System.out.printf("%s is now protected against %s!%n",
-                user.getName(),
-                protectionType == ProtectionType.HEALTH ? "damage" : "status changes");
         return true;
     }
 
