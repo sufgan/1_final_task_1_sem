@@ -5,8 +5,6 @@ import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.utils.RandomGenerator;
 import edu.kit.kastel.game.types.StatType;
 
-import javax.management.monitor.MonitorSettingException;
-
 /**
  * An abstract effect that can be applied to a {@link Monster}.
  *
@@ -72,7 +70,7 @@ public abstract class ApplyableEffect extends Effect {
         double targetAGL = isOnUser() ? 1 : target.getStat(StatType.AGL);
         double conditionQuotient = userPRC / targetAGL;
 
-        hits = RandomGenerator.probabilityGood(effectHitRate * conditionQuotient, DEBUG_MESSAGE;
+        hits = RandomGenerator.probabilityGood(effectHitRate * conditionQuotient, DEBUG_MESSAGE);
         return hits;
     }
 
