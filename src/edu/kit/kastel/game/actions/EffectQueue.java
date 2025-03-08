@@ -4,10 +4,10 @@ import edu.kit.kastel.game.actions.effects.ApplyableEffect;
 import edu.kit.kastel.game.actions.effects.BurnDamageEffect;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.Condition;
-import edu.kit.kastel.game.types.StatType;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A queue for handling action and constant effects applied by a monster.
@@ -17,56 +17,20 @@ import java.util.LinkedList;
  *
  * @author uyqbd
  */
-public class EffectQueue implements Comparable<EffectQueue> {
+public class EffectQueue {
     private static final String USE_ACTION_MESSAGE_FORMAT = "%s uses %s!%n";
     private static final String ACTION_FAIL_MESSAGE = "The action failed...";
     private static final String PASS_MESSAGE_FORMAT = "%s passes!%n";
 
-    private final LinkedList<ApplyableEffect> actionEffects = new LinkedList<>();
     private final LinkedList<ApplyableEffect> constantEffects = new LinkedList<>();
-    private final String actionName;
+    private final Action action;
     private final Monster user;
     private final Monster target;
 
-    /**
-     * Constructs a new {@code EffectQueue} for the given action name and monsters.
-     *
-     * @param actionName name of the action being performed
-     * @param user       the monster performing this action
-     * @param target     the monster targeted by this action
-     */
-    public EffectQueue(String actionName, Monster user, Monster target) {
-        this.actionName = actionName;
+    public EffectQueue(Monster user, Monster target, Action action) {
+        this.action = action;
         this.user = user;
         this.target = target;
-    }
-
-    /**
-     * Adds a single effect to either the action effect list or the constant effect list.
-     *
-     * @param effect       the {@link ApplyableEffect} to be added
-     * @param actionEffect if {@code true}, adds to the action effect list; otherwise adds to the constant effect list
-     */
-    public void add(ApplyableEffect effect, boolean actionEffect) {
-        if (actionEffect) {
-            actionEffects.add(effect);
-        } else {
-            constantEffects.add(effect);
-        }
-    }
-
-    /**
-     * Adds multiple effects to either the action effect list or the constant effect list.
-     *
-     * @param effect       a collection of {@link ApplyableEffect} instances to be added
-     * @param actionEffect if {@code true}, adds to the action effect list; otherwise adds to the constant effect list
-     */
-    public void addAll(Collection<ApplyableEffect> effect, boolean actionEffect) {
-        if (actionEffect) {
-            actionEffects.addAll(effect);
-        } else {
-            constantEffects.addAll(effect);
-        }
     }
 
     /**
@@ -80,38 +44,39 @@ public class EffectQueue implements Comparable<EffectQueue> {
      */
     public void apply() {
         printMessage();
+        user.updateCondition();
         Condition userCondition = user.getCondition();
+        List<ApplyableEffect> effects = action.createEffects();
         if (userCondition != null) {
             if (userCondition == Condition.SLEEP) {
-                actionEffects.clear();
+                effects.clear();
             } else if (userCondition == Condition.BURN) {
                 constantEffects.add(new BurnDamageEffect());
             }
         }
 
-        applyActionEffects();
+        applyActionEffects(effects);
         applyConstantEffects();
     }
 
     private void printMessage() {
-        if (actionName != null) { // else is pass command
-            System.out.printf(USE_ACTION_MESSAGE_FORMAT, user.getName(), actionName);
+        if (action.getName() != null) { // else is pass command
+            System.out.printf(USE_ACTION_MESSAGE_FORMAT, user.getName(), action.getName());
         } else {
             System.out.printf(PASS_MESSAGE_FORMAT, user.getName());
         }
     }
 
-    private void applyActionEffects() {
-        if (!actionEffects.isEmpty()) {
-            if (!actionEffects.peekFirst().hits(user, target)) {
-                System.out.println(ACTION_FAIL_MESSAGE);
-                return;
-            }
+    private void applyActionEffects(List<ApplyableEffect> effects) {
+        if (!effects.isEmpty() && !effects.get(0).hits(user, target)) {
+            System.out.println(ACTION_FAIL_MESSAGE);
+            return;
 
-            for (ApplyableEffect effect = actionEffects.pollFirst(); effect != null; effect = actionEffects.pollFirst()) {
-                if (effect.canBeApplied(user, target)) {
-                    effect.apply(user, target);
-                }
+        }
+
+        for (ApplyableEffect effect : effects) {
+            if (effect.canBeApplied(user, target)) {
+                effect.apply(user, target);
             }
         }
     }
@@ -129,16 +94,6 @@ public class EffectQueue implements Comparable<EffectQueue> {
      */
     public Monster getUser() {
         return user;
-    }
-
-    @Override
-    public int compareTo(EffectQueue o) {
-        return -Double.compare(user.getStat(StatType.SPD), o.user.getStat(StatType.SPD));
-    }
-
-    @Override
-    public String toString() {
-        return "%s:%nAE -> %s%nCE -> %s".formatted(actionName, actionEffects, constantEffects);
     }
 
 }

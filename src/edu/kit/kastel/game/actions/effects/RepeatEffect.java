@@ -1,6 +1,5 @@
 package edu.kit.kastel.game.actions.effects;
 
-import edu.kit.kastel.game.actions.EffectQueue;
 import edu.kit.kastel.game.types.count.Count;
 
 import java.util.LinkedList;
@@ -30,10 +29,12 @@ public final class RepeatEffect extends Effect {
     }
 
     @Override
-    public void addToEffectQueue(EffectQueue queue) {
+    public List<ApplyableEffect> create() {
+        List<ApplyableEffect> effects = new LinkedList<>();
         for (int i = 0; i < count.getValue(); i++) {
-            queue.addAll(effects, true);
+            effects.addAll(this.effects);
         }
+        return effects;
     }
 
     @Override

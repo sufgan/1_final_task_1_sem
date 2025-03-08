@@ -1,5 +1,6 @@
 package edu.kit.kastel.game.monsters;
 
+import edu.kit.kastel.game.actions.EffectQueue;
 import edu.kit.kastel.game.types.StatType;
 import edu.kit.kastel.game.types.Condition;
 import edu.kit.kastel.game.types.Protection;
@@ -15,7 +16,7 @@ import java.util.Map;
  * Represents an active monster with modifiable health, stats, conditions, and protections.
  * @author uyqbd
  */
-public class Monster {
+public class Monster implements Comparable<Monster> {
     private final MonsterSample sample;
     private final Map<StatType,  Integer> scales;
     private final int index;
@@ -187,6 +188,11 @@ public class Monster {
         } else {
             return sample.getName();
         }
+    }
+
+    @Override
+    public int compareTo(Monster o) {
+        return -Double.compare(getStat(StatType.SPD), o.getStat(StatType.SPD));
     }
 
     @Override

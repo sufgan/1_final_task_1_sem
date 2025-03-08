@@ -5,6 +5,8 @@ import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.utils.RandomGenerator;
 import edu.kit.kastel.game.types.StatType;
 
+import java.util.List;
+
 /**
  * An abstract effect that can be applied to a {@link Monster}.
  *
@@ -75,8 +77,8 @@ public abstract class ApplyableEffect extends Effect {
     }
 
     @Override
-    public void addToEffectQueue(EffectQueue queue) {
-        queue.add(this, true);
+    public List<ApplyableEffect> create() {
+        return List.of(this);
     }
 
     @Override

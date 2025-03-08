@@ -7,9 +7,10 @@ import edu.kit.kastel.game.monsters.MonsterSample;
 import edu.kit.kastel.utils.Utility;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 /**
@@ -22,14 +23,15 @@ import java.util.List;
  * @author uyqbd
  */
 public class Competition {
-    private static final String MONSTER_TURN_FORMAT = "%nIt's %s's turn.%n";
+    private static final String MONSTERS_TURN_FORMAT = "%nIt's %s's turn.%n";
     private static final String MONSTER_TABLE_FORMAT = "[%s%s] %d %s%s (%s)%n";
     private static final String MONSTER_HEALTH_SIGN = "X";
     private static final String MONSTER_EMPTY_HEALTH_SIGN = "_";
 
 
     private final List<Monster> monsters;
-    private final List<EffectQueue> effectQueues;
+//    private final List<EffectQueue> effectQueues;
+    private final Map<Monster, EffectQueue> selectedActions;
 
     private int currentMonsterIndex = 0;
 
@@ -40,8 +42,9 @@ public class Competition {
      */
     public Competition(List<MonsterSample> monstersSamples) {
         System.out.printf("The %d monsters enter the competition!%n", monstersSamples.size());
-        effectQueues = new LinkedList<>();
+//        effectQueues = new LinkedList<>();
         monsters = new ArrayList<>();
+        selectedActions = new TreeMap<>();
         MonsterSample.clearCreatedCounts();
         for (MonsterSample ms : monstersSamples) {
             Monster monster = ms.create();
@@ -58,16 +61,17 @@ public class Competition {
      * @throws GameRuntimeException if action need the monster and it was not given
      */
     public void selectAction(Action action, String targetMonsterName) throws GameRuntimeException {
-        Monster targetMonster = findMonster(targetMonsterName);
+        Monster user = getCurrentMonster();
+        Monster target = findMonster(targetMonsterName);
         if (action.needTarget() && targetMonsterName == null) {
             List<Monster> aliveMonsters = getAliveMonsters();
             if (aliveMonsters.size() > 2) {
                 throw new GameRuntimeException("this action need target monster");
             }
-            aliveMonsters.remove(getCurrentMonster());
-            targetMonster = aliveMonsters.get(0);
+            aliveMonsters.remove(user); // ???
+            target = aliveMonsters.get(0);
         }
-        effectQueues.add(action.createEffectsQueue(monsters.get(currentMonsterIndex), targetMonster));
+        selectedActions.put(getCurrentMonster(), new EffectQueue(user, target, action));
         step();
     }
 
@@ -79,24 +83,21 @@ public class Competition {
         if (currentMonsterIndex < lastMonsterIndex) {
             applyActions();
             updateProtections();
-            effectQueues.clear();
+            selectedActions.clear();
         }
     }
 
     private void applyActions() {
-        Collections.sort(effectQueues);
-        for (EffectQueue effectQueue : effectQueues) {
-            if (!effectQueue.getUser().isFainted()) {
-                System.out.printf(MONSTER_TURN_FORMAT, effectQueue.getUser().getName());
-                effectQueue.getUser().updateCondition();
-                effectQueue.apply();
+        for (Map.Entry<Monster, EffectQueue> entry : selectedActions.entrySet()) {
+            if (!entry.getValue().getUser().isFainted()) {
+                System.out.printf(MONSTERS_TURN_FORMAT, entry.getKey().getName());
+                entry.getValue().apply();
             }
         }
     }
 
     private void updateProtections() {
-        for (EffectQueue effectQueue : effectQueues) {
-            Monster monster = effectQueue.getUser();
+        for (Monster monster : selectedActions.keySet()) {
             if (!monster.isFainted()) {
                 monster.updateProtection();
             }

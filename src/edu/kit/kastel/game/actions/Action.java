@@ -1,11 +1,11 @@
 package edu.kit.kastel.game.actions;
 
 import edu.kit.kastel.game.GameRuntimeException;
+import edu.kit.kastel.game.actions.effects.ApplyableEffect;
 import edu.kit.kastel.game.actions.effects.DamageEffect;
 import edu.kit.kastel.game.actions.effects.Effect;
 import edu.kit.kastel.game.actions.effects.EffectType;
 import edu.kit.kastel.game.actions.effects.RepeatEffect;
-import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.Element;
 import edu.kit.kastel.utils.RegexConstructor;
 
@@ -63,6 +63,14 @@ public class Action {
         return false;
     }
 
+    public List<ApplyableEffect> createEffects() {
+        List<ApplyableEffect> effects = new LinkedList<>();
+        for (Effect effect : this.effects) {
+            effects.addAll(effect.create());
+        }
+        return effects;
+    }
+
     /**
      * Finds and retrieves an {@code Action} instance by its name from the internal storage.
      *
@@ -78,35 +86,10 @@ public class Action {
     }
 
     /**
-     * Checks if an action with the provided name exists in the internal storage.
-     *
-     * @param actionName the name of the action to check
-     * @return {@code true} if the action exists; otherwise {@code false}
-     */
-    public static boolean hasAction(String actionName) {
-        return ACTIONS.containsKey(actionName);
-    }
-
-    /**
      * Clears all registered actions from the internal storage.
      */
     public static void clearActions() {
         ACTIONS.clear();
-    }
-
-    /**
-     * Creates an {@link EffectQueue} for this action, associating it with a user monster and a target monster.
-     *
-     * @param user   the monster executing this action
-     * @param target the monster targeted by this action
-     * @return a new {@link EffectQueue} containing the effects of this action
-     */
-    public EffectQueue createEffectsQueue(Monster user, Monster target) {
-        EffectQueue queue = new EffectQueue(name, user, target);
-        for (Effect effect : effects) {
-            effect.addToEffectQueue(queue);
-        }
-        return queue;
     }
 
     /**

@@ -2,6 +2,8 @@ package edu.kit.kastel.game.actions.effects;
 
 import edu.kit.kastel.game.actions.EffectQueue;
 
+import java.util.List;
+
 /**
  * A base class for effects that can be applied within the game.
  * <p>
@@ -12,12 +14,8 @@ import edu.kit.kastel.game.actions.EffectQueue;
  * @author uyqbd
  */
 public abstract class Effect {
-    /**
-     * Adds this effect to the specified {@link EffectQueue}.
-     *
-     * @param queue the queue to which this effect is added
-     */
-    public abstract void addToEffectQueue(EffectQueue queue);
+
+    public abstract List<ApplyableEffect> create();
 
     /**
      * Indicates if a separate target (i.e., not the user) is required.
