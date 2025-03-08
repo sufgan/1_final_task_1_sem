@@ -35,9 +35,8 @@ public abstract class ApplyableEffect extends Effect {
      *
      * @param user   the monster using this effect
      * @param target the monster targeted by this effect
-     * @return {@code true} if the effect was successfully applied; {@code false} otherwise
      */
-    public abstract boolean apply(Monster user, Monster target);
+    public abstract void apply(Monster user, Monster target);
 
     /**
      * Determines if this effect can be applied, considering both monsters' states
@@ -47,7 +46,7 @@ public abstract class ApplyableEffect extends Effect {
      * @param target the monster targeted by this effect
      * @return {@code true} if the effect meets the conditions to be applied
      */
-    protected boolean canBeApplied(Monster user, Monster target) {
+    public boolean canBeApplied(Monster user, Monster target) {
         if (user.isFainted() || (!isOnUser() && target.isFainted())) {
             return false;
         }

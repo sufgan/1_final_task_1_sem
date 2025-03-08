@@ -29,12 +29,8 @@ public final class ProtectEffect extends ApplyableEffect {
     }
 
     @Override
-    public boolean apply(Monster user, Monster target) {
-        if (!canBeApplied(user, target)) {
-            return false;
-        }
+    public void apply(Monster user, Monster target) {
         user.setProtection(protectionType, count.getValue());
-        return true;
     }
 
 }

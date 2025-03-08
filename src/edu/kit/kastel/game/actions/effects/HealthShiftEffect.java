@@ -55,11 +55,8 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
     }
 
     @Override
-    public boolean apply(Monster userMonster, Monster targetMonster) {
+    public void apply(Monster userMonster, Monster targetMonster) {
         Monster target = isOnUser() ? userMonster : targetMonster;
-        if (!canBeApplied(userMonster, target, power.getValue() < 0)) {
-            return false;
-        }
 
         if (!isOnUser() && powerScale < 0 && target.getProtectionType() == ProtectionType.HEALTH) {
             System.out.printf(MASSAGE_PROTECTED_FORMAT, target.getName());
@@ -72,20 +69,6 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
         if (target.isFainted()) {
             System.out.printf(MESSAGE_DEFEAT_FORMAT, target.getName());
         }
-        return true;
-    }
-
-    /**
-     * Determines if the effect can be applied based on the user's and target's
-     * conditions and the presence of protections.
-     *
-     * @param user the monster initiating the effect
-     * @param target the monster receiving the effect
-     * @param damage whether the effect inflicts damage or not
-     * @return {@code true} if the effect can be applied, {@code false} otherwise
-     */
-    public boolean canBeApplied(Monster user, Monster target, boolean damage) {
-        return canBeApplied(user, target); // check hit
     }
 
     private String getMessageFormat(int shiftValue) {

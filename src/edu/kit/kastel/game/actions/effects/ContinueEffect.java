@@ -22,8 +22,8 @@ public final class ContinueEffect extends ApplyableEffect {
     }
 
     @Override
-    public boolean apply(Monster user, Monster target) {
-        return canBeApplied(user, target);
+    public void apply(Monster user, Monster target) {
+
     }
 
 }

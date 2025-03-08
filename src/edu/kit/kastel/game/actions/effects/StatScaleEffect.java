@@ -36,11 +36,8 @@ public final class StatScaleEffect extends ApplyableEffect {
     }
 
     @Override
-    public boolean apply(Monster user, Monster targetMonster) {
+    public void apply(Monster user, Monster targetMonster) {
         Monster target = isOnUser() ? user : targetMonster;
-        if (!canBeApplied(user, target)) {
-            return false;
-        }
 
         if (!this.isOnUser() && scaleShift < 0 && target.getProtectionType() == ProtectionType.STATS) {
             System.out.printf(MASSAGE_PROTECTED_FORMAT, target.getName());
@@ -51,12 +48,6 @@ public final class StatScaleEffect extends ApplyableEffect {
                     state,
                     scaleShift < 0 ? NEGATIVE_SHIFT_MESSAGE_END : POSITIVE_SHIFT_MESSAGE_END);
         }
-        return true;
-    }
-
-    @Override
-    public boolean canBeApplied(Monster user, Monster target) {
-        return super.canBeApplied(user, target);
     }
 
 }
