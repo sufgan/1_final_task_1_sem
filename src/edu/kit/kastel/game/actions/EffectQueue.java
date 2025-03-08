@@ -49,8 +49,8 @@ public class EffectQueue {
      * </p>
      */
     public void apply() {
-        printMessage();
         user.updateCondition();
+        printMessage();
         Condition userCondition = user.getCondition();
         List<ApplyableEffect> effects = action.createEffects();
         if (userCondition != null) {
