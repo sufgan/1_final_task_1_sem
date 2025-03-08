@@ -72,6 +72,7 @@ public final class ConfigParser {
             throw new ConfigPatternException("config file not found");
         }
         if (!Pattern.matches(getRegex(), config)) {
+            System.out.println(config.replaceAll("\n", "|"));
             throw new ConfigPatternException("invalid config format");
         }
         System.out.print(config);
