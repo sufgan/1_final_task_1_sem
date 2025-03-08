@@ -5,6 +5,7 @@ import edu.kit.kastel.game.monsters.MonsterSample;
 import edu.kit.kastel.ui.handlers.CommandHandler;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 import edu.kit.kastel.ui.handlers.DefaultCommandHandler;
+import edu.kit.kastel.utils.Utility;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,13 +23,18 @@ public class CompetitionCreateCommand extends Command {
 
     @Override
     public void execute(CommandHandler handler, String[] args) throws CommandException {
+        if (args.length < 2) {
+            throw new CommandException("not enough monsters to start competition"); // move
+        }
         List<MonsterSample> monsterSamples = new LinkedList<>();
-        for (String arg : args) {
-            MonsterSample monsterSample = MonsterSample.find(arg);
+        for (int i = 0; i < args.length; i++) {
+            MonsterSample monsterSample = MonsterSample.find(args[i]);
             if (monsterSample != null) {
                 monsterSamples.add(monsterSample);
             } else {
-                System.err.printf("Monster with name %s doesn't exist%n", arg);
+                System.err.printf("Monster with name %s doesn't exist%n", args[i]);
+                execute(handler, Utility.includeFromArray(args, i));
+                return;
             }
         }
         Competition competition = new Competition(monsterSamples);

@@ -44,4 +44,20 @@ public final class Utility {
         return val * (scale >= 0 ? (factor + scale) / factor : factor / (factor - scale));
     }
 
+    /**
+     * Creates a new array by excluding an element from the input array at the specified index.
+     *
+     * @param <T> the type of elements in the array
+     * @param array the input array from which an element will be excluded
+     * @param index the index of the element to be excluded from the input array
+     * @return a new array of the same type as the input array, but with the element at the specified index removed
+     * @throws ArrayIndexOutOfBoundsException if the specified index is out of bounds for the input array
+     */
+    public static <T> T[] includeFromArray(T[] array, int index) {
+        T[] result = (T[]) new Object[array.length - 1];
+        System.arraycopy(array, 0, result, 0, index);
+        System.arraycopy(array, index + 1, result, index, result.length - index);
+        return result;
+    }
+
 }

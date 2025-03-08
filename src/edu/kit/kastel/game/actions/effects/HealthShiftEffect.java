@@ -61,9 +61,13 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
             return false;
         }
 
-        int shiftValue = powerScale * power.getValue(userMonster, target, actionElement);
-        target.shiftHealth(shiftValue);
-        System.out.printf((getMessageFormat(shiftValue)), target.getName(), Math.abs(shiftValue));
+        if (powerScale < 0 && target.getProtectionType() == ProtectionType.HEALTH) {
+            System.out.printf(MASSAGE_PROTECTED_FORMAT, target.getName());
+        } else {
+            int shiftValue = powerScale * power.getValue(userMonster, target, actionElement);
+            target.shiftHealth(shiftValue);
+            System.out.printf((getMessageFormat(shiftValue)), target.getName(), Math.abs(shiftValue));
+        }
 
         if (target.isFainted()) {
             System.out.printf(MESSAGE_DEFEAT_FORMAT, target.getName());
@@ -81,10 +85,6 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
      * @return {@code true} if the effect can be applied, {@code false} otherwise
      */
     public boolean canBeApplied(Monster user, Monster target, boolean damage) {
-        if (!this.isOnUser() && damage && target.getProtectionType() == ProtectionType.HEALTH) { // check protection
-            System.out.printf(MASSAGE_PROTECTED_FORMAT, (this.isOnUser() ? user : target).getName());
-            return false;
-        }
         return canBeApplied(user, target); // check hit
     }
 
