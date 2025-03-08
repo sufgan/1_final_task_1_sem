@@ -33,7 +33,7 @@ public final class AbsolutePower extends Power {
 
     @Override
     public int getValue(Monster user, Monster target, Element actionElement) {
-        return (int) getValue();
+        return getValue();
     }
 
     /**

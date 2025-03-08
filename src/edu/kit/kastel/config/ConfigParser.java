@@ -76,12 +76,14 @@ public final class ConfigParser {
 //            throw new ConfigPatternException(config.replace("\n", "\\n").replace("\r", "\\r"));
             throw new ConfigPatternException("invalid config format");
         }
+        System.out.println(config);
+
         MonsterSample.clearSamples();
         Action.clearActions();
 
         int loadedActionsCount = parseActions(config);
         int loadedMonstersCount = parseMonsters(config);
-        System.out.printf("%s%nLoaded %d actions, %d monsters.%n", config, loadedActionsCount, loadedMonstersCount);
+        System.out.printf("%nLoaded %d actions, %d monsters.%n", loadedActionsCount, loadedMonstersCount);
     }
 
     private static int parseActions(String config) {
@@ -91,7 +93,7 @@ public final class ConfigParser {
         while (matcher.find()) {
             String name = matcher.group("name");
             if (names.contains(name)) {
-                System.err.printf("Duplicating action name %s%n", name);
+                System.err.printf("Error, duplicating action name %s%n", name);
             } else {
                 Element element = Element.valueOf(matcher.group(Element.class.getSimpleName()));
                 new Action(name, element, parseEffects(matcher.group(EffectType.class.getSimpleName()), element));
@@ -166,7 +168,7 @@ public final class ConfigParser {
         while (matcher.find()) {
             String name = matcher.group("name");
             if (names.contains(name)) {
-                System.err.printf("Duplicating monster name %s%n", name);
+                System.err.printf("Error, duplicating monster name %s%n", name);
             } else {
                 new MonsterSample(name,
                         Element.valueOf(matcher.group(Element.class.getSimpleName())),

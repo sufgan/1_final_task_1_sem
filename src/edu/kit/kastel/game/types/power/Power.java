@@ -12,7 +12,7 @@ import edu.kit.kastel.utils.RegexConstructor;
  * @author uyqbd
  */
 public abstract class Power {
-    private final double value;
+    private final int value;
     private final String type;
 
     /**
@@ -22,7 +22,7 @@ public abstract class Power {
      * @param value the numeric value representing the magnitude or strength of the power
      * @param type  the string identifier representing the type of the power
      */
-    protected Power(double value, String type) {
+    protected Power(int value, String type) {
         this.value = value;
         this.type = type;
     }
@@ -40,6 +40,15 @@ public abstract class Power {
     public abstract int getValue(Monster user, Monster target, Element actionElement);
 
     /**
+     * Retrieves the base value of the power instance.
+     *
+     * @return the numeric value representing the base power.
+     */
+    public int getValue() {
+        return value;
+    }
+
+    /**
      * Creates and returns an instance of a specific subclass of Power based on the given arguments.
      * The method expects the first argument to specify the type of Power to create, and the second
      * argument to specify the numeric value associated with the Power. If the arguments are invalid
@@ -54,10 +63,11 @@ public abstract class Power {
         if (args.length != 2) {
             return null;
         }
+        int value = Integer.parseInt(args[1]);
         return switch (args[0]) {
-            case AbsolutePower.NAME -> new AbsolutePower(Integer.parseInt(args[1]));
-            case RelativePower.NAME -> new RelativePower(Integer.parseInt(args[1]));
-            case BasicPower.NAME -> new BasicPower(Integer.parseInt(args[1]));
+            case AbsolutePower.NAME -> new AbsolutePower(value);
+            case RelativePower.NAME -> new RelativePower(value);
+            case BasicPower.NAME -> new BasicPower(value);
             default -> null;
         };
     }
@@ -81,18 +91,9 @@ public abstract class Power {
         );
     }
 
-    /**
-     * Retrieves the base value of the power instance.
-     *
-     * @return the numeric value representing the base power.
-     */
-    public double getValue() {
-        return value;
-    }
-
     @Override
     public String toString() {
-        return "%s%d".formatted(type, (int) value);
+        return "%s%d".formatted(type, value);
     }
 
 }
