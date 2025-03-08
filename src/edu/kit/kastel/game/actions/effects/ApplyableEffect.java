@@ -108,6 +108,14 @@ public abstract class ApplyableEffect extends Effect {
         return target == TargetType.USER;
     }
     
+    /**
+     * Creates and returns a copy of this {@code ApplyableEffect}.
+     * The copied instance retains all properties and configurations
+     * of the original effect, allowing for independent modification
+     * or reapplication.
+     *
+     * @return a new {@code ApplyableEffect} instance that is a clone of this effect
+     */
     public abstract ApplyableEffect copy();
 
 }
