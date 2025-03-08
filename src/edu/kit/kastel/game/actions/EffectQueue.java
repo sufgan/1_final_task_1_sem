@@ -16,7 +16,8 @@ import java.util.List;
  *
  * @author uyqbd
  */
-public class EffectQueue {
+public class EffectQueue implements Comparable<EffectQueue> {
+    private static final String MONSTERS_TURN_FORMAT = "%nIt's %s's turn.%n";
     private static final String USE_ACTION_MESSAGE_FORMAT = "%s uses %s!%n";
     private static final String ACTION_FAIL_MESSAGE = "The action failed...";
     private static final String PASS_MESSAGE_FORMAT = "%s passes!%n";
@@ -49,6 +50,11 @@ public class EffectQueue {
      * </p>
      */
     public void apply() {
+        if (user.isFainted()) {
+            return;
+        }
+
+        System.out.printf(MONSTERS_TURN_FORMAT, user.getName());
         user.updateCondition();
         printMessage();
         Condition userCondition = user.getCondition();
@@ -93,13 +99,9 @@ public class EffectQueue {
         }
     }
 
-    /**
-     * Returns the monster performing the action.
-     *
-     * @return the user monster
-     */
-    public Monster getUser() {
-        return user;
+    @Override
+    public int compareTo(EffectQueue o) {
+        return user.compareTo(o.user);
     }
 
 }

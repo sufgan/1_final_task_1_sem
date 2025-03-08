@@ -7,11 +7,9 @@ import edu.kit.kastel.game.monsters.MonsterSample;
 import edu.kit.kastel.utils.Utility;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 
 /**
  * Manages a competition among multiple monsters.
@@ -23,15 +21,13 @@ import java.util.TreeMap;
  * @author uyqbd
  */
 public class Competition {
-    private static final String MONSTERS_TURN_FORMAT = "%nIt's %s's turn.%n";
     private static final String MONSTER_TABLE_FORMAT = "[%s%s] %d %s%s (%s)%n";
     private static final String MONSTER_HEALTH_SIGN = "X";
     private static final String MONSTER_EMPTY_HEALTH_SIGN = "_";
 
 
     private final List<Monster> monsters;
-//    private final List<EffectQueue> effectQueues;
-    private final Map<Monster, EffectQueue> selectedActions;
+    private final List<EffectQueue> selectedActions;
 
     private int currentMonsterIndex = 0;
 
@@ -44,7 +40,7 @@ public class Competition {
         System.out.printf("The %d monsters enter the competition!%n", monstersSamples.size());
 //        effectQueues = new LinkedList<>();
         monsters = new ArrayList<>();
-        selectedActions = new TreeMap<>();
+        selectedActions = new LinkedList<>();
         MonsterSample.clearCreatedCounts();
         for (MonsterSample ms : monstersSamples) {
             Monster monster = ms.create();
@@ -71,7 +67,7 @@ public class Competition {
             aliveMonsters.remove(user); // ???
             target = aliveMonsters.get(0);
         }
-        selectedActions.put(getCurrentMonster(), new EffectQueue(user, target, action));
+        selectedActions.add(new EffectQueue(user, target, action));
         step();
     }
 
@@ -83,24 +79,20 @@ public class Competition {
         if (currentMonsterIndex < lastMonsterIndex) {
             applyActions();
             updateProtections();
-            selectedActions.clear();
         }
     }
 
     private void applyActions() {
-        for (Map.Entry<Monster, EffectQueue> entry : selectedActions.entrySet()) {
-            if (!entry.getValue().getUser().isFainted()) {
-                System.out.printf(MONSTERS_TURN_FORMAT, entry.getKey().getName());
-                entry.getValue().apply();
-            }
+        Collections.sort(selectedActions);
+        for (EffectQueue effectQueue : selectedActions) {
+            effectQueue.apply();
         }
+        selectedActions.clear();
     }
 
     private void updateProtections() {
-        for (Monster monster : selectedActions.keySet()) {
-            if (!monster.isFainted()) {
-                monster.updateProtection();
-            }
+        for (Monster monster : getAliveMonsters()) {
+            monster.updateProtection();
         }
     }
 
