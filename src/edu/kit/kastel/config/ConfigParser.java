@@ -76,7 +76,7 @@ public final class ConfigParser {
 //            throw new ConfigPatternException(config.replace("\n", "\\n").replace("\r", "\\r"));
             throw new ConfigPatternException("invalid config format");
         }
-        System.out.println(config);
+        System.out.print(config);
 
         MonsterSample.clearSamples();
         Action.clearActions();
