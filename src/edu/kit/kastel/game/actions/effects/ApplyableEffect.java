@@ -5,6 +5,8 @@ import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.utils.RandomGenerator;
 import edu.kit.kastel.game.types.StatType;
 
+import javax.management.monitor.MonitorSettingException;
+
 /**
  * An abstract effect that can be applied to a {@link Monster}.
  *
@@ -18,6 +20,8 @@ public abstract class ApplyableEffect extends Effect {
 
     private final int effectHitRate;
     private final TargetType target;
+
+    private Boolean hits;
 
     /**
      * Constructs a new {@code ApplyableEffect} with a given hit rate and target type.
@@ -39,23 +43,37 @@ public abstract class ApplyableEffect extends Effect {
     public abstract void apply(Monster user, Monster target);
 
     /**
-     * Determines if this effect can be applied, considering both monsters' states
-     * and a probability check based on user and target stats.
+     * Determines whether the effect can be applied from the user to the target.
+     * The effect cannot be applied if the user is fainted or, in the case of a non-user-based effect,
+     * if the target is fainted. The method also considers hit success based on predefined conditions.
      *
-     * @param user   the monster using this effect
-     * @param target the monster targeted by this effect
-     * @return {@code true} if the effect meets the conditions to be applied
+     * @param user   the monster attempting to use this effect
+     * @param target the monster that is targeted by this effect
+     * @return {@code true} if the effect can be applied, otherwise {@code false}
      */
     public boolean canBeApplied(Monster user, Monster target) {
         if (user.isFainted() || (!isOnUser() && target.isFainted())) {
             return false;
         }
 
+        return hits != null ? hits : hits(user, target);
+    }
+
+    /**
+     * Determines if an effect successfully "hits" the target by comparing the user's precision
+     * and the target's agility, factoring in the predefined effect hit rate and a random probability check.
+     *
+     * @param user   the monster using this effect, whose precision is considered in the calculation
+     * @param target the monster targeted by this effect, whose agility is referenced if the effect is applied to a target
+     * @return {@code true} if the effect hits the target, otherwise {@code false}
+     */
+    public boolean hits(Monster user, Monster target) {
         double userPRC = user.getStat(StatType.PRC);
         double targetAGL = isOnUser() ? 1 : target.getStat(StatType.AGL);
         double conditionQuotient = userPRC / targetAGL;
 
-        return RandomGenerator.probabilityGood(effectHitRate * conditionQuotient, DEBUG_MESSAGE);
+        hits = RandomGenerator.probabilityGood(effectHitRate * conditionQuotient, DEBUG_MESSAGE;
+        return hits;
     }
 
     @Override
