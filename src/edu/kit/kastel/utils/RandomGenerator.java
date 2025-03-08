@@ -11,7 +11,7 @@ import java.util.Random;
  */
 public final class RandomGenerator {
     private static final String PROBABILITY_DEBUG_MESSAGE_FORMAT = "Decide %s: yes or no? (y/n)";
-    private static final String RANDOM_FACTOR_DEBUG_MESSAGE_FORMAT = "Decide %s: a double between %.2f and %.2f?";
+    private static final String RANDOM_FACTOR_DEBUG_MESSAGE_FORMAT = "Decide %s: a number between %.2f and %.2f?";
     private static final String RANDOM_NUMBER_DEBUG_MESSAGE_FORMAT = "Decide %s: an integer between %d and %d?";
 
     private static final Random RANDOM = new Random();
