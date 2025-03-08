@@ -1,4 +1,4 @@
-package edu.kit.kastel.game.types;
+package edu.kit.kastel.game.types.element;
 
 /**
  * Represents the efficiency of an element in battle, providing a scaling value

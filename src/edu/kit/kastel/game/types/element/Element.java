@@ -1,4 +1,4 @@
-package edu.kit.kastel.game.types;
+package edu.kit.kastel.game.types.element;
 
 import edu.kit.kastel.utils.RegexConstructor;
 import edu.kit.kastel.utils.RegexProvider;
@@ -43,18 +43,25 @@ public enum Element implements RegexProvider {
     }
 
     /**
-     * Determines how this element interacts with the specified element
-     * (very effective, normal, or not very effective).
+     * Determines the efficiency of an interaction between the current element
+     * and the specified target element based on their relationship.
      *
-     * @param element the element to compare against
-     * @return the resulting {@link ElementEfficiency}
+     * @param element the target {@code Element} to evaluate the interaction against
+     * @param printMessage a boolean flag indicating whether a descriptive message
+     *                      should be printed to the console describing the effectiveness
+     * @return an {@code ElementEfficiency} value representing the interaction's
+     *         effectiveness, which can be {@code POWERLESS}, {@code POWERFUL}, or {@code NORMAL}
      */
-    public ElementEfficiency getEfficiency(Element element) {
+    public ElementEfficiency getEfficiency(Element element, boolean printMessage) {
         if (element.name().equals(this.dominant)) {
-            System.out.println("It is not very effective...");
+            if (printMessage) {
+                System.out.println("It is not very effective...");
+            }
             return ElementEfficiency.POWERLESS;
         } else if (element.name().equals(this.yielding)) {
-            System.out.println("It is very effective!");
+            if (printMessage) {
+                System.out.println("It is very effective!");
+            }
             return ElementEfficiency.POWERFUL;
         }
         return ElementEfficiency.NORMAL;

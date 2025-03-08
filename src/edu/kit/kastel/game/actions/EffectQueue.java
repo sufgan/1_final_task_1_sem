@@ -2,6 +2,7 @@ package edu.kit.kastel.game.actions;
 
 import edu.kit.kastel.game.actions.effects.ApplyableEffect;
 import edu.kit.kastel.game.actions.effects.BurnDamageEffect;
+import edu.kit.kastel.game.actions.effects.HealthShiftEffect;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.Condition;
 
@@ -26,6 +27,8 @@ public class EffectQueue implements Comparable<EffectQueue> {
     private final Action action;
     private final Monster user;
     private final Monster target;
+
+    private boolean wasBasicDamage = false;
 
     /**
      * Constructs an EffectQueue to handle effects applied by a monster's action.
@@ -86,6 +89,7 @@ public class EffectQueue implements Comparable<EffectQueue> {
 
         }
 
+        HealthShiftEffect.printElementEfficiency();
         for (ApplyableEffect effect : effects) {
             if (effect.canBeApplied(user, target)) {
                 effect.apply(user, target);

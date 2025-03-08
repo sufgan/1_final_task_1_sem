@@ -2,7 +2,7 @@ package edu.kit.kastel.game.actions.effects;
 
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.power.Power;
-import edu.kit.kastel.game.types.Element;
+import edu.kit.kastel.game.types.element.Element;
 
 /**
  * An abstract class for effects that shift a monster's health,
@@ -20,6 +20,8 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
     private static final String TAKING_DAMAGE_FORMAT = "%%s takes %%d damage%s!%%n";
     private static final String GAINING_HEALTH_FORMAT = "%%s gains back %%d health%s!%%n";
     private static final String REASON_FORMAT = " from %s";
+
+    private static boolean printElementEfficiency = false;
 
     private final Element actionElement;
     private final Power power;
@@ -57,11 +59,20 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
         this.reason = reason;
     }
 
+    /**
+     * Next {@code HealthShiftEffect} will print element efficiency.
+     */
+    public static void printElementEfficiency() {
+        printElementEfficiency = true;
+    }
+
     @Override
     public void apply(Monster userMonster, Monster targetMonster) {
         Monster target = isOnUser() ? userMonster : targetMonster;
 
-        int shiftValue = powerScale * power.getValue(userMonster, target, actionElement);
+        int shiftValue = powerScale * power.getValue(userMonster, target, actionElement, printElementEfficiency);
+        printElementEfficiency = false;
+
         target.shiftHealth(shiftValue);
         System.out.printf((getMessageFormat(shiftValue)), target.getName(), Math.abs(shiftValue));
 

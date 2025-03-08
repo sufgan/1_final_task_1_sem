@@ -1,7 +1,7 @@
 package edu.kit.kastel.game.actions.effects;
 
 import edu.kit.kastel.game.types.power.Power;
-import edu.kit.kastel.game.types.Element;
+import edu.kit.kastel.game.types.element.Element;
 
 /**
  * Represents a damage-inflicting effect that reduces health
@@ -27,5 +27,5 @@ public final class DamageEffect extends HealthShiftEffect {
     public ApplyableEffect copy() {
         return new DamageEffect(getHitRate(), getTarget(), getActionElement(), getPower());
     }
-    
+
 }

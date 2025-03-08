@@ -19,7 +19,7 @@ import edu.kit.kastel.game.monsters.MonsterSample;
 import edu.kit.kastel.game.types.count.Count;
 import edu.kit.kastel.game.types.power.Power;
 import edu.kit.kastel.game.types.Condition;
-import edu.kit.kastel.game.types.Element;
+import edu.kit.kastel.game.types.element.Element;
 import edu.kit.kastel.game.types.StatType;
 import edu.kit.kastel.utils.RegexConstructor;
 

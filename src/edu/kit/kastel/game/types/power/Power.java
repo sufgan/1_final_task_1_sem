@@ -1,7 +1,7 @@
 package edu.kit.kastel.game.types.power;
 
 import edu.kit.kastel.game.monsters.Monster;
-import edu.kit.kastel.game.types.Element;
+import edu.kit.kastel.game.types.element.Element;
 import edu.kit.kastel.utils.RegexConstructor;
 
 /**
@@ -28,16 +28,16 @@ public abstract class Power {
     }
 
     /**
-     * Calculates and returns the power value based on the interaction between the user, target,
-     * and the specified action element. The calculation typically involves considering the monsters'
-     * stats, conditions, and the element interactions.
+     * Calculates and returns an integer value based on the provided user, target,
+     * action element, and a flag indicating if it's the first calculation.
      *
-     * @param user          the monster that uses the power
-     * @param target        the monster that is the target of the power
-     * @param actionElement the elemental type associated with this action
-     * @return an integer value representing the calculated power output
+     * @param user the monster using the power; its stats or condition may influence the result
+     * @param target the target monster affected by the power; its stats or condition may influence the result
+     * @param actionElement the element associated with the action, which may affect the value calculation
+     * @param first a boolean flag indicating if this is the first application of the power, potentially altering the result
+     * @return an integer representing the calculated value of the power for this interaction
      */
-    public abstract int getValue(Monster user, Monster target, Element actionElement);
+    public abstract int getValue(Monster user, Monster target, Element actionElement, boolean first);
 
     /**
      * Retrieves the base value of the power instance.
