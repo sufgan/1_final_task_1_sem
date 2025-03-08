@@ -99,8 +99,8 @@ public abstract class CommandHandler {
         for (Command command : commands.values()) {
             if (line.startsWith(command.getName())) {
                 String[] args = new String[0];
-                if (line.length() > command.getName().length()) {
-                    String rawArgs = line.substring(command.getName().length() + 1);
+                if (line.length() >= command.getName().length()) {
+                    String rawArgs = line.substring(command.getName().length()).trim();
                     if (Pattern.matches(command.getArgsRegex(), rawArgs)) {
                         args = line.substring(command.getName().length() + 1).split(Command.SEPARATOR);
                     } else {

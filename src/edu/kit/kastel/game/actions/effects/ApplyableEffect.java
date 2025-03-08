@@ -51,10 +51,6 @@ public abstract class ApplyableEffect extends Effect {
      * @return {@code true} if the effect can be applied, otherwise {@code false}
      */
     public boolean canBeApplied(Monster user, Monster target) {
-        if (user.isFainted() || (!isOnUser() && target.isFainted())) {
-            return false;
-        }
-
         return hits != null ? hits : hits(user, target);
     }
 
@@ -67,6 +63,10 @@ public abstract class ApplyableEffect extends Effect {
      * @return {@code true} if the effect hits the target, otherwise {@code false}
      */
     public boolean hits(Monster user, Monster target) {
+        if (user.isFainted() || (!isOnUser() && target.isFainted())) {
+            return false;
+        }
+
         double userPRC = user.getStat(StatType.PRC);
         double targetAGL = isOnUser() ? 1 : target.getStat(StatType.AGL);
         double conditionQuotient = userPRC / targetAGL;

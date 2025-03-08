@@ -147,27 +147,22 @@ public class Action {
         return String.join(" ", elements);
     }
 
-    private List<String> findDamages() {
-        return findDamages(effects);
+    private String findDamage() {
+        return findDamage(effects);
     }
 
-    private List<String> findDamages(List<Effect> effects) {
-        List<String> damages = new LinkedList<>();
+    private String findDamage(List<Effect> effects) {
         for (Effect effect : effects) {
             if (effect instanceof DamageEffect) {
-                damages.add(((DamageEffect) effect).getPower().toString());
+                return ((DamageEffect) effect).getPower().toString();
             } else if (effect instanceof RepeatEffect) {
-                for (String damage : findDamages(((RepeatEffect) effect).getEffects())) {
-                    if (!damage.equals("--")) {
-                        damages.add(damage);
-                    }
+                String damage = findDamage(((RepeatEffect) effect).getEffects());
+                if (!damage.equals("--")) {
+                    return damage;
                 }
             }
         }
-        if (damages.isEmpty()) {
-            damages.add("--");
-        }
-        return damages;
+        return "--";
     }
 
     /**
@@ -184,7 +179,7 @@ public class Action {
         return "%s: ELEMENT %s, Damage %s, HitRate %s".formatted(
                 name,
                 element,
-                String.join(",", findDamages()),
+                findDamage(),
                 effects.get(0).getHitRate()
         );
     }

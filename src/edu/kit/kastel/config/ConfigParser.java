@@ -93,7 +93,7 @@ public final class ConfigParser {
         while (matcher.find()) {
             String name = matcher.group("name");
             if (names.contains(name)) {
-                System.err.printf("Error, duplicating action name %s%n", name);
+//                System.err.printf("Error, duplicating action name %s%n", name);
             } else {
                 Element element = Element.valueOf(matcher.group(Element.class.getSimpleName()));
                 new Action(name, element, parseEffects(matcher.group(EffectType.class.getSimpleName()), element));
@@ -168,7 +168,7 @@ public final class ConfigParser {
         while (matcher.find()) {
             String name = matcher.group("name");
             if (names.contains(name)) {
-                System.err.printf("Error, duplicating monster name %s%n", name);
+//                System.err.printf("Error, duplicating monster name %s%n", name);
             } else {
                 new MonsterSample(name,
                         Element.valueOf(matcher.group(Element.class.getSimpleName())),
