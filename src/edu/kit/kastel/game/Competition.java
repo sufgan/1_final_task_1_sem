@@ -38,7 +38,6 @@ public class Competition {
      */
     public Competition(List<MonsterSample> monstersSamples) {
         System.out.printf("The %d monsters enter the competition!%n", monstersSamples.size());
-//        effectQueues = new LinkedList<>();
         monsters = new ArrayList<>();
         selectedActions = new LinkedList<>();
         MonsterSample.clearCreatedCounts();
@@ -91,7 +90,9 @@ public class Competition {
     }
 
     private void updateProtections() {
-        for (Monster monster : getAliveMonsters()) {
+        List<Monster> monsters = getAliveMonsters();
+        Collections.sort(monsters);
+        for (Monster monster : monsters) {
             monster.updateProtection();
         }
     }
