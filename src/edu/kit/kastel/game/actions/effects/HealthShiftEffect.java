@@ -61,7 +61,7 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
             return false;
         }
 
-        if (powerScale < 0 && target.getProtectionType() == ProtectionType.HEALTH) {
+        if (isOnUser() && powerScale < 0 && target.getProtectionType() == ProtectionType.HEALTH) {
             System.out.printf(MASSAGE_PROTECTED_FORMAT, target.getName());
         } else {
             int shiftValue = powerScale * power.getValue(userMonster, target, actionElement);
