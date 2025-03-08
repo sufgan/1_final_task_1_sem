@@ -72,8 +72,6 @@ public final class ConfigParser {
             throw new ConfigPatternException("config file not found");
         }
         if (!Pattern.matches(getRegex(), config)) {
-            // for debug
-//            throw new ConfigPatternException(config.replace("\n", "\\n").replace("\r", "\\r"));
             throw new ConfigPatternException("invalid config format");
         }
         System.out.print(config);
@@ -86,14 +84,14 @@ public final class ConfigParser {
         System.out.printf("%nLoaded %d actions, %d monsters.%n", loadedActionsCount, loadedMonstersCount);
     }
 
-    private static int parseActions(String config) {
+    private static int parseActions(String config) throws ConfigPatternException {
         Matcher matcher = Pattern.compile(Action.getRegex(true)).matcher(config);
         int count = 0;
         Set<String> names = new HashSet<>();
         while (matcher.find()) {
             String name = matcher.group("name");
             if (names.contains(name)) {
-//                System.err.printf("Error, duplicating action name %s%n", name);
+                throw new ConfigPatternException("duplicating action name %s".formatted(name));
             } else {
                 Element element = Element.valueOf(matcher.group(Element.class.getSimpleName()));
                 new Action(name, element, parseEffects(matcher.group(EffectType.class.getSimpleName()), element));
@@ -161,14 +159,14 @@ public final class ConfigParser {
         };
     }
 
-    private static int parseMonsters(String config) {
+    private static int parseMonsters(String config) throws ConfigPatternException {
         Matcher matcher = Pattern.compile(MonsterSample.getRegex(false, true)).matcher(config);
         int count = 0;
         Set<String> names = new HashSet<>();
         while (matcher.find()) {
             String name = matcher.group("name");
             if (names.contains(name)) {
-//                System.err.printf("Error, duplicating monster name %s%n", name);
+                throw new ConfigPatternException("duplicating monster name %s".formatted(name));
             } else {
                 new MonsterSample(name,
                         Element.valueOf(matcher.group(Element.class.getSimpleName())),

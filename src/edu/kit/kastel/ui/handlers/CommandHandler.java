@@ -131,9 +131,11 @@ public abstract class CommandHandler {
      *              if 0, only the current handler stops; if negative, all outer handlers stop recursively
      */
     public void stop(int level) {
-        running = false;
-        if (level != 0 && outerCommandHandler != null) {
-            outerCommandHandler.stop(level - 1);
+        if (level != 0) {
+            running = false;
+            if (outerCommandHandler != null) {
+                outerCommandHandler.stop(level - 1);
+            }
         }
     }
 

@@ -30,8 +30,6 @@ public final class Application {
     private static final InputStream DEFAULT_INPUT_STREAM = System.in;
     private static final Scanner SCANNER = new Scanner(DEFAULT_INPUT_STREAM);
 
-    private static DefaultCommandHandler commandHandler;
-
     private Application() {
 
     }
@@ -47,8 +45,7 @@ public final class Application {
         }
 
         if (handleArguments(args)) {
-            commandHandler = new DefaultCommandHandler();
-            commandHandler.startHandling();
+            new DefaultCommandHandler().startHandling();
         }
 
         SCANNER.close();
@@ -87,13 +84,6 @@ public final class Application {
      */
     public static String readInputLine() {
         return SCANNER.nextLine();
-    }
-
-    /**
-     * Stops the command handler, effectively terminating the application.
-     */
-    public static void stop() {
-        commandHandler.stop(-1);
     }
 
 }
