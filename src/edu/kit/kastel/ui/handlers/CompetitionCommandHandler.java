@@ -9,6 +9,7 @@ import edu.kit.kastel.ui.commands.ShowActionsCommand;
 import edu.kit.kastel.ui.commands.ShowCommand;
 import edu.kit.kastel.ui.commands.ActionCommand;
 import edu.kit.kastel.ui.commands.QuitCommand;
+import edu.kit.kastel.ui.commands.ShowMonstersCommand;
 import edu.kit.kastel.ui.commands.ShowStatsCommand;
 
 import java.util.List;
@@ -45,6 +46,7 @@ public class CompetitionCommandHandler extends CommandHandler {
                 new ShowStatsCommand(),
                 new ShowCommand(),
                 new ShowActionsCommand(),
+                new ShowMonstersCommand(),
                 new PassCommand(),
                 new ActionCommand(),
                 new CompetitionCreateCommand(),

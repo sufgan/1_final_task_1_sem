@@ -167,7 +167,11 @@ public class Action {
             if (effect instanceof DamageEffect) {
                 damages.add(((DamageEffect) effect).getPower().toString());
             } else if (effect instanceof RepeatEffect) {
-                damages.addAll(findDamages(((RepeatEffect) effect).getEffects()));
+                for (String damage : findDamages(((RepeatEffect) effect).getEffects())) {
+                    if (!damage.equals("--")) {
+                        damages.add(damage);
+                    }
+                }
             }
         }
         if (damages.isEmpty()) {

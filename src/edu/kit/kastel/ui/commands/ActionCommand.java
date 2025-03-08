@@ -29,7 +29,7 @@ public class ActionCommand extends CompetitionCommand {
 
     @Override
     public String getArgsRegex() {
-        return "\\w+(\\w+(#\\d+)?)?" + super.getArgsRegex();
+        return "\\w+(\\s\\w+(#\\d+)?)?" + super.getArgsRegex();
     }
 
 }

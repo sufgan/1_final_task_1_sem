@@ -25,8 +25,10 @@ import edu.kit.kastel.utils.RegexConstructor;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -85,14 +87,16 @@ public final class ConfigParser {
     private static int parseActions(String config) {
         Matcher matcher = Pattern.compile(Action.getRegex(true)).matcher(config);
         int count = 0;
+        Set<String> names = new HashSet<>();
         while (matcher.find()) {
             String name = matcher.group("name");
-            if (Action.hasAction(name)) {
+            if (names.contains(name)) {
                 System.err.printf("Duplicating action name %s%n", name);
             } else {
                 Element element = Element.valueOf(matcher.group(Element.class.getSimpleName()));
                 new Action(name, element, parseEffects(matcher.group(EffectType.class.getSimpleName()), element));
                 count++;
+                names.add(name);
             }
         }
         return count;
@@ -158,9 +162,12 @@ public final class ConfigParser {
     private static int parseMonsters(String config) {
         Matcher matcher = Pattern.compile(MonsterSample.getRegex(false, true)).matcher(config);
         int count = 0;
+        Set<String> names = new HashSet<>();
         while (matcher.find()) {
             String name = matcher.group("name");
-            if (MonsterSample.find(name) == null) {
+            if (names.contains(name)) {
+                System.err.printf("Duplicating monster name %s%n", name);
+            }else {
                 new MonsterSample(name,
                         Element.valueOf(matcher.group(Element.class.getSimpleName())),
                         Integer.parseInt(matcher.group(ValueType.HEALTH.name())),
@@ -170,8 +177,7 @@ public final class ConfigParser {
                         matcher.group("actions").split(" ")
                 );
                 count++;
-            } else {
-                System.err.printf("Duplicating monster name %s%n", name);
+                names.add(name);
             }
         }
         return count;

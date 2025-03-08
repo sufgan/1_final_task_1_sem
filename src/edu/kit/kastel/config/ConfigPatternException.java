@@ -8,7 +8,7 @@ package edu.kit.kastel.config;
  * @author uyqbd
  */
 public class ConfigPatternException extends Exception {
-    private static final String MESSAGE = "Config error, ";
+    private static final String MESSAGE = "Error, ";
 
     /**
      * Constructs a {@code ConfigPatternException} with a detailed error message.
