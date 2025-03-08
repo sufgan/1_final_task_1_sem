@@ -1,5 +1,6 @@
 package edu.kit.kastel.config;
 
+import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.game.actions.effects.Effect;
 import edu.kit.kastel.game.actions.effects.EffectType;
@@ -169,19 +170,31 @@ public final class ConfigParser {
             if (names.contains(name)) {
                 throw new ConfigPatternException("duplicating monster name %s".formatted(name));
             } else {
+                String[] actionNames = matcher.group("actions").split(" ");
+                checkActions(actionNames);
                 new MonsterSample(name,
                         Element.valueOf(matcher.group(Element.class.getSimpleName())),
                         Integer.parseInt(matcher.group(ValueType.HEALTH.name())),
                         Integer.parseInt(matcher.group(ValueType.ATK.name())),
                         Integer.parseInt(matcher.group(ValueType.DEF.name())),
                         Integer.parseInt(matcher.group(ValueType.SPD.name())),
-                        matcher.group("actions").split(" ")
+                        actionNames
                 );
                 count++;
                 names.add(name);
             }
         }
         return count;
+    }
+
+    private static void checkActions(String[] actionNames) throws ConfigPatternException {
+        for (String actionName : actionNames) {
+            try {
+                Action.find(actionName);
+            } catch (GameRuntimeException e) {
+                throw new ConfigPatternException("action %s not found".formatted(actionName));
+            }
+        }
     }
 
     /**
@@ -198,6 +211,10 @@ public final class ConfigParser {
                 RegexConstructor.group(null, MonsterSample.getRegex(false, false)),
                 "*"
         );
+    }
+
+    public static void main(String[] args) {
+        System.out.println(MonsterSample.getRegex(false, false));
     }
 
 }
