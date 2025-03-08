@@ -24,8 +24,22 @@ public final class Utility {
      *         the lower bound, the lower bound is returned. If the value exceeds the upper bound,
      *         the upper bound is returned. Otherwise, the original value is returned.
      */
-    public static int limitValue(int val, int low, int top) {
+    public static int absLimitValue(int val, int low, int top) {
         return Math.max(low, Math.min(val, top));
+    }
+
+    /**
+     * Returns the absolute value of {@code val} capped by {@code absTop}.
+     *
+     * <p>If the absolute value of {@code val} exceeds {@code absTop}, this method returns {@code absTop}.
+     * Otherwise, it returns {@code Math.abs(val)}.</p>
+     *
+     * @param val    the original value
+     * @param absTop the maximum absolute value that should not be exceeded
+     * @return       the absolute value of {@code val}, limited by {@code absTop}
+     */
+    public static int absLimitValue(int val, int absTop) {
+        return Math.min(Math.abs(val), absTop);
     }
 
     /**

@@ -44,7 +44,7 @@ public class Monster implements Comparable<Monster> {
      * @param shift the amount to add (positive or negative)
      */
     public void shiftScale(StatType stat, int shift) {
-        scales.put(stat, Utility.limitValue(scales.getOrDefault(stat, 0) + shift, -5, 5));
+        scales.put(stat, Utility.absLimitValue(scales.getOrDefault(stat, 0) + shift, -5, 5));
     }
 
     /**
@@ -53,7 +53,7 @@ public class Monster implements Comparable<Monster> {
      * @param shift the amount to add (positive or negative)
      */
     public void shiftHealth(int shift) {
-        health = Utility.limitValue(health + shift, 0, sample.getMaxHealth());
+        health = Utility.absLimitValue(health + shift, 0, sample.getMaxHealth());
     }
 
     /**
