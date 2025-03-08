@@ -27,4 +27,5 @@ public final class DamageEffect extends HealthShiftEffect {
     public ApplyableEffect copy() {
         return new DamageEffect(getHitRate(), getTarget(), getActionElement(), getPower());
     }
+    
 }
