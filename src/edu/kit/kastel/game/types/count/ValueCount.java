@@ -30,7 +30,8 @@ public final class ValueCount extends Count {
     }
 
     @Override
-    public int getValue() {
+    public int getValue(String debugMessage) {
         return value;
     }
+
 }

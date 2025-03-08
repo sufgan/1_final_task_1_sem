@@ -30,7 +30,7 @@ public final class ProtectEffect extends ApplyableEffect {
 
     @Override
     public void apply(Monster user, Monster target) {
-        user.setProtection(protectionType, count.getValue());
+        user.setProtection(protectionType, count.getValue("duration"));
     }
 
     @Override

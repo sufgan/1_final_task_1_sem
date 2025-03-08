@@ -31,7 +31,8 @@ public final class RepeatEffect extends Effect {
     @Override
     public List<ApplyableEffect> create() {
         List<ApplyableEffect> effects = new LinkedList<>();
-        for (int i = 0; i < count.getValue(); i++) {
+        int count = this.count.getValue("count of repeating");
+        for (int i = 0; i < count; i++) {
             for (ApplyableEffect effect : this.effects) {
                 effects.add(effect.copy());
             }

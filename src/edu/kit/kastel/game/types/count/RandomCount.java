@@ -11,8 +11,6 @@ import edu.kit.kastel.utils.RegexConstructor;
  * @author uyqbd
  */
 public final class RandomCount extends Count {
-    private static final String DEBUG_MESSAGE = "duration or count of repeating";
-
     private final int min;
     private final int max;
 
@@ -42,8 +40,8 @@ public final class RandomCount extends Count {
     }
 
     @Override
-    public int getValue() {
-        return RandomGenerator.getRandomNumber(min, max, DEBUG_MESSAGE);
+    public int getValue(String debugMessage) {
+        return RandomGenerator.getRandomNumber(min, max, debugMessage);
     }
 
 }

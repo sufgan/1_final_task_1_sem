@@ -33,7 +33,7 @@ public abstract class Count {
      *
      * @return the count value as an integer
      */
-    public abstract int getValue();
+    public abstract int getValue(String debugMessage);
 
     /**
      * Builds a regex pattern matching either a {@link ValueCount}

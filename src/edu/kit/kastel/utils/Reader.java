@@ -61,7 +61,7 @@ public final class Reader {
 //        System.out.println();
         System.out.println(message);
         String answer = Application.readInputLine();
-        if (Pattern.matches("\\d+\\.\\d+", answer)) {
+        if (Pattern.matches("\\d+(\\.\\d+)?", answer)) {
             return Double.parseDouble(answer);
         }
         System.out.println(ERROR_MESSAGE);
