@@ -3,7 +3,6 @@ package edu.kit.kastel.game.actions.effects;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.power.Power;
 import edu.kit.kastel.game.types.element.Element;
-import edu.kit.kastel.utils.Utility;
 
 /**
  * An abstract class for effects that shift a monster's health,
