@@ -22,7 +22,7 @@ public final class BurnDamageEffect extends HealthShiftEffect {
     }
 
     @Override
-    public boolean canBeApplied(Monster user, Monster target) {
+    public boolean hits(Monster user, Monster target) {
         return true;
     }
 

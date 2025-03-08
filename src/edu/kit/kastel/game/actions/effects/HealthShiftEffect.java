@@ -65,11 +65,11 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
         int shiftValue = powerScale * power.getValue(userMonster, target, actionElement);
 
         target.shiftHealth(shiftValue);
-        System.out.printf((getMessageFormat(shiftValue)), target.getName(), Utility.absLimitValue(shiftValue, powerScale < 0
-                ? target.getSample().getMaxHealth() - target.getHealth()
-                : target.getHealth()
-        ));
-
+        System.out.printf((getMessageFormat(shiftValue)), target.getName(), Math.abs(shiftValue));
+        // Utility.absLimitValue(shiftValue, powerScale < 0
+        //                ? target.getSample().getMaxHealth() - target.getHealth()
+        //                : target.getHealth()
+        // )
 
         if (target.isFainted()) {
             System.out.printf(MESSAGE_DEFEAT_FORMAT, target.getName());

@@ -28,8 +28,6 @@ public class EffectQueue implements Comparable<EffectQueue> {
     private final Monster user;
     private final Monster target;
 
-    private boolean wasBasicDamage = false;
-
     /**
      * Constructs an EffectQueue to handle effects applied by a monster's action.
      *
@@ -86,7 +84,6 @@ public class EffectQueue implements Comparable<EffectQueue> {
         if (!effects.isEmpty() && !effects.get(0).hits(user, target)) {
             System.out.println(ACTION_FAIL_MESSAGE);
             return;
-
         }
 
         BasicPower.printElementEfficiency();
