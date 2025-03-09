@@ -201,7 +201,7 @@ public class Monster implements Comparable<Monster> {
     @Override
     public String toString() {
         List<String> stats = new LinkedList<>();
-        stats.add("HP %d/%PRINT_FORMATd".formatted(health, getSample().getMaxHealth()));
+        stats.add("HP %d/%d".formatted(health, getSample().getMaxHealth()));
         for (StatType stat : StatType.values()) {
             stats.add("%s %s%s".formatted(
                     stat,

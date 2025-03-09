@@ -10,14 +10,13 @@ import edu.kit.kastel.ui.handlers.CommandHandler;
  * @author uyqbd
  */
 public abstract class Command {
-    private static final String ARGS_END_REGEX = "$";
-
-
     /**
      * A constant representing the delimiter used to separate command arguments.
      * This separator is utilized in various commands to split or parse input stringsю
      */
     public static final String SEPARATOR = " ";
+
+    private static final String ARGS_END_REGEX = "$";
 
     /**
      * Executes the given command with the specified arguments.

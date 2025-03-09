@@ -23,18 +23,17 @@ import java.util.Map;
  * @author uyqbd
  */
 public class Action {
-    private static final String NO_DAMAGE = "--";
-    private static final String PRINT_FORMAT = "%s: ELEMENT %s, Damage %s, HitRate %s";
-    private static final String ACTION_NOT_FOUND_FORMAT = "action %s not found";
-
     /**
      * A predefined, immutable instance of {@code Action} with no name, no elemental type,
      * and an empty list of effects. This represents an action that performs no operation,
      * often used as a placeholder or default value.
      */
     public static final Action EMPTY_ACTION = new Action(null, null, List.of());
-
     private static final Map<String, Action> ACTIONS = new HashMap<>();
+    private static final String NO_DAMAGE = "--";
+    private static final String PRINT_FORMAT = "%s: ELEMENT %s, Damage %s, HitRate %s";
+    private static final String ACTION_NOT_FOUND_FORMAT = "action %s not found";
+
 
     private final String name;
     private final Element element;
