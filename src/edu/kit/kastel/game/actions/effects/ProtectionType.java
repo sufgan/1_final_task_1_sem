@@ -14,12 +14,18 @@ public enum ProtectionType implements RegexProvider {
      * This protection type ensures that effects targeting health can be absorbed
      * or negated based on the specific implementation within the game mechanics.
      */
-    HEALTH,
+    HEALTH("damage"),
     /**
      * Represents a type of protection that can shield a monster by affecting its statistics.
      * This includes modifications or immunities related to attributes such as attack, defense, speed, etc.
      */
-    STATS;
+    STATS("status changes");
+
+    private final String message;
+
+    ProtectionType(String message) {
+        this.message = message;
+    }
 
     /**
      * Builds a regex pattern matching any {@code ProtectionType} constant.
@@ -43,6 +49,15 @@ public enum ProtectionType implements RegexProvider {
      */
     public static ProtectionType valueOfRegexName(String regexName) {
         return valueOf(regexName.toUpperCase());
+    }
+
+    /**
+     * Retrieves the message associated with the current {@code ProtectionType}.
+     *
+     * @return the message corresponding to the protection type as a {@code String}
+     */
+    public String getMessage() {
+        return message;
     }
 
     @Override

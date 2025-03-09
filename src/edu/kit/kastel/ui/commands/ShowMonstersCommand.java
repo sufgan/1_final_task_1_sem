@@ -13,6 +13,8 @@ import edu.kit.kastel.ui.handlers.CommandHandler;
  * @author uyqbd
  */
 public class ShowMonstersCommand extends Command {
+    private static final String NAME = "show monsters";
+
     @Override
     public void execute(CommandHandler handler, String[] args) {
         System.out.println(MonsterSample.allToString());
@@ -20,7 +22,7 @@ public class ShowMonstersCommand extends Command {
 
     @Override
     public String getName() {
-        return "show monsters";
+        return NAME;
     }
 
 }

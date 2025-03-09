@@ -30,7 +30,7 @@ public final class RelativePower extends Power {
      *              the target's maximum health
      */
     public RelativePower(int value) {
-        super(value, "r");
+        super(value, NAME.substring(0, 1));
     }
 
     @Override

@@ -38,7 +38,7 @@ public final class BasicPower extends Power {
      * @param value the numeric value representing the base power of this BasicPower instance
      */
     public BasicPower(int value) {
-        super(value, "b");
+        super(value, NAME.substring(0, 1));
     }
 
     @Override

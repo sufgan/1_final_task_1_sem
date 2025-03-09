@@ -11,6 +11,8 @@ import edu.kit.kastel.utils.RegexConstructor;
  * @author uyqbd
  */
 public final class RandomCount extends Count {
+    private static final String RANDOM_LABEL = "random";
+
     private final int min;
     private final int max;
 
@@ -33,7 +35,7 @@ public final class RandomCount extends Count {
      */
     public static String getRegex(boolean nameGroup) {
         return RegexConstructor.groupAND(null, RegexConstructor.REGEX_SPACE,
-                "random",
+                RANDOM_LABEL,
                 ValueType.MIN.toRegex(false),
                 ValueType.MAX.toRegex(false)
         );

@@ -48,6 +48,15 @@ import java.util.regex.Pattern;
  * @author uyqbd
  */
 public final class ConfigParser {
+    private static final String CONFIG_NOT_FOUND = "config file not found";
+    private static final String INVALID_CONFIG = "invalid config format";
+    private static final String CONFIG_LOADED_FORMAT = "%nLoaded %d actions, %d monsters.%n";
+    private static final String ACTION_NOT_FOUND_FORMAT = "action %s not found";
+    private static final String DUPLICATING_NAME_FORMAT = "duplicating %s name %s";
+    private static final String GROUP_NAME = "name";
+    private static final String GROUP_ACTIONS = "actions";
+
+
     private ConfigParser() {
 
     }
@@ -71,11 +80,10 @@ public final class ConfigParser {
             config = preConfig + (preConfig.endsWith("\n") ? "" : "\n");
             System.out.print(config);
         } catch (IOException e) {
-            throw new ConfigPatternException("config file not found");
+            throw new ConfigPatternException(CONFIG_NOT_FOUND);
         }
         if (!Pattern.matches(getRegex(), config)) {
-//            System.out.println(config.replaceAll("\n", "|"));
-            throw new ConfigPatternException("invalid config format");
+            throw new ConfigPatternException(INVALID_CONFIG);
         }
 
         MonsterSample.clearSamples();
@@ -83,7 +91,7 @@ public final class ConfigParser {
 
         int loadedActionsCount = parseActions(config);
         int loadedMonstersCount = parseMonsters(config);
-        System.out.printf("%nLoaded %d actions, %d monsters.%n", loadedActionsCount, loadedMonstersCount);
+        System.out.printf(CONFIG_LOADED_FORMAT, loadedActionsCount, loadedMonstersCount);
     }
 
     private static int parseActions(String config) throws ConfigPatternException {
@@ -91,9 +99,9 @@ public final class ConfigParser {
         int count = 0;
         Set<String> names = new HashSet<>();
         while (matcher.find()) {
-            String name = matcher.group("name");
+            String name = matcher.group(GROUP_NAME);
             if (names.contains(name)) {
-                throw new ConfigPatternException("duplicating action name %s".formatted(name));
+                throw new ConfigPatternException(DUPLICATING_NAME_FORMAT.formatted("action", name));
             } else {
                 Element element = Element.valueOf(matcher.group(Element.class.getSimpleName()));
                 new Action(name, element, parseEffects(matcher.group(EffectType.class.getSimpleName()), element));
@@ -166,11 +174,11 @@ public final class ConfigParser {
         int count = 0;
         Set<String> names = new HashSet<>();
         while (matcher.find()) {
-            String name = matcher.group("name");
+            String name = matcher.group(GROUP_NAME);
             if (names.contains(name)) {
-                throw new ConfigPatternException("duplicating monster name %s".formatted(name));
+                throw new ConfigPatternException(DUPLICATING_NAME_FORMAT.formatted("monster", name));
             } else {
-                String[] actionNames = matcher.group("actions").split(" ");
+                String[] actionNames = matcher.group(GROUP_ACTIONS).split(" ");
                 checkActions(actionNames);
                 new MonsterSample(name,
                         Element.valueOf(matcher.group(Element.class.getSimpleName())),
@@ -192,7 +200,7 @@ public final class ConfigParser {
             try {
                 Action.find(actionName);
             } catch (GameRuntimeException e) {
-                throw new ConfigPatternException("action %s not found".formatted(actionName));
+                throw new ConfigPatternException(ACTION_NOT_FOUND_FORMAT.formatted(actionName));
             }
         }
     }

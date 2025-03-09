@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 public final class Application {
     private static final String COMMAND_LINE_ARGUMENTS_MESSAGE = "Error, wrong arguments count, 1 or 2 line arguments expected.";
     private static final String WRONG_SECOND_ARGUMENT_MESSAGE = "Error, wrong second argument, number or 'debug' expected.";
+    private static final String DEBUG_MODE_FLAG = "debug";
     private static final String ERROR_WRONG_NUMBER_FORMAT = "Error, seed has to be between %d and %d".formatted(
             Long.MIN_VALUE,
             Long.MAX_VALUE
@@ -66,7 +67,7 @@ public final class Application {
                 } catch (NumberFormatException e) {
                     System.err.println(ERROR_WRONG_NUMBER_FORMAT);
                 }
-            } else if (args[1].equals("debug")) {
+            } else if (args[1].equals(DEBUG_MODE_FLAG)) {
                 RandomGenerator.switchDebugMod();
             } else {
                 System.err.println(WRONG_SECOND_ARGUMENT_MESSAGE);

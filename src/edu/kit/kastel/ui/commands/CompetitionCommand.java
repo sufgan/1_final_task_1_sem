@@ -13,13 +13,14 @@ import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
  * @author uyqbd
  */
 public abstract class CompetitionCommand extends Command {
+    private static final String ERROR_MESSAGE = "you have to start competition first";
 
     @Override
     public void execute(CommandHandler handler, String[] args) throws CommandException {
         if (handler instanceof CompetitionCommandHandler) {
             execute((CompetitionCommandHandler) handler, args);
         } else {
-            throw new CommandException("you have to start competition first");
+            throw new CommandException(ERROR_MESSAGE);
         }
     }
 

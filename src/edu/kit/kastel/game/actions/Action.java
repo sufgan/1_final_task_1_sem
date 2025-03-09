@@ -23,6 +23,10 @@ import java.util.Map;
  * @author uyqbd
  */
 public class Action {
+    private static final String NO_DAMAGE = "--";
+    private static final String PRINT_FORMAT = "%s: ELEMENT %s, Damage %s, HitRate %s";
+    private static final String ACTION_NOT_FOUND_FORMAT = "action %s not found";
+
     /**
      * A predefined, immutable instance of {@code Action} with no name, no elemental type,
      * and an empty list of effects. This represents an action that performs no operation,
@@ -89,7 +93,7 @@ public class Action {
         if (ACTIONS.containsKey(actionName)) {
             return ACTIONS.get(actionName);
         }
-        throw new GameRuntimeException("action %s not found".formatted(actionName));
+        throw new GameRuntimeException(ACTION_NOT_FOUND_FORMAT.formatted(actionName));
     }
 
     /**
@@ -157,12 +161,12 @@ public class Action {
                 return ((DamageEffect) effect).getPower().toString();
             } else if (effect instanceof RepeatEffect) {
                 String damage = findDamage(((RepeatEffect) effect).getEffects());
-                if (!damage.equals("--")) {
+                if (!damage.equals(NO_DAMAGE)) {
                     return damage;
                 }
             }
         }
-        return "--";
+        return NO_DAMAGE;
     }
 
     /**
@@ -176,7 +180,7 @@ public class Action {
 
     @Override
     public String toString() {
-        return "%s: ELEMENT %s, Damage %s, HitRate %s".formatted(
+        return PRINT_FORMAT.formatted(
                 name,
                 element,
                 findDamage(),

@@ -10,6 +10,8 @@ import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
  * @author uyqbd
  */
 public class ActionCommand extends CompetitionCommand {
+    private static final String NAME = "action";
+    private static final String ARGS_REGEX_FORMAT = "\\w+(\\s\\w+(#\\d+)?)?";
 
     @Override
     public void execute(CompetitionCommandHandler handler, String[] args) throws CommandException {
@@ -24,12 +26,12 @@ public class ActionCommand extends CompetitionCommand {
 
     @Override
     public String getName() {
-        return "action";
+        return NAME;
     }
 
     @Override
     public String getArgsRegex() {
-        return "\\w+(\\s\\w+(#\\d+)?)?" + super.getArgsRegex();
+        return ARGS_REGEX_FORMAT + super.getArgsRegex();
     }
 
 }

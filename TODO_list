@@ -1,0 +1,9 @@
+1) Create DebugCommandHandler class instead of Reader
+1.1) Commands will be show/quit
+1.2) Also check numbers and another answers
+1.2.1) Mb with 'command wasn't found' exception?
+
+2) Why fish takes 87 instead of 84 damage???
+
+
+And after this all i can relax (or not)

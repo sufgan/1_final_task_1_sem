@@ -11,6 +11,7 @@ import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
  * @author uyqbd
  */
 public class ShowCommand extends CompetitionCommand {
+    private static final String NAME = "show";
 
     @Override
     public void execute(CompetitionCommandHandler handler, String[] args) throws CommandException {
@@ -19,7 +20,7 @@ public class ShowCommand extends CompetitionCommand {
 
     @Override
     public String getName() {
-        return "show";
+        return NAME;
     }
 
 }

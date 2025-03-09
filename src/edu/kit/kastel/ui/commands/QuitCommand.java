@@ -11,6 +11,8 @@ import edu.kit.kastel.ui.handlers.CommandHandler;
  * @author uyqbd
  */
 public class QuitCommand extends Command {
+    private static final String NAME = "quit";
+
 
     @Override
     public void execute(CommandHandler handler, String[] args) throws CommandException {
@@ -19,7 +21,7 @@ public class QuitCommand extends Command {
 
     @Override
     public String getName() {
-        return "quit";
+        return NAME;
     }
 
 }

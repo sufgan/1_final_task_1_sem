@@ -19,6 +19,7 @@ import java.util.Map;
  * @author uyqbd
  */
 public class MonsterSample {
+    private static final String PRINT_FORMAT = "%s: ELEMENT %s, HP %d, ATK %d, DEF %d, SPD %d";
     private static final Map<String, MonsterSample> SAMPLES = new LinkedHashMap<>();
 
     private final Map<StatType, Integer> stats;
@@ -181,7 +182,7 @@ public class MonsterSample {
 
     @Override
     public String toString() {
-        return String.format("%s: ELEMENT %s, HP %d, ATK %d, DEF %d, SPD %d",
+        return String.format(PRINT_FORMAT,
                 name,
                 element,
                 maxHealth,

@@ -15,10 +15,15 @@ import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
  * @author uyqbd
  */
 public class LoadCommand extends Command {
+    private static final String NAME = "load";
+    private static final String ARGS_REGEX_FORMAT = "\\S+";
+    private static final String WRONG_ARGS_COUNT = "wrong number of arguments";
+
+
     @Override
     public void execute(CommandHandler handler, String[] args) throws CommandException {
         if (args.length != 1) {
-            throw new CommandException("wrong number of arguments");
+            throw new CommandException(WRONG_ARGS_COUNT);
         }
         try {
             ConfigParser.parse(args[0]);
@@ -32,11 +37,11 @@ public class LoadCommand extends Command {
 
     @Override
     public String getName() {
-        return "load";
+        return NAME;
     }
 
     @Override
     public String getArgsRegex() {
-        return "\\S+" + super.getArgsRegex();
+        return ARGS_REGEX_FORMAT + super.getArgsRegex();
     }
 }

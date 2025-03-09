@@ -13,11 +13,13 @@ import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
  * @author uyqbd
  */
 public class ShowStatsCommand extends CompetitionCommand {
+    private static final String NAME = "show stats";
+    private static final String LABEL_FORMAT = "STATS OF %s%n%s%n";
 
     @Override
     public void execute(CompetitionCommandHandler handler, String[] args) throws CommandException {
         Monster currentMonster = handler.getCompetition().getCurrentMonster();
-        System.out.printf("STATS OF %s%n%s%n",
+        System.out.printf(LABEL_FORMAT,
                 currentMonster.getName(),
                 currentMonster.toString()
         );
@@ -25,7 +27,7 @@ public class ShowStatsCommand extends CompetitionCommand {
 
     @Override
     public String getName() {
-        return "show stats";
+        return NAME;
     }
 
 }

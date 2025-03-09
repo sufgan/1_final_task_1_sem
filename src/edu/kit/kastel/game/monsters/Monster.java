@@ -16,6 +16,12 @@ import java.util.Map;
  * @author uyqbd
  */
 public class Monster implements Comparable<Monster> {
+    private static final String PROTECTION_FADES_FORMAT = "%s's protection fades away...%n";
+    private static final String PROTECTION_ADDED_FORMAT = "%s is now protected against %s!%n";
+    private static final String FAINTED_STATUS = "FAINTED";
+    private static final String NORMAL_STATUS = "OK";
+    private static final String NAME_FORMAT = "%s#%d";
+
     private final MonsterSample sample;
     private final Map<StatType,  Integer> scales;
     private final int index;
@@ -134,7 +140,7 @@ public class Monster implements Comparable<Monster> {
         if (protection != null) {
             if (protection.step() == null) {
                 protection = null;
-                System.out.printf("%s's protection fades away...%n", getName());
+                System.out.printf(PROTECTION_FADES_FORMAT, getName());
             }
         }
     }
@@ -147,9 +153,7 @@ public class Monster implements Comparable<Monster> {
      */
     public void setProtection(ProtectionType type, int duration) {
         this.protection = new Protection(type, duration);
-        System.out.printf("%s is now protected against %s!%n",
-                getName(),
-                type == ProtectionType.HEALTH ? "damage" : "status changes");
+        System.out.printf(PROTECTION_ADDED_FORMAT, getName(), type.getMessage());
     }
 
     /**
@@ -168,11 +172,11 @@ public class Monster implements Comparable<Monster> {
      */
     public String getStatus() {
         if (isFainted()) {
-            return "FAINTED";
+            return FAINTED_STATUS;
         } else if (condition != null) {
             return condition.toString();
         } else {
-            return "OK";
+            return NORMAL_STATUS;
         }
     }
 
@@ -183,7 +187,7 @@ public class Monster implements Comparable<Monster> {
      */
     public String getName() {
         if (sample.getCreatedCount() > 1) {
-            return "%s#%d".formatted(sample.getName(), index);
+            return NAME_FORMAT.formatted(sample.getName(), index);
         } else {
             return sample.getName();
         }
@@ -197,7 +201,7 @@ public class Monster implements Comparable<Monster> {
     @Override
     public String toString() {
         List<String> stats = new LinkedList<>();
-        stats.add("HP %d/%d".formatted(health, getSample().getMaxHealth()));
+        stats.add("HP %d/%PRINT_FORMATd".formatted(health, getSample().getMaxHealth()));
         for (StatType stat : StatType.values()) {
             stats.add("%s %s%s".formatted(
                     stat,

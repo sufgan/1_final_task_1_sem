@@ -28,7 +28,7 @@ public final class AbsolutePower extends Power {
      * @param value the numeric value representing the strength or effect of this AbsolutePower instance
      */
     public AbsolutePower(int value) {
-        super(value, "a");
+        super(value, NAME.substring(0, 1));
     }
 
     @Override

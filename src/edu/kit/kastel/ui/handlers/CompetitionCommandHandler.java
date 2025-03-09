@@ -27,6 +27,10 @@ import java.util.List;
  * @author uyqbd
  */
 public class CompetitionCommandHandler extends CommandHandler {
+    private static final String REQUEST_ACTION_MESSAGE_FORMAT = "%nWhat should %s do?%n";
+    private static final String COMPETITION_END_MESSAGE_FORMAT = "%n%s has no opponents left and wins the competition!%n";
+    private static final String COMPETITION_END_DRAW_MESSAGE = "%nAll monsters have fainted. The competition ends without a winner!%n";
+
     private final Competition competition;
 
     /**
@@ -61,12 +65,12 @@ public class CompetitionCommandHandler extends CommandHandler {
         List<Monster> aliveMonsters = competition.getAliveMonsters();
         if (super.isRunning()) {
             if (aliveMonsters.size() > 1) {
-                System.out.printf("%nWhat should %s do?%n", competition.getCurrentMonster().getName());
+                System.out.printf(REQUEST_ACTION_MESSAGE_FORMAT, competition.getCurrentMonster().getName());
                 return true;
             } else if (!aliveMonsters.isEmpty()) {
-                System.out.printf("%n%s has no opponents left and wins the competition!%n", aliveMonsters.get(0).getName());
+                System.out.printf(COMPETITION_END_MESSAGE_FORMAT, aliveMonsters.get(0).getName());
             } else {
-                System.out.printf("%nAll monsters have fainted. The competition ends without a winner!%n");
+                System.out.printf(COMPETITION_END_DRAW_MESSAGE);
             }
         }
         return false;

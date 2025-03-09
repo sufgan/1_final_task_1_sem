@@ -14,6 +14,8 @@ import java.util.List;
  * @author uyqbd
  */
 public final class RepeatEffect extends Effect {
+    private static final String DEBUG_MESSAGE = "count of repeating";
+
     private final List<ApplyableEffect> effects;
     private final Count count;
 
@@ -31,7 +33,7 @@ public final class RepeatEffect extends Effect {
     @Override
     public List<ApplyableEffect> create() {
         List<ApplyableEffect> effects = new LinkedList<>();
-        int count = this.count.getValue("count of repeating");
+        int count = this.count.getValue(DEBUG_MESSAGE);
         for (int i = 0; i < count; i++) {
             for (ApplyableEffect effect : this.effects) {
                 effects.add(effect.copy());

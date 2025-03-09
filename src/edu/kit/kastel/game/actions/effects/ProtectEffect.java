@@ -12,6 +12,8 @@ import edu.kit.kastel.game.types.count.Count;
  * @author uyqbd
  */
 public final class ProtectEffect extends ApplyableEffect {
+    private static final String DEBUG_MESSAGE = "duration";
+
     private final ProtectionType protectionType;
     private final Count count;
 
@@ -30,7 +32,7 @@ public final class ProtectEffect extends ApplyableEffect {
 
     @Override
     public void apply(Monster user, Monster target) {
-        user.setProtection(protectionType, count.getValue("duration"));
+        user.setProtection(protectionType, count.getValue(DEBUG_MESSAGE));
     }
 
     @Override

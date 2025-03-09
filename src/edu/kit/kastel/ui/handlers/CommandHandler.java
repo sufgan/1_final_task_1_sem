@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
  */
 public abstract class CommandHandler {
     private static final String ERROR_UNKNOWN_COMMAND_FORMAT = "unknown command %s";
+    private static final String WRONG_ARGS = "wrong count or types of arguments";
 
     private final CommandHandler outerCommandHandler;
     private final Map<String, Command> commands;
@@ -104,7 +105,7 @@ public abstract class CommandHandler {
                     if (Pattern.matches(command.getArgsRegex(), rawArgs)) {
                         args = rawArgs.split(Command.SEPARATOR);
                     } else {
-                        throw new CommandException("wrong count or types of arguments");
+                        throw new CommandException(WRONG_ARGS);
                     }
                 }
                 command.execute(this, args);

@@ -19,7 +19,7 @@ public enum ElementEfficiency {
      * The {@code NORMAL} constant corresponds to a default interaction
      * where neither amplified nor reduced damage multipliers are applied.
      */
-    NORMAL(1),
+    NORMAL(1, ""),
     /**
      * Represents an enhanced level of effectiveness in elemental interactions.
      * When an interaction is deemed "POWERFUL," it indicates that the damage
@@ -27,17 +27,19 @@ public enum ElementEfficiency {
      * The scaling value for "POWERFUL" effectiveness is {@code 2}, signifying
      * that the damage output is doubled compared to "NORMAL" effectiveness interactions.
      */
-    POWERFUL(2),
+    POWERFUL(2, "It is very effective!"),
     /**
      * Represents reduced effectiveness, resulting in diminished damage during an
      * interaction between elements. The damage scale for this interaction is 0.5,
      * indicating that it is "not very effective."
      */
-    POWERLESS(0.5);
+    POWERLESS(0.5, "It is not very effective...");
 
+    private final String message;
     private final double damageScale;
 
-    ElementEfficiency(double damageScale) {
+    ElementEfficiency(double damageScale, String message) {
+        this.message = message;
         this.damageScale = damageScale;
     }
 
@@ -50,6 +52,17 @@ public enum ElementEfficiency {
      */
     public double getDamageScale() {
         return damageScale;
+    }
+
+    /**
+     * Retrieves the descriptive message associated with this {@code ElementEfficiency}.
+     * The message provides details about the effectiveness of an interaction, such as
+     * whether it is "very effective" or "not very effective."
+     *
+     * @return the descriptive message as a {@code String}
+     */
+    public String getMessage() {
+        return message;
     }
 
 }

@@ -14,22 +14,25 @@ import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
  * @author uyqbd
  */
 public class ShowActionsCommand extends CompetitionCommand {
+    private static final String NAME = "show actions";
+    private static final String LABEL_FORMAT = "ACTIONS OF %s%n";
+
 
     @Override
     public void execute(CompetitionCommandHandler handler, String[] args) {
-        System.out.printf("ACTIONS OF %s%n", handler.getCompetition().getCurrentMonster().getName());
+        System.out.printf(LABEL_FORMAT, handler.getCompetition().getCurrentMonster().getName());
         for (String actionName : handler.getCompetition().getCurrentMonster().getSample().getActions()) {
             try {
                 System.out.println(Action.find(actionName));
             } catch (GameRuntimeException e) {
-                System.err.println(e.getMessage() + " (how do you did this?)");
+                System.err.println(e.getMessage());
             }
         }
     }
 
     @Override
     public String getName() {
-        return "show actions";
+        return NAME;
     }
 
 }

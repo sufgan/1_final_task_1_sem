@@ -22,8 +22,11 @@ import java.util.List;
  */
 public class Competition {
     private static final String MONSTER_TABLE_FORMAT = "[%s%s] %d %s%s (%s)%n";
+    private static final String ENTER_COMPETITION_FORMAT = "The %d monsters enter the competition!%n";
+    private static final String ACTION_NEED_TARGET_MESSAGE = "this action need target monster";
     private static final String MONSTER_HEALTH_SIGN = "X";
     private static final String MONSTER_EMPTY_HEALTH_SIGN = "_";
+    private static final String CURRENT_MONSTER_SIGN = "*";
 
 
     private final List<Monster> monsters;
@@ -37,7 +40,7 @@ public class Competition {
      * @param monstersSamples the list of monster samples to instantiate
      */
     public Competition(List<MonsterSample> monstersSamples) {
-        System.out.printf("The %d monsters enter the competition!%n", monstersSamples.size());
+        System.out.printf(ENTER_COMPETITION_FORMAT, monstersSamples.size());
         monsters = new ArrayList<>();
         selectedActions = new LinkedList<>();
         MonsterSample.clearCreatedCounts();
@@ -61,7 +64,7 @@ public class Competition {
         if (action.needTarget() && targetMonsterName == null) {
             List<Monster> aliveMonsters = getAliveMonsters();
             if (aliveMonsters.size() > 2) {
-                throw new GameRuntimeException("this action need target monster");
+                throw new GameRuntimeException(ACTION_NEED_TARGET_MESSAGE);
             }
             aliveMonsters.remove(user); // ???
             target = aliveMonsters.get(0);
@@ -148,7 +151,7 @@ public class Competition {
                     MONSTER_HEALTH_SIGN.repeat(healthCount),
                     MONSTER_EMPTY_HEALTH_SIGN.repeat(20 - healthCount),
                     i + 1,
-                    i == currentMonsterIndex ? "*" : "",
+                    i == currentMonsterIndex ? CURRENT_MONSTER_SIGN : "",
                     monster.getName(),
                     monster.getStatus()
             );

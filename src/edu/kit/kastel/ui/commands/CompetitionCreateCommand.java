@@ -19,11 +19,16 @@ import java.util.List;
  * @author uyqbd
  */
 public class CompetitionCreateCommand extends Command {
+    private static final String NAME = "competition";
+    private static final String ARGS_REGEX_FORMAT = "\\w+(\\s\\w+){1,}";
+    private static final String FEW_ARGS_MESSAGE = "not enough monsters to start competition";
+    private static final String MONSTER_NOT_FOUND_MESSAGE = "monster %s not found";
+
 
     @Override
     public void execute(CommandHandler handler, String[] args) throws CommandException {
         if (args.length < 2) {
-            throw new CommandException("not enough monsters to start competition"); // move
+            throw new CommandException(FEW_ARGS_MESSAGE);
         }
         List<MonsterSample> monsterSamples = new LinkedList<>();
         for (String arg : args) {
@@ -31,7 +36,7 @@ public class CompetitionCreateCommand extends Command {
             if (monsterSample != null) {
                 monsterSamples.add(monsterSample);
             } else {
-                throw new CommandException("monster %s not found".formatted(arg));
+                throw new CommandException(MONSTER_NOT_FOUND_MESSAGE.formatted(arg));
             }
         }
         Competition competition = new Competition(monsterSamples);
@@ -45,12 +50,12 @@ public class CompetitionCreateCommand extends Command {
 
     @Override
     public String getName() {
-        return "competition";
+        return NAME;
     }
 
     @Override
     public String getArgsRegex() {
-        return "\\w+(\\s\\w+){1,}" + super.getArgsRegex();
+        return ARGS_REGEX_FORMAT + super.getArgsRegex();
     }
 
 }
