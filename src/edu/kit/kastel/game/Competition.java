@@ -88,7 +88,7 @@ public class Competition {
             applyActions();
             updateProtections();
         }
-        while (monsters.get(currentMonsterIndex).isFainted()) {
+        while (monsters.get(currentMonsterIndex).isFainted() && lastMonsterIndex != currentMonsterIndex) {
             increaseMonsterIndex();
         }
     }
