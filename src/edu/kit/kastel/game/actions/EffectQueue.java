@@ -60,8 +60,8 @@ public class EffectQueue implements Comparable<EffectQueue> {
         System.out.printf(MONSTERS_TURN_FORMAT, user.getName());
 
         List<ApplyableEffect> effects = action.createEffects();
-        processCondition();
 
+        processCondition();
         applyActionEffects(effects);
         applyConstantEffects();
     }
@@ -91,6 +91,9 @@ public class EffectQueue implements Comparable<EffectQueue> {
     private void applyActionEffects(List<ApplyableEffect> effects) {
         if (applyActionEffects && !effects.isEmpty() && !effects.get(0).hits(user, target)) {
             System.out.println(ACTION_FAIL_MESSAGE);
+            return;
+        }
+        if (!applyActionEffects) {
             return;
         }
 
