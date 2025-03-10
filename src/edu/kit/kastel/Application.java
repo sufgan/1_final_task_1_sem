@@ -3,6 +3,7 @@ package edu.kit.kastel;
 import edu.kit.kastel.config.ConfigParser;
 import edu.kit.kastel.utils.RandomGenerator;
 import edu.kit.kastel.ui.handlers.DefaultCommandHandler;
+import edu.kit.kastel.utils.Reader;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -31,8 +32,10 @@ public final class Application {
     /**
      * The default output stream for the application.
      *
+     * <p>
      * This stream is used for printing standard output messages
      * and is initialized to {@code System.out}.
+     * </p>
      */
     public static final PrintStream DEFAULT_OUTPUT_STREAM = System.out;
     /**
@@ -43,7 +46,6 @@ public final class Application {
      * provide error feedback or debugging information to the user or developer.
      */
     public static final PrintStream DEFAULT_ERROR_STREAM = System.err;
-    private static final Scanner SCANNER = new Scanner(DEFAULT_INPUT_STREAM);
 
     private static final String COMMAND_LINE_ARGUMENTS_MESSAGE = "Error, wrong arguments count, 1 or 2 line arguments expected.";
     private static final String WRONG_SECOND_ARGUMENT_MESSAGE = "Error, wrong second argument, number or 'debug' expected.";
@@ -76,12 +78,11 @@ public final class Application {
 
         try (Scanner scanner = new Scanner(DEFAULT_INPUT_STREAM)) {
             handleArguments(args);
+            Reader.setScanner(scanner);
             new DefaultCommandHandler(scanner).startHandling();
         } catch (ApplicationException e) {
             DEFAULT_ERROR_STREAM.println(e.getMessage());
         }
-
-        SCANNER.close();
     }
 
     private static void handleArguments(String[] args) throws ApplicationException {
@@ -108,15 +109,6 @@ public final class Application {
         } catch (NumberFormatException e) {
             throw new ApplicationException(ERROR_WRONG_NUMBER_FORMAT);
         }
-    }
-
-    /**
-     * Reads a line of input from scanner.
-     *
-     * @return the next line entered by the user
-     */
-    public static String readInputLine() {
-        return SCANNER.nextLine();
     }
 
 }
