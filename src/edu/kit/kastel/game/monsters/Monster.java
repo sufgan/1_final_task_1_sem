@@ -218,7 +218,7 @@ public class Monster implements Comparable<Monster> {
             stats.add("%s %s%s".formatted(
                     stat,
                     sample.getStat(stat),
-                    scales.getOrDefault(stat, 0) != 0 ? "(%+d)".formatted(scales.get(stat)) : ""
+                    scales.getOrDefault(stat, DEFAULT_SCALE_VALUE) != DEFAULT_SCALE_VALUE ? "(%+d)".formatted(scales.get(stat)) : ""
             ));
         }
         return String.join(", ", stats);

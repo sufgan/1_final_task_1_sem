@@ -94,14 +94,20 @@ public class EffectQueue implements Comparable<EffectQueue> {
             return;
         }
 
-        if (!effects.isEmpty() && !effects.get(0).hits(user, target)) {
-            Application.DEFAULT_OUTPUT_STREAM.println(ACTION_FAIL_MESSAGE);
-            return;
-        }
-
         BasicPower.printNextElementEfficiency();
+        boolean first = true;
         for (ApplyableEffect effect : effects) {
-            if (effect.canBeApplied(user, target)) {
+            if (first) {
+                if (effect.hits(user, target)) {
+                    if (effect.canBeApplied(user, target, true)) {
+                        effect.apply(user, target);
+                    }
+                } else {
+                    Application.DEFAULT_OUTPUT_STREAM.println(ACTION_FAIL_MESSAGE);
+                    return;
+                }
+                first = false;
+            } else if (effect.canBeApplied(user, target, null)) {
                 effect.apply(user, target);
             }
         }

@@ -41,6 +41,7 @@ public final class RandomGenerator {
      * @return {@code true} if the event occurs; {@code false} otherwise
      */
     public static boolean probabilityGood(double probability, String debugMessage) {
+//        System.out.println("-->\t\t" + debugMessage);
         if (debug) {
             return Reader.readBoolean(PROBABILITY_DEBUG_MESSAGE_FORMAT.formatted(debugMessage));
         }
@@ -57,6 +58,7 @@ public final class RandomGenerator {
      * @return a random double within the range [min, max], or the value entered by the user in debug mode
      */
     public static double getRandomFactor(double min, double max, String debugMessage) {
+//        System.out.println("-->\t\t" + debugMessage);
         if (debug) {
             return Reader.readDouble(RANDOM_FACTOR_DEBUG_MESSAGE_FORMAT.formatted(debugMessage, min, max));
         }
@@ -73,6 +75,7 @@ public final class RandomGenerator {
      * @return a random integer within the specified range or a user-provided value in debug mode
      */
     public static int getRandomNumber(int min, int max, String debugMessage) {
+//        System.out.println("-->\t\t" + debugMessage);
         if (debug) {
             return Reader.readInteger(RANDOM_NUMBER_DEBUG_MESSAGE_FORMAT.formatted(debugMessage, min, max));
         }

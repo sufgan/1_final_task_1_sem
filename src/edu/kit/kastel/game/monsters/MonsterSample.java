@@ -21,6 +21,7 @@ import java.util.Map;
 public class MonsterSample {
     private static final String PRINT_FORMAT = "%s: ELEMENT %s, HP %d, ATK %d, DEF %d, SPD %d";
     private static final Map<String, MonsterSample> SAMPLES = new LinkedHashMap<>();
+    private static final int DEFAULT_STAT_VALUE = 1;
 
     private final Map<StatType, Integer> stats;
     private final List<String> actions;
@@ -57,7 +58,7 @@ public class MonsterSample {
      * @return the {@code MonsterSample} if found, or {@code null} otherwise
      */
     public static MonsterSample find(String name) {
-        return SAMPLES.getOrDefault(name, null);
+        return SAMPLES.get(name);
     }
 
     /**
@@ -119,7 +120,7 @@ public class MonsterSample {
      * @return the integer value of the requested stat
      */
     public int getStat(StatType type) {
-        return stats.getOrDefault(type, 1);
+        return stats.getOrDefault(type, DEFAULT_STAT_VALUE);
     }
 
     /**

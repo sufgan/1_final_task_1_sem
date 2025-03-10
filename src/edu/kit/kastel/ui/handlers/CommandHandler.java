@@ -156,4 +156,15 @@ public abstract class CommandHandler {
     public CommandHandler getOuterCommandHandler() {
         return outerCommandHandler;
     }
+
+    /**
+     * Stops the command handler during the configuration parsing process.
+     * This method halts the current command handling loop at a specific level
+     * to facilitate transitions or state changes triggered by configuration parsing results.
+     * It is typically invoked after successfully parsing a configuration file.
+     */
+    public void stopOnConfigParse() {
+
+    }
+
 }

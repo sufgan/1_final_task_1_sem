@@ -32,6 +32,7 @@ public class CompetitionCommandHandler extends CommandHandler {
     private static final String REQUEST_ACTION_MESSAGE_FORMAT = "%nWhat should %s do?%n";
     private static final String COMPETITION_END_MESSAGE_FORMAT = "%n%s has no opponents left and wins the competition!%n";
     private static final String COMPETITION_END_DRAW_MESSAGE = "%nAll monsters have fainted. The competition ends without a winner!%n";
+    private static final int STOP_CURRENT_LEVEL = 1;
 
     private final Competition competition;
 
@@ -83,7 +84,7 @@ public class CompetitionCommandHandler extends CommandHandler {
 
     @Override
     public void handleCompetition(Competition competition) {
-        stop(1);
+        stop(STOP_CURRENT_LEVEL);
         new CompetitionCommandHandler(scanner, getOuterCommandHandler(), competition).startHandling();
     }
 
@@ -94,6 +95,11 @@ public class CompetitionCommandHandler extends CommandHandler {
      */
     public Competition getCompetition() {
         return competition;
+    }
+
+    @Override
+    public void stopOnConfigParse() {
+        stop(1);
     }
 
 }

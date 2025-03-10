@@ -47,12 +47,12 @@ public final class StatScaleEffect extends ApplyableEffect {
     }
 
     @Override
-    public boolean canBeApplied(Monster user, Monster target) {
+    public boolean canBeApplied(Monster user, Monster target, Boolean hits) {
         if (!this.isOnUser() && scaleShift < 0 && target.getProtectionType() == ProtectionType.STATS) {
             Application.DEFAULT_OUTPUT_STREAM.printf(MASSAGE_PROTECTED_FORMAT, target.getName());
             return false;
         }
-        return super.canBeApplied(user, target);
+        return super.canBeApplied(user, target, hits);
     }
 
     @Override

@@ -20,8 +20,6 @@ public abstract class ApplyableEffect extends Effect {
     private final int effectHitRate;
     private final TargetType target;
 
-    private Boolean hits;
-
     /**
      * Constructs a new {@code ApplyableEffect} with a given hit rate and target type.
      *
@@ -42,16 +40,18 @@ public abstract class ApplyableEffect extends Effect {
     public abstract void apply(Monster user, Monster target);
 
     /**
-     * Determines whether the effect can be applied from the user to the target.
-     * The effect cannot be applied if the user is fainted or, in the case of a non-user-based effect,
-     * if the target is fainted. The method also considers hit success based on predefined conditions.
+     * Determines whether the effect can be applied from the user to the target,
+     * considering whether the action successfully "hits" based on the provided
+     * 'hits' parameter or recalculating it if 'hits' is null.
      *
      * @param user   the monster attempting to use this effect
      * @param target the monster that is targeted by this effect
+     * @param hits   the predefined result of whether the effect hits, or {@code null}
+     *               if the hit success should be recalculated
      * @return {@code true} if the effect can be applied, otherwise {@code false}
      */
-    public boolean canBeApplied(Monster user, Monster target) {
-        return hits != null ? hits : hits(user, target);
+    public boolean canBeApplied(Monster user, Monster target, Boolean hits) {
+        return hits == null ? hits(user, target) : hits;
     }
 
     /**
@@ -71,8 +71,7 @@ public abstract class ApplyableEffect extends Effect {
         double targetAGL = isOnUser() ? 1 : target.getStat(StatType.AGL);
         double conditionQuotient = userPRC / targetAGL;
 
-        hits = RandomGenerator.probabilityGood(effectHitRate * conditionQuotient, DEBUG_MESSAGE);
-        return hits;
+        return RandomGenerator.probabilityGood(effectHitRate * conditionQuotient, DEBUG_MESSAGE);
     }
 
     @Override

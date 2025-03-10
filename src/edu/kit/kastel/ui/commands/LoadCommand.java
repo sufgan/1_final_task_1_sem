@@ -4,7 +4,6 @@ import edu.kit.kastel.Application;
 import edu.kit.kastel.config.ConfigPatternException;
 import edu.kit.kastel.config.ConfigParser;
 import edu.kit.kastel.ui.handlers.CommandHandler;
-import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 
 /**
  * Command to load a configuration file and parse it using the ConfigParser.
@@ -30,9 +29,7 @@ public class LoadCommand extends Command {
         }
         try {
             ConfigParser.parse(args[CONFIG_PATH_INDEX]);
-            if (handler instanceof CompetitionCommandHandler) {
-                handler.stop(1);
-            }
+            handler.stopOnConfigParse();
         } catch (ConfigPatternException e) {
             Application.DEFAULT_ERROR_STREAM.println(e.getMessage());
         }

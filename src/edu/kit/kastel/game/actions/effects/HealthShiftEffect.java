@@ -73,12 +73,12 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
     }
 
     @Override
-    public boolean canBeApplied(Monster user, Monster target) {
+    public boolean canBeApplied(Monster user, Monster target, Boolean hits) {
         if (!isOnUser() && powerScale < 0 && target.getProtectionType() == ProtectionType.HEALTH) {
             Application.DEFAULT_OUTPUT_STREAM.printf(MASSAGE_PROTECTED_FORMAT, target.getName());
             return false;
         }
-        return super.canBeApplied(user, target);
+        return super.canBeApplied(user, target, hits);
     }
 
     private String getMessageFormat(int shiftValue) {
