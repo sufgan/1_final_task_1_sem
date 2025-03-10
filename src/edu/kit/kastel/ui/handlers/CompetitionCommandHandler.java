@@ -14,6 +14,7 @@ import edu.kit.kastel.ui.commands.ShowMonstersCommand;
 import edu.kit.kastel.ui.commands.ShowStatsCommand;
 
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Handles competition-related commands during a competition.
@@ -34,14 +35,17 @@ public class CompetitionCommandHandler extends CommandHandler {
     private final Competition competition;
 
     /**
-     * Constructs a CompetitionCommandHandler that handles competition-related commands
-     * during a competition by delegating functionalities to the parent CommandHandler.
+     * Constructs a CompetitionCommandHandler which manages competition-related commands.
+     * This handler is responsible for delegating commands to manage actions, showing
+     * competition-related statistics, and facilitating control flow within a competition.
      *
-     * @param outerCommandHandler the parent CommandHandler handling commands outside the competition context
-     * @param competition the Competition instance containing the monsters and their states to be managed
+     * @param scanner              the Scanner instance used for reading user input
+     * @param outerCommandHandler  the parent CommandHandler providing a context for delegation
+     *                              or null if this is a root handler
+     * @param competition          the Competition object representing the context of the current competition
      */
-    public CompetitionCommandHandler(CommandHandler outerCommandHandler, Competition competition) {
-        super(outerCommandHandler);
+    public CompetitionCommandHandler(Scanner scanner, CommandHandler outerCommandHandler, Competition competition) {
+        super(scanner, outerCommandHandler);
         this.competition = competition;
     }
 
@@ -76,6 +80,12 @@ public class CompetitionCommandHandler extends CommandHandler {
         return false;
     }
 
+    @Override
+    public void handleCompetition(Competition competition) {
+        stop(1);
+        new CompetitionCommandHandler(scanner, getOuterCommandHandler(), competition).startHandling();
+    }
+
     /**
      * Retrieves the current competition instance being managed.
      *
@@ -84,4 +94,5 @@ public class CompetitionCommandHandler extends CommandHandler {
     public Competition getCompetition() {
         return competition;
     }
+
 }

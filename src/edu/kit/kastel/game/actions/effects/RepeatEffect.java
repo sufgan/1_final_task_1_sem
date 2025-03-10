@@ -1,6 +1,7 @@
 package edu.kit.kastel.game.actions.effects;
 
 import edu.kit.kastel.game.types.count.Count;
+import edu.kit.kastel.game.types.power.Power;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -55,6 +56,16 @@ public final class RepeatEffect extends Effect {
     @Override
     public int getHitRate() {
         return effects.get(0).getHitRate();
+    }
+
+    @Override
+    public Power getPower() {
+        for (ApplyableEffect effect : effects) {
+            if (effect.getPower() != null) {
+                return effect.getPower();
+            }
+        }
+        return null;
     }
 
     /**

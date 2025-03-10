@@ -12,6 +12,12 @@ import edu.kit.kastel.utils.RegexConstructor;
  * @author uyqbd
  */
 public abstract class Power {
+    private static final String MESSAGE_FORMAT = "%s%d";
+    private static final int ARGS_COUNT = 2;
+    private static final int TYPE_INDEX = 0;
+    private static final int VALUE_INDEX = 1;
+
+
     private final int value;
     private final String type;
 
@@ -59,11 +65,11 @@ public abstract class Power {
      *         if the arguments are valid; otherwise, returns null
      */
     public static Power create(String... args) {
-        if (args.length != 2) {
+        if (args.length != ARGS_COUNT) {
             return null;
         }
-        int value = Integer.parseInt(args[1]);
-        return switch (args[0]) {
+        int value = Integer.parseInt(args[VALUE_INDEX]);
+        return switch (args[TYPE_INDEX]) {
             case AbsolutePower.NAME -> new AbsolutePower(value);
             case RelativePower.NAME -> new RelativePower(value);
             case BasicPower.NAME -> new BasicPower(value);
@@ -92,7 +98,7 @@ public abstract class Power {
 
     @Override
     public String toString() {
-        return "%s%d".formatted(type, value);
+        return MESSAGE_FORMAT.formatted(type, value);
     }
 
 }

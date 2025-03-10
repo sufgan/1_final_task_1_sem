@@ -86,18 +86,19 @@ public enum ValueType implements RegexProvider {
      */
     CHANGE;
 
+    private static final String RANGE_0_INF_REGEX = "\\d+";
+    private static final String RANGE_0_INF_FLAG_REGEX = "[+-]?" + RANGE_0_INF_REGEX;
+    private static final String RANGE_1_INF_REGEX = "[1-9]\\d*";
+    private static final String RANGE_0_100_REGEX = RegexConstructor.groupOR(null, "0", "100", "[1-9]\\d?");
+
+
     @Override
     public String toRegex(boolean nameGroup) {
         String regex = switch (this) {
-            case VALUE, MIN, MAX -> RegexConstructor.groupOR(null,
-                    "0",
-                    "[1-9]\\d*"
-            );
-            case HEALTH, ATK, DEF, SPD -> "[1-9]\\d*";
-            case RATE, PERCENTAGE -> RegexConstructor.groupOR(null,
-                    "0", "100", "[1-9]\\d?"
-            );
-            case CHANGE -> "[+-]?\\d+";
+            case VALUE, MIN, MAX -> RANGE_0_INF_REGEX;
+            case HEALTH, ATK, DEF, SPD -> RANGE_1_INF_REGEX;
+            case RATE, PERCENTAGE -> RANGE_0_100_REGEX;
+            case CHANGE -> RANGE_0_INF_FLAG_REGEX;
         };
         return nameGroup ? RegexConstructor.group(this.name(), regex) : regex;
     }

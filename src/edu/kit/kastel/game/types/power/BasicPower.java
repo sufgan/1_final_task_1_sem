@@ -29,6 +29,13 @@ public final class BasicPower extends Power {
     private static final String CRITICAL_HIT_MESSAGE = "Critical hit!";
     private static final String CRITICAL_HIT_DEBUG_MESSAGE = "critical hit";
     private static final String RANDOM_FACTOR_DEBUG_MESSAGE = "random factor";
+    private static final int CRITICAL_HIT_MULTIPLIER = 2;
+    private static final int DEFAULT_HIT_MULTIPLIER = 1;
+    private static final double SAME_ELEMENT_MULTIPLIER = 1.5;
+    private static final double NORMAL_FACTOR_MULTIPLIER = 1 / 3.;
+    private static final double RANDOM_FACTOR_MIN = 0.85;
+    private static final double RANDOM_FACTOR_MAX = 1;
+
 
     private static boolean printElementEfficiency = false;
 
@@ -47,23 +54,20 @@ public final class BasicPower extends Power {
         printElementEfficiency = false;
         double statusFactor = user.getStat(StatType.ATK) / target.getStat(StatType.DEF);
         double criticalHitProbability = Math.pow(10, -target.getStat(StatType.SPD) / user.getStat(StatType.SPD)) * 100;
-        int criticalHitFactor;
+        int criticalHitFactor = DEFAULT_HIT_MULTIPLIER;
         if (RandomGenerator.probabilityGood(criticalHitProbability, CRITICAL_HIT_DEBUG_MESSAGE)) {
-            System.out.println(CRITICAL_HIT_MESSAGE); // 8
-            criticalHitFactor = 2;
-        } else {
-            criticalHitFactor = 1;
+            System.out.println(CRITICAL_HIT_MESSAGE);
+            criticalHitFactor = CRITICAL_HIT_MULTIPLIER;
         }
-        double sameElementFactor = user.getSample().getElement() == actionElement ? 1.5 : 1;
-        double randomFactor = RandomGenerator.getRandomFactor(0.85, 1, RANDOM_FACTOR_DEBUG_MESSAGE);
-        double normalFactor = 1 / 3.;
+        double sameElementFactor = user.getSample().getElement() == actionElement ? SAME_ELEMENT_MULTIPLIER : DEFAULT_HIT_MULTIPLIER;
+        double randomFactor = RandomGenerator.getRandomFactor(RANDOM_FACTOR_MIN, RANDOM_FACTOR_MAX, RANDOM_FACTOR_DEBUG_MESSAGE);
         return (int) Math.ceil(getValue()
                 * elementFactor
                 * statusFactor
                 * criticalHitFactor
                 * sameElementFactor
                 * randomFactor
-                * normalFactor
+                * NORMAL_FACTOR_MULTIPLIER
         );
     }
 

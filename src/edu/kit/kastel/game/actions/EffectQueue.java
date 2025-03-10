@@ -28,6 +28,8 @@ public class EffectQueue implements Comparable<EffectQueue> {
     private final Monster user;
     private final Monster target;
 
+    private boolean applyActionEffects = true;
+
     /**
      * Constructs an EffectQueue to handle effects applied by a monster's action.
      *
@@ -54,23 +56,29 @@ public class EffectQueue implements Comparable<EffectQueue> {
         if (user.isFainted()) {
             return;
         }
-        System.out.printf(MONSTERS_TURN_FORMAT, user.getName()); // 4
+
+        System.out.printf(MONSTERS_TURN_FORMAT, user.getName());
 
         List<ApplyableEffect> effects = action.createEffects();
-        user.updateCondition(); // 12 - 15
-        printMessage(); // 5, 6
-        Condition userCondition = user.getCondition();
-        if (userCondition != null) {
-            if (userCondition == Condition.SLEEP) {
-                effects.clear();
-            } else if (userCondition == Condition.BURN) {
-                constantEffects.add(new BurnDamageEffect());
-            }
-        }
+        processCondition();
 
         applyActionEffects(effects);
         applyConstantEffects();
     }
+
+    private void processCondition() {
+        user.updateCondition();
+        printMessage();
+        Condition userCondition = user.getCondition();
+        if (userCondition != null) {
+            if (userCondition == Condition.SLEEP) {
+                applyActionEffects = false;
+            } else if (userCondition == Condition.BURN) {
+                constantEffects.add(new BurnDamageEffect());
+            }
+        }
+    }
+
 
     private void printMessage() {
         if (action.getName() != null) { // else is pass command
@@ -81,7 +89,7 @@ public class EffectQueue implements Comparable<EffectQueue> {
     }
 
     private void applyActionEffects(List<ApplyableEffect> effects) {
-        if (!effects.isEmpty() && !effects.get(0).hits(user, target)) {
+        if (applyActionEffects && !effects.isEmpty() && !effects.get(0).hits(user, target)) {
             System.out.println(ACTION_FAIL_MESSAGE);
             return;
         }

@@ -2,10 +2,8 @@ package edu.kit.kastel.game.actions;
 
 import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.effects.ApplyableEffect;
-import edu.kit.kastel.game.actions.effects.DamageEffect;
 import edu.kit.kastel.game.actions.effects.Effect;
 import edu.kit.kastel.game.actions.effects.EffectType;
-import edu.kit.kastel.game.actions.effects.RepeatEffect;
 import edu.kit.kastel.game.types.element.Element;
 import edu.kit.kastel.utils.RegexConstructor;
 
@@ -119,18 +117,26 @@ public class Action {
      */
     public static String getRegex(boolean nameGroup) {
         return RegexConstructor.groupAND(nameGroup ? Action.class.getSimpleName() : null, "",
-                RegexConstructor.groupAND(null, RegexConstructor.REGEX_SPACE,
-                        "action",
-                        "(?%s\\w+)".formatted(nameGroup ? "<name>" : ":"),
-                        Element.getRegex(nameGroup)
-                ),
+                getActionLabelRegex(nameGroup),
                 RegexConstructor.REGEX_NEW_LINE,
-                RegexConstructor.groupAND(nameGroup ? EffectType.class.getSimpleName() : null, "",
-                        RegexConstructor.group(null, EffectType.getRegex(false)),
-                        "+"
-                ),
+                getEffectsRegex(nameGroup),
                 "end action",
                 RegexConstructor.REGEX_MULTI_NEW_LINE
+        );
+    }
+
+    private static String getActionLabelRegex(boolean nameGroup) {
+        return RegexConstructor.groupAND(null, RegexConstructor.REGEX_SPACE,
+                "action",
+                "(?%s\\w+)".formatted(nameGroup ? "<name>" : ":"),
+                Element.getRegex(nameGroup)
+        );
+    }
+
+    private static String getEffectsRegex(boolean nameGroup) {
+        return RegexConstructor.groupAND(nameGroup ? EffectType.class.getSimpleName() : null, "",
+                RegexConstructor.group(null, EffectType.getRegex(false)),
+                "+"
         );
     }
 
@@ -151,18 +157,9 @@ public class Action {
     }
 
     private String findDamage() {
-        return findDamage(effects);
-    }
-
-    private String findDamage(List<Effect> effects) {
         for (Effect effect : effects) {
-            if (effect instanceof DamageEffect) {
-                return ((DamageEffect) effect).getPower().toString();
-            } else if (effect instanceof RepeatEffect) {
-                String damage = findDamage(((RepeatEffect) effect).getEffects());
-                if (!damage.equals(NO_DAMAGE)) {
-                    return damage;
-                }
+            if (effect.getPower() != null) {
+                return effect.getPower().toString();
             }
         }
         return NO_DAMAGE;

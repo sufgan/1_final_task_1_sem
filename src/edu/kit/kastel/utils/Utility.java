@@ -29,20 +29,6 @@ public final class Utility {
     }
 
     /**
-     * Returns the absolute value of {@code val} capped by {@code absTop}.
-     *
-     * <p>If the absolute value of {@code val} exceeds {@code absTop}, this method returns {@code absTop}.
-     * Otherwise, it returns {@code Math.abs(val)}.</p>
-     *
-     * @param val    the original value
-     * @param absTop the maximum absolute value that should not be exceeded
-     * @return       the absolute value of {@code val}, limited by {@code absTop}
-     */
-    public static int absLimitValue(int val, int absTop) {
-        return Math.min(Math.abs(val), absTop);
-    }
-
-    /**
      * Scales a given value based on the scaling factor of a provided stat type
      * and a specified scale value. The scaling behavior varies depending on
      * whether the scale is positive or negative.

@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
  */
 public final class Reader {
     private static final String ERROR_MESSAGE = "Error, wrong value.";
+    private static final String DOUBLE_REGEX = "\\d+(\\.\\d+)?";
+    private static final String INTEGER_REGEX = "\\d+";
 
     private Reader() {
 
@@ -32,17 +34,16 @@ public final class Reader {
      * @return {@code true} if the user enters 'y'; {@code false} if the user enters 'n'
      */
     public static boolean readBoolean(String message) {
-//        System.out.println();
         System.out.println(message);
         String answer = Application.readInputLine();
-        if (answer.length() == 1) {
-            switch (answer.charAt(0)) {
-                case 'y': return true;
-                case 'n': return false;
-                default: break;
+        if (!answer.isEmpty()) {
+            switch (answer) {
+                case "y": return true;
+                case "n": return false;
+                default: checkOnCommands(answer);
             }
         }
-        System.out.println("Error, enter y or n.");
+        System.err.println(ERROR_MESSAGE);
         return readBoolean(message);
     }
 
@@ -58,13 +59,14 @@ public final class Reader {
      * @return the double value entered by the user
      */
     public static double readDouble(String message) {
-//        System.out.println();
         System.out.println(message);
         String answer = Application.readInputLine();
-        if (Pattern.matches("\\d+(\\.\\d+)?", answer)) {
+        if (Pattern.matches(DOUBLE_REGEX, answer)) {
             return Double.parseDouble(answer);
+        } else {
+            checkOnCommands(answer);
         }
-        System.out.println(ERROR_MESSAGE);
+        System.err.println(ERROR_MESSAGE);
         return readDouble(message);
     }
 
@@ -79,14 +81,19 @@ public final class Reader {
      * @return the integer value entered by the user
      */
     public static int readInteger(String message) {
-//        System.out.println();
         System.out.println(message);
         String answer = Application.readInputLine();
-        if (Pattern.matches("\\d+", answer)) {
+        if (Pattern.matches(INTEGER_REGEX, answer)) {
             return Integer.parseInt(answer);
+        } else {
+            checkOnCommands(answer);
         }
         System.err.println(ERROR_MESSAGE);
         return readInteger(message);
+    }
+
+    private static void checkOnCommands(String command) {
+        
     }
 
 }

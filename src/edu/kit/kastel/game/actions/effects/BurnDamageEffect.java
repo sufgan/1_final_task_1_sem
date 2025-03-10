@@ -12,13 +12,14 @@ import edu.kit.kastel.game.types.power.RelativePower;
  */
 public final class BurnDamageEffect extends HealthShiftEffect {
     private static final String REASON = "burning";
+    private static final int POWER_SCALE = -1;
 
     /**
      * Constructs a new {@code BurnDamageEffect} that applies
      * a 10% health reduction to the user each turn.
      */
     public BurnDamageEffect() {
-        super(0, TargetType.USER, null, new RelativePower(10), -1, REASON);
+        super(0, TargetType.USER, null, new RelativePower(10), POWER_SCALE, REASON);
     }
 
     @Override

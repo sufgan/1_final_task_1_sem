@@ -21,6 +21,11 @@ public class Monster implements Comparable<Monster> {
     private static final String FAINTED_STATUS = "FAINTED";
     private static final String NORMAL_STATUS = "OK";
     private static final String NAME_FORMAT = "%s#%d";
+    private static final int MIN_SCALE_VALUE = -5;
+    private static final int MAX_SCALE_VALUE = 5;
+    private static final int DEFAULT_SCALE_VALUE = 0;
+    private static final int DEFAULT_CONDITION_FACTOR = 1;
+    private static final int MIN_HEALTH_VALUE = 0;
 
     private final MonsterSample sample;
     private final Map<StatType,  Integer> scales;
@@ -44,13 +49,17 @@ public class Monster implements Comparable<Monster> {
     }
 
     /**
-     * Modifies the scaling value of a specific stat, within [-5, 5].
+     * Adjusts the scaling value of a specified stat for the monster. The shift is added
+     * to the current scale value, and the resulting scale is constrained within a
+     * predefined minimum and maximum range.
      *
-     * @param stat  the stat to change
-     * @param shift the amount to add (positive or negative)
+     * @param stat the stat to be adjusted (e.g., ATK, DEF, SPD, PRC, AGL)
+     * @param shift the value to shift the stat's current scale by; can be positive or negative
      */
     public void shiftScale(StatType stat, int shift) {
-        scales.put(stat, Utility.absLimitValue(scales.getOrDefault(stat, 0) + shift, -5, 5));
+        scales.put(stat,
+                Utility.absLimitValue(scales.getOrDefault(stat, DEFAULT_SCALE_VALUE) + shift, MIN_SCALE_VALUE, MAX_SCALE_VALUE)
+        );
     }
 
     /**
@@ -59,7 +68,7 @@ public class Monster implements Comparable<Monster> {
      * @param shift the amount to add (positive or negative)
      */
     public void shiftHealth(int shift) {
-        health = Utility.absLimitValue(health + shift, 0, sample.getMaxHealth());
+        health = Utility.absLimitValue(health + shift, MIN_HEALTH_VALUE, sample.getMaxHealth());
     }
 
     /**
@@ -77,7 +86,7 @@ public class Monster implements Comparable<Monster> {
      * @return {@code true} if fainted, {@code false} otherwise
      */
     public boolean isFainted() {
-        return health == 0;
+        return health == MIN_HEALTH_VALUE;
     }
 
     /**
@@ -87,8 +96,8 @@ public class Monster implements Comparable<Monster> {
      * @return the modified stat value as a double
      */
     public double getStat(StatType stat) {
-        double conditionFactor = condition == null ? 1 : condition.getStateFactor(stat);
-        return Utility.scaleStat(stat, sample.getStat(stat), scales.getOrDefault(stat, 0)) * conditionFactor;
+        double conditionFactor = condition == null ? DEFAULT_CONDITION_FACTOR : condition.getStateFactor(stat);
+        return Utility.scaleStat(stat, sample.getStat(stat), scales.getOrDefault(stat, DEFAULT_SCALE_VALUE)) * conditionFactor;
     }
 
     /**
@@ -108,7 +117,7 @@ public class Monster implements Comparable<Monster> {
         if (condition != null) {
             condition = condition.step();
             System.out.printf(
-                    lastCondition.getMessage(lastCondition != condition ? Condition.FINISHING_MESSAGE : Condition.EXISTING_MESSAGE),
+                    lastCondition != condition ? lastCondition.getFinishingMessage() : lastCondition.getExistingMessage(),
                     sample.getName()
             );
         }
@@ -120,7 +129,7 @@ public class Monster implements Comparable<Monster> {
      * @param condition a {@link Condition} (e.g., POISON, SLEEP)
      */
     public void setCondition(Condition condition) {
-        System.out.printf(condition.getMessage(Condition.CREATING_MESSAGE), getName());
+        System.out.printf(condition.getCreationMessage(), getName());
         this.condition = condition;
     }
 
@@ -194,7 +203,7 @@ public class Monster implements Comparable<Monster> {
     }
 
     @Override
-    public int compareTo(Monster o) {
+    public int compareTo(Monster o) { // reverse order
         return -Double.compare(getStat(StatType.SPD), o.getStat(StatType.SPD));
     }
 

@@ -1,5 +1,7 @@
 package edu.kit.kastel.config;
 
+import edu.kit.kastel.ApplicationException;
+
 /**
  * Thrown when the configuration has an incorrect pattern.
  *
@@ -7,20 +9,15 @@ package edu.kit.kastel.config;
  *
  * @author uyqbd
  */
-public class ConfigPatternException extends Exception {
-    private static final String MESSAGE = "Error, ";
+public class ConfigPatternException extends ApplicationException {
 
     /**
-     * Constructs a {@code ConfigPatternException} with a detailed error message.
-     * This exception is thrown when configuration data does not adhere to the
-     * expected format or pattern.
+     * Constructs a ConfigPatternException with a specified error message.
      *
-     * @param message a {@code String} specifying the details of the error.
-     *                This message will be appended to a predefined prefix
-     *                indicating a configuration error.
+     * @param message the detailed error message describing the configuration pattern violation
      */
     public ConfigPatternException(String message) {
-        super(MESSAGE + message);
+        super(message);
     }
 
 }

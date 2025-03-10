@@ -39,8 +39,9 @@ public enum StatType implements RegexProvider {
     /**
      * Represents the "AGL" (Agility) stat type used for defining a monster's agility,
      * typically influencing its speed or evasiveness in-game mechanics.
-     *
+     * <p>
      * Associated with a scaling factor of 3 to determine its contribution in various calculations.
+     * </p>
      */
     AGL(3);
 

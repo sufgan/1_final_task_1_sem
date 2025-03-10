@@ -3,8 +3,6 @@ package edu.kit.kastel.ui.commands;
 import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.monsters.MonsterSample;
 import edu.kit.kastel.ui.handlers.CommandHandler;
-import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
-import edu.kit.kastel.ui.handlers.DefaultCommandHandler;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -23,11 +21,12 @@ public class CompetitionCreateCommand extends Command {
     private static final String ARGS_REGEX_FORMAT = "\\w+(\\s\\w+){1,}";
     private static final String FEW_ARGS_MESSAGE = "not enough monsters to start competition";
     private static final String MONSTER_NOT_FOUND_MESSAGE = "monster %s not found";
+    private static final int ARGS_COUNT = 2;
 
 
     @Override
     public void execute(CommandHandler handler, String[] args) throws CommandException {
-        if (args.length < 2) {
+        if (args.length < ARGS_COUNT) {
             throw new CommandException(FEW_ARGS_MESSAGE);
         }
         List<MonsterSample> monsterSamples = new LinkedList<>();
@@ -40,12 +39,7 @@ public class CompetitionCreateCommand extends Command {
             }
         }
         Competition competition = new Competition(monsterSamples);
-        if (handler instanceof DefaultCommandHandler) {
-            new CompetitionCommandHandler(handler, competition).startHandling();
-        } else {
-            handler.stop(1);
-            new CompetitionCommandHandler(handler.getOuterCommandHandler(), competition).startHandling();
-        }
+        handler.handleCompetition(competition);
     }
 
     @Override

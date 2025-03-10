@@ -18,15 +18,17 @@ public class LoadCommand extends Command {
     private static final String NAME = "load";
     private static final String ARGS_REGEX_FORMAT = "\\S+";
     private static final String WRONG_ARGS_COUNT = "wrong number of arguments";
+    private static final int ARGS_COUNT = 1;
+    private static final int CONFIG_PATH_INDEX = 0;
 
 
     @Override
     public void execute(CommandHandler handler, String[] args) throws CommandException {
-        if (args.length != 1) {
+        if (args.length != ARGS_COUNT) {
             throw new CommandException(WRONG_ARGS_COUNT);
         }
         try {
-            ConfigParser.parse(args[0]);
+            ConfigParser.parse(args[CONFIG_PATH_INDEX]);
             if (handler instanceof CompetitionCommandHandler) {
                 handler.stop(1);
             }

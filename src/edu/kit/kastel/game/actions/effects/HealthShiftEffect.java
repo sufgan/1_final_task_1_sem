@@ -65,10 +65,6 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
 
         target.shiftHealth(shiftValue);
         System.out.printf((getMessageFormat(shiftValue)), target.getName(), Math.abs(shiftValue));
-        // Utility.absLimitValue(shiftValue, powerScale < 0
-        //                ? target.getSample().getMaxHealth() - target.getHealth()
-        //                : target.getHealth()
-        // )
 
         if (target.isFainted()) {
             System.out.printf(MESSAGE_DEFEAT_FORMAT, target.getName());
@@ -90,11 +86,7 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
         );
     }
 
-    /**
-     * Retrieves the {@link Power} instance used to calculate the health shift.
-     *
-     * @return the {@link Power} for this effect
-     */
+    @Override
     public Power getPower() {
         return power;
     }

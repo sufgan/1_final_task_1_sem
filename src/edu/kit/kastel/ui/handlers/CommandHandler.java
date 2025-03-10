@@ -1,12 +1,13 @@
 package edu.kit.kastel.ui.handlers;
 
-import edu.kit.kastel.Application;
+import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.ui.commands.Command;
 import edu.kit.kastel.ui.commands.CommandException;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -25,31 +26,35 @@ public abstract class CommandHandler {
     private static final String ERROR_UNKNOWN_COMMAND_FORMAT = "unknown command %s";
     private static final String WRONG_ARGS = "wrong count or types of arguments";
 
+    protected final Scanner scanner;
     private final CommandHandler outerCommandHandler;
     private final Map<String, Command> commands;
 
     private boolean running;
 
     /**
-     * Protected constructor for the {@code CommandHandler} class.
-     * <p>
-     * This no-argument constructor initializes a {@code CommandHandler} instance with a
-     * {@code null} outer command handler. It delegates to the parameterized constructor.
-     * </p>
+     * Constructs a CommandHandler using the specified Scanner for user input.
+     * This constructor initializes the handler without an outer parent, assuming
+     * it is a standalone root command handler.
+     *
+     * @param scanner the Scanner instance used to read input from the user
      */
-    protected CommandHandler() {
-        this(null);
+    protected CommandHandler(Scanner scanner) {
+        this(scanner, null);
     }
 
     /**
-     * Constructs a CommandHandler with the specified outer command handler.
-     * This constructor initializes the internal command map and populates it
-     * with commands obtained from the {@link #getAvailableCommands()} method.
-     * The handler is set to a running state upon creation.
+     * Constructs a CommandHandler using the specified Scanner for user input
+     * and an optional outer CommandHandler for hierarchical delegation.
+     * This constructor initializes the handler with the commands available
+     * in the current context.
      *
-     * @param outerCommandHandler the parent CommandHandler instance, or null if this is the root handler
+     * @param scanner              the Scanner instance used to read input from the user
+     * @param outerCommandHandler  the parent CommandHandler providing a context for delegation,
+     *                             or null if this is the root handler
      */
-    protected CommandHandler(CommandHandler outerCommandHandler) {
+    protected CommandHandler(Scanner scanner, CommandHandler outerCommandHandler) {
+        this.scanner = scanner;
         this.outerCommandHandler = outerCommandHandler;
         this.commands = new TreeMap<>(Comparator.reverseOrder());
         for (Command command : getAvailableCommands()) {
@@ -69,50 +74,50 @@ public abstract class CommandHandler {
     protected abstract List<Command> getAvailableCommands();
 
     /**
-     * Starts the command handling loop.
-     * <p>
-     * This method continuously reads input from the application until the handler is stopped.
-     * Each input line is processed using the {@link #handleCommand(String)} method.
-     * </p>
+     * Starts handling user input by continuously reading commands from the provided scanner.
+     * The method remains active while the command handler is running, processing each
+     * input line by passing it to the {@code handleCommand} method. If a {@code CommandException}
+     * is thrown during the handling of a command, the error message is printed to the standard error stream.
      */
     public void startHandling() {
         while (isRunning()) {
             try {
-                handleCommand(Application.readInputLine());
+                handleCommand(scanner.nextLine());
             } catch (CommandException e) {
                 System.err.println(e.getMessage());
             }
         }
     }
 
-    /**
-     * Processes a single command line.
-     * <p>
-     * The method iterates over all registered commands, matching the input line against each
-     * command's regex pattern. If a match is found, the command is executed with the extracted
-     * arguments. If no command matches, a {@link CommandException} is thrown.
-     * </p>
-     *
-     * @param line the input command line to handle
-     * @throws CommandException if the command is unknown or the arguments are invalid
-     */
-    public void handleCommand(String line) throws CommandException {
+    private void handleCommand(String line) throws CommandException {
         for (Command command : commands.values()) {
-            if (line.startsWith(command.getName())) {
-                String[] args = new String[0];
-                if (line.length() >= command.getName().length()) {
-                    String rawArgs = line.substring(command.getName().length()).trim();
-                    if (Pattern.matches(command.getArgsRegex(), rawArgs)) {
-                        args = rawArgs.split(Command.SEPARATOR);
-                    } else {
-                        throw new CommandException(WRONG_ARGS);
-                    }
-                }
-                command.execute(this, args);
-                return;
+            if (!line.startsWith(command.getName())) {
+                continue;
             }
+            String rawArgs = line.substring(command.getName().length()).trim();
+            String[] args = parseArgs(command, rawArgs);
+            command.execute(this, args);
+            return;
         }
         throw new CommandException(String.format(ERROR_UNKNOWN_COMMAND_FORMAT, line));
+    }
+
+    /**
+     * Handles a competition among multiple monsters within the context of the provided {@link Competition}.
+     * This abstract method is designed to be implemented with specific logic for managing
+     * the phases or actions of the competition.
+     *
+     * @param competition the {@link Competition} instance representing the competition to be handled
+     */
+    public abstract void handleCompetition(Competition competition);
+
+    private String[] parseArgs(Command command, String rawArgs) throws CommandException {
+        if (rawArgs.isEmpty()) {
+            return new String[0];
+        } else if (!Pattern.matches(command.getArgsRegex(), rawArgs)) {
+            throw new CommandException(WRONG_ARGS);
+        }
+        return rawArgs.split(Command.SEPARATOR);
     }
 
     /**

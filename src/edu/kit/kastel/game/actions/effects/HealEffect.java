@@ -12,6 +12,8 @@ import edu.kit.kastel.game.types.element.Element;
  * @author uyqbd
  */
 public final class HealEffect extends HealthShiftEffect {
+    private static final int POWER_SCALE = 1;
+
     /**
      * Creates a {@code HealEffect} with a given hit rate, target, element, and power.
      *
@@ -21,7 +23,7 @@ public final class HealEffect extends HealthShiftEffect {
      * @param power          the power determining the healing amount
      */
     public HealEffect(int effectHitRate, TargetType target, Element actionElement, Power power) {
-        super(effectHitRate, target, actionElement, power, 1);
+        super(effectHitRate, target, actionElement, power, POWER_SCALE);
     }
 
     @Override

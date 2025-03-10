@@ -23,10 +23,12 @@ import java.util.List;
 public class Competition {
     private static final String MONSTER_TABLE_FORMAT = "[%s%s] %d %s%s (%s)%n";
     private static final String ENTER_COMPETITION_FORMAT = "The %d monsters enter the competition!%n";
-    private static final String ACTION_NEED_TARGET_MESSAGE = "this action need target monster";
+    private static final String ACTION_NEED_TARGET_MESSAGE = "this action need target monster.";
+    private static final String MONSTER_NOT_FOUND_FORMAT = "monster %s wasn't found.";
     private static final String MONSTER_HEALTH_SIGN = "X";
     private static final String MONSTER_EMPTY_HEALTH_SIGN = "_";
     private static final String CURRENT_MONSTER_SIGN = "*";
+    private static final int HEALTH_BAR_LENGTH = 20;
 
 
     private final List<Monster> monsters;
@@ -51,26 +53,29 @@ public class Competition {
     }
 
     /**
-     * Selects an action for the current monster, specifying an optional target.
-     * <p>Automatically proceeds to the next monster.</p>
+     * Selects an action for the current monster and adds it to the action queue.
+     * The action may optionally require a target monster.
      *
-     * @param action           the {@link Action} to be performed
-     * @param targetMonsterName the name of the target monster (if required)
-     * @throws GameRuntimeException if action need the monster and it was not given
+     * @param action              the {@link Action} to be performed by the current monster
+     * @param targetMonsterName   the name of the target monster, required if the action needs a target
+     * @throws GameRuntimeException if the action requires a target but the target monster cannot be found
      */
     public void selectAction(Action action, String targetMonsterName) throws GameRuntimeException {
         Monster user = getCurrentMonster();
-        Monster target = findMonster(targetMonsterName);
-        if (action.needTarget() && targetMonsterName == null) {
-            List<Monster> aliveMonsters = getAliveMonsters();
-            if (aliveMonsters.size() > 2) {
-                throw new GameRuntimeException(ACTION_NEED_TARGET_MESSAGE);
-            }
-            aliveMonsters.remove(user); // ???
-            target = aliveMonsters.get(0);
-        }
+        Monster target = action.needTarget() ? selectTarget(user.getName(), targetMonsterName) : null;
         selectedActions.add(new EffectQueue(user, target, action));
         step();
+    }
+
+    private Monster selectTarget(String userMonsterName, String targetMonsterName) throws GameRuntimeException {
+        if (targetMonsterName != null) {
+            return findMonster(targetMonsterName);
+        }
+        List<Monster> aliveMonsters = getAliveMonsters(userMonsterName);
+        if (aliveMonsters.size() == 1) {
+            return aliveMonsters.get(0);
+        }
+        throw new GameRuntimeException(ACTION_NEED_TARGET_MESSAGE);
     }
 
     private void step() {
@@ -101,14 +106,17 @@ public class Competition {
     }
 
     /**
-     * Retrieves a list of all monsters that are not fainted.
+     * Retrieves a list of all currently alive monsters, excluding those whose names are specified
+     * in the provided parameter.
      *
-     * @return a list of alive monsters
+     * @param exceptMonsterNames the names of monsters to be excluded from the result list
+     * @return a list of {@link Monster} objects that are alive and not in the excluded list
      */
-    public List<Monster> getAliveMonsters() {
+    public List<Monster> getAliveMonsters(String... exceptMonsterNames) {
         List<Monster> result = new LinkedList<>();
+        List<String> exceptMonsterNamesList = List.of(exceptMonsterNames);
         for (Monster monster : monsters) {
-            if (!monster.isFainted()) {
+            if (!monster.isFainted() && !exceptMonsterNamesList.contains(monster.getName())) {
                 result.add(monster);
             }
         }
@@ -116,18 +124,19 @@ public class Competition {
     }
 
     /**
-     * Searches for a monster by name in the competition.
+     * Finds a monster by its name from a predefined list of monsters.
      *
-     * @param monsterName the name to match
-     * @return the matching {@link Monster}, or {@code null} if not found
+     * @param monsterName the name of the monster to be searched
+     * @return the {@link Monster} with the specified name if found
+     * @throws GameRuntimeException if no monster with the specified name is found
      */
-    public Monster findMonster(String monsterName) {
+    public Monster findMonster(String monsterName) throws GameRuntimeException {
         for (Monster monster : monsters) {
             if (monster.getName().equals(monsterName)) {
                 return monster;
             }
         }
-        return null;
+        throw new GameRuntimeException(MONSTER_NOT_FOUND_FORMAT.formatted(monsterName));
     }
 
     /**
@@ -146,10 +155,10 @@ public class Competition {
     public void printMonsters() {
         int i = 0;
         for (Monster monster : monsters) {
-            int healthCount = Utility.ceilDiv(20 * monster.getHealth(), monster.getSample().getMaxHealth());
+            int healthCount = Utility.ceilDiv(HEALTH_BAR_LENGTH * monster.getHealth(), monster.getSample().getMaxHealth());
             System.out.printf(MONSTER_TABLE_FORMAT,
                     MONSTER_HEALTH_SIGN.repeat(healthCount),
-                    MONSTER_EMPTY_HEALTH_SIGN.repeat(20 - healthCount),
+                    MONSTER_EMPTY_HEALTH_SIGN.repeat(HEALTH_BAR_LENGTH - healthCount),
                     i + 1,
                     i == currentMonsterIndex ? CURRENT_MONSTER_SIGN : "",
                     monster.getName(),

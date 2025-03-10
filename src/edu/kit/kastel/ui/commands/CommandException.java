@@ -1,5 +1,7 @@
 package edu.kit.kastel.ui.commands;
 
+import edu.kit.kastel.ApplicationException;
+
 /**
  * Exception thrown when a command error occurs.
  * <p>
@@ -8,8 +10,7 @@ package edu.kit.kastel.ui.commands;
  *
  * @author uyqbd
  */
-public class CommandException extends Exception {
-    private static final String MESSAGE_PREFIX = "Error, ";
+public class CommandException extends ApplicationException {
 
     /**
      * Constructs a new CommandException with the specified error message.
@@ -17,7 +18,7 @@ public class CommandException extends Exception {
      * @param message the error message to be prefixed and passed to the superclass
      */
     public CommandException(String message) {
-        super(MESSAGE_PREFIX + message);
+        super(message);
     }
 
 }

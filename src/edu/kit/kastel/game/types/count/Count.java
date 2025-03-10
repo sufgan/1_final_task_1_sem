@@ -9,6 +9,10 @@ import edu.kit.kastel.utils.RegexConstructor;
  * @author uyqbd
  */
 public abstract class Count {
+    private static final int VALUE_INDEX = 0;
+    private static final int MIN_INDEX = 1;
+    private static final int MAX_INDEX = 2;
+
     /**
      * Creates a {@code Count} instance based on the provided arguments.
      * <ul>
@@ -22,8 +26,8 @@ public abstract class Count {
      */
     public static Count create(String... args) {
         return switch (args.length) {
-            case 1 -> new ValueCount(Integer.parseInt(args[0]));
-            case 3 -> new RandomCount(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+            case 1 -> new ValueCount(Integer.parseInt(args[VALUE_INDEX]));
+            case 3 -> new RandomCount(Integer.parseInt(args[MIN_INDEX]), Integer.parseInt(args[MAX_INDEX]));
             default -> null;
         };
     }

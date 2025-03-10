@@ -31,11 +31,12 @@ public enum Condition implements RegexProvider {
      * - Affects the defense stat (DEF), reducing it by 25% (scaling factor of 0.75).
      * </p>
      */
-    WET(new String[] {
+    WET(
         "%s becomes soaking wet!",
         "%s is soaking wet!",
-        "%s dried up!"
-        }, new StateFactor(StatType.DEF, 0.75)),
+        "%s dried up!",
+        new StateFactor(StatType.DEF, 0.75)
+    ),
 
     /**
      * Represents the "BURN" status effect in the game, which is associated with fire-related damage
@@ -50,11 +51,12 @@ public enum Condition implements RegexProvider {
      * - A {@code StateFactor} that reduces the entity's Attack (ATK) stat by 25% (factor of 0.75).
      * </p>
      */
-    BURN(new String[] {
+    BURN(
         "%s caught on fire!",
         "%s is burning!",
-        "%s's burning has faded!"},
-        new StateFactor(StatType.ATK, 0.75)),
+        "%s's burning has faded!",
+        new StateFactor(StatType.ATK, 0.75)
+    ),
 
     /**
      * Represents a quicksand effect that impacts an entity in the game.
@@ -74,11 +76,12 @@ public enum Condition implements RegexProvider {
      * - {@link StatType#SPD}: Reduces the speed stat by a factor of 0.75.
      * </p>
      */
-    QUICKSAND(new String[] {
+    QUICKSAND(
         "%s gets caught by quicksand!",
         "%s is caught in quicksand!",
-        "%s escaped the quicksand!"},
-        new StateFactor(StatType.SPD, 0.75)),
+        "%s escaped the quicksand!",
+        new StateFactor(StatType.SPD, 0.75)
+    ),
 
     /**
      * Represents a state change for an entity related to sleep status, providing
@@ -92,42 +95,24 @@ public enum Condition implements RegexProvider {
      * - Message for waking up.
      * </p>
      */
-    SLEEP(new String[] {
+    SLEEP(
         "%s falls asleep!",
         "%s is asleep!",
-        "%s woke up!"});
-
-    /**
-     * Represents the state of a process where a message is currently being created.
-     * This constant is used to define or identify the specific stage within the
-     * message creation lifecycle.
-     */
-    public static final int CREATING_MESSAGE = 0;
-    /**
-     * Represents the identifier for an action or event when a message already exists.
-     * This is typically used in scenarios where a distinction is required between
-     * existing and new messages in a system or processing flow.
-     */
-    public static final int EXISTING_MESSAGE = 1;
-    /**
-     * Represents a constant value used to signify a finishing message or state.
-     *
-     * <p>
-     * FINISHING_MESSAGE is typically used in contexts where a final message or
-     * termination indicator is required, often to mark the end of a process or
-     * sequence.
-     * </p>
-     */
-    public static final int FINISHING_MESSAGE = 2;
+        "%s woke up!"
+    );
 
     private static final double FINISH_PROBABILITY = 1.0 / 3 * 100;
     private static final String END_CONDITION_DEBUG_MESSAGE = "end of condition";
 
-    private final String[] messages;
     private final Map<StatType, Double> stateFactor;
+    private final String creationMessage;
+    private final String existingMessage;
+    private final String finishingMessage;
 
-    Condition(String[] messages, StateFactor... stateFactors) {
-        this.messages = messages;
+    Condition(String creationMessage, String existingMessage, String finishingMessage, StateFactor... stateFactors) {
+        this.creationMessage = creationMessage;
+        this.existingMessage = existingMessage;
+        this.finishingMessage = finishingMessage;
         this.stateFactor = new HashMap<>();
         for (StateFactor stateFactor : stateFactors) {
             this.stateFactor.put(stateFactor.state(), stateFactor.factor());
@@ -142,16 +127,6 @@ public enum Condition implements RegexProvider {
      */
     public double getStateFactor(StatType state) {
         return stateFactor.getOrDefault(state, 1.0);
-    }
-
-    /**
-     * Provides the message associated with this condition at a given index.
-     *
-     * @param messageIndex an index for condition messages
-     * @return the formatted message string
-     */
-    public String getMessage(int messageIndex) {
-        return messages[messageIndex] + "%n";
     }
 
     /**
@@ -179,6 +154,33 @@ public enum Condition implements RegexProvider {
     @Override
     public String toRegex(boolean nameGroup) {
         return name();
+    }
+
+    /**
+     * Retrieves the creation message associated with this instance.
+     *
+     * @return a string containing the creation message
+     */
+    public String getCreationMessage() {
+        return creationMessage;
+    }
+
+    /**
+     * Retrieves the existing message.
+     *
+     * @return the existing message as a {@code String}
+     */
+    public String getExistingMessage() {
+        return existingMessage;
+    }
+
+    /**
+     * Retrieves the finishing message associated with a specific operation or process.
+     *
+     * @return the finishing message as a string
+     */
+    public String getFinishingMessage() {
+        return finishingMessage;
     }
 
     /**

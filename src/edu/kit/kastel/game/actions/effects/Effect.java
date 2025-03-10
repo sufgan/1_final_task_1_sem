@@ -1,5 +1,7 @@
 package edu.kit.kastel.game.actions.effects;
 
+import edu.kit.kastel.game.types.power.Power;
+
 import java.util.List;
 
 /**
@@ -35,5 +37,16 @@ public abstract class Effect {
      * @return the hit rate as an integer
      */
     public abstract int getHitRate();
+
+    /**
+     * Retrieves an instance of the {@code Power} class, representing the power or
+     * effect associated with the current implementation of {@code Effect}.
+     *
+     * @return an instance of {@code Power} representing the effect's associated power,
+     *         or {@code null} if no power is defined.
+     */
+    public Power getPower() {
+        return null;
+    }
 
 }

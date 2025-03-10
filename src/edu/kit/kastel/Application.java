@@ -1,11 +1,11 @@
 package edu.kit.kastel;
 
-import edu.kit.kastel.config.ConfigPatternException;
 import edu.kit.kastel.config.ConfigParser;
 import edu.kit.kastel.utils.RandomGenerator;
 import edu.kit.kastel.ui.handlers.DefaultCommandHandler;
 
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -28,7 +28,15 @@ public final class Application {
             Long.MAX_VALUE
     );
 
+    private static final int ARGS_COUNT = 1;
+    private static final int ARGS_COUNT_WITH_RANDOM = 2;
+    private static final int CONFIG_PATH_INDEX = 0;
+    private static final int RANDOM_INDEX = 1;
+    private static final String SEED_REGEX = "-?\\d+";
+
     private static final InputStream DEFAULT_INPUT_STREAM = System.in;
+    private static final PrintStream DEFAULT_OUTPUT_STREAM = System.out;
+    private static final PrintStream DEFAULT_ERROR_STREAM = System.err;
     private static final Scanner SCANNER = new Scanner(DEFAULT_INPUT_STREAM);
 
     private Application() {
@@ -40,42 +48,45 @@ public final class Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        if (args.length == 0 || args.length > 2) {
+        if (args.length != ARGS_COUNT && args.length != ARGS_COUNT_WITH_RANDOM) {
             System.err.println(COMMAND_LINE_ARGUMENTS_MESSAGE);
             return;
         }
 
-        if (handleArguments(args)) {
-            new DefaultCommandHandler().startHandling();
+        try (Scanner scanner = new Scanner(DEFAULT_INPUT_STREAM)) {
+            handleArguments(args);
+            new DefaultCommandHandler(scanner).startHandling();
+        } catch (ApplicationException e) {
+            DEFAULT_ERROR_STREAM.println(e.getMessage());
         }
 
         SCANNER.close();
     }
 
-    private static boolean handleArguments(String[] args) {
+    private static void handleArguments(String[] args) throws ApplicationException {
+        ConfigParser.parse(args[CONFIG_PATH_INDEX]);
+
+        if (args.length == ARGS_COUNT_WITH_RANDOM) {
+            parseRandom(args[RANDOM_INDEX]);
+        }
+    }
+
+    private static void parseRandom(String rawRandom) throws ApplicationException {
+        if (Pattern.matches(SEED_REGEX, rawRandom)) {
+            parseSeed(rawRandom);
+        } else if (rawRandom.equals(DEBUG_MODE_FLAG)) {
+            RandomGenerator.switchDebugMod();
+        } else {
+            throw new ApplicationException(WRONG_SECOND_ARGUMENT_MESSAGE);
+        }
+    }
+
+    private static void parseSeed(String seed) throws ApplicationException {
         try {
-            ConfigParser.parse(args[0]);
-        } catch (ConfigPatternException e) {
-            System.err.println(e.getMessage());
-            return false;
+            RandomGenerator.setSeed(Long.parseLong(seed));
+        } catch (NumberFormatException e) {
+            throw new ApplicationException(ERROR_WRONG_NUMBER_FORMAT);
         }
-
-        if (args.length == 2) {
-            if (Pattern.matches("-?\\d+", args[1])) {
-                try {
-                    RandomGenerator.setSeed(Long.parseLong(args[1]));
-                } catch (NumberFormatException e) {
-                    System.err.println(ERROR_WRONG_NUMBER_FORMAT);
-                }
-            } else if (args[1].equals(DEBUG_MODE_FLAG)) {
-                RandomGenerator.switchDebugMod();
-            } else {
-                System.err.println(WRONG_SECOND_ARGUMENT_MESSAGE);
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**

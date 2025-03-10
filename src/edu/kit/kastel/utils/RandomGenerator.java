@@ -60,7 +60,7 @@ public final class RandomGenerator {
         if (debug) {
             return Reader.readDouble(RANDOM_FACTOR_DEBUG_MESSAGE_FORMAT.formatted(debugMessage, min, max));
         }
-        return RANDOM.nextDouble(0.85, 1);
+        return RANDOM.nextDouble(min, max);
     }
 
     /**
