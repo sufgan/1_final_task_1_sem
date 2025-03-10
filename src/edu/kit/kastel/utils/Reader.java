@@ -93,7 +93,7 @@ public final class Reader {
     }
 
     private static void checkOnCommands(String command) {
-        
+
     }
 
 }

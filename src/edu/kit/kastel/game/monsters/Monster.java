@@ -120,6 +120,7 @@ public class Monster implements Comparable<Monster> {
                     lastCondition != condition ? lastCondition.getFinishingMessage() : lastCondition.getExistingMessage(),
                     sample.getName()
             );
+            System.out.println();
         }
     }
 
@@ -130,6 +131,7 @@ public class Monster implements Comparable<Monster> {
      */
     public void setCondition(Condition condition) {
         System.out.printf(condition.getCreationMessage(), getName());
+        System.out.println();
         this.condition = condition;
     }
 
