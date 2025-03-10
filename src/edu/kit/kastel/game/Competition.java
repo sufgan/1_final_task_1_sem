@@ -82,12 +82,19 @@ public class Competition {
     private void step() {
         int lastMonsterIndex = currentMonsterIndex;
         do {
-            currentMonsterIndex = (currentMonsterIndex + 1) % monsters.size();
+            increaseMonsterIndex();
         } while (monsters.get(currentMonsterIndex).isFainted());
         if (currentMonsterIndex < lastMonsterIndex) {
             applyActions();
             updateProtections();
         }
+        while (monsters.get(currentMonsterIndex).isFainted()) {
+            increaseMonsterIndex();
+        }
+    }
+
+    private void increaseMonsterIndex() {
+        currentMonsterIndex = (currentMonsterIndex + 1) % monsters.size();
     }
 
     private void applyActions() {
