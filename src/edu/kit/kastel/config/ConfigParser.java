@@ -1,5 +1,6 @@
 package edu.kit.kastel.config;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.game.actions.effects.Effect;
@@ -78,7 +79,7 @@ public final class ConfigParser {
         try {
             String preConfig = Files.readString(Path.of(configPath));
             config = preConfig + (preConfig.endsWith("\n") ? "" : "\n");
-            System.out.print(config);
+            Application.DEFAULT_OUTPUT_STREAM.print(config);
         } catch (IOException e) {
             throw new ConfigPatternException(CONFIG_NOT_FOUND);
         }
@@ -91,7 +92,7 @@ public final class ConfigParser {
 
         int loadedActionsCount = parseActions(config);
         int loadedMonstersCount = parseMonsters(config);
-        System.out.printf(CONFIG_LOADED_FORMAT, loadedActionsCount, loadedMonstersCount);
+        Application.DEFAULT_OUTPUT_STREAM.printf(CONFIG_LOADED_FORMAT, loadedActionsCount, loadedMonstersCount);
     }
 
     private static int parseActions(String config) throws ConfigPatternException {
@@ -124,8 +125,9 @@ public final class ConfigParser {
     private static List<ApplyableEffect> parseApplyableEffect(String rawEffects, Element actionElement) {
         List<ApplyableEffect> applyableEffectList = new LinkedList<>();
         for (Effect effect : parseEffects(rawEffects, actionElement)) {
-            if (effect instanceof ApplyableEffect) {
-                applyableEffectList.add((ApplyableEffect) effect);
+            ApplyableEffect applyableEffect = effect.asApplyableEffect();
+            if (applyableEffect != null) {
+                applyableEffectList.add(applyableEffect);
             }
         }
         return applyableEffectList;

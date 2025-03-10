@@ -1,5 +1,6 @@
 package edu.kit.kastel.game;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.game.actions.EffectQueue;
 import edu.kit.kastel.game.monsters.Monster;
@@ -42,7 +43,7 @@ public class Competition {
      * @param monstersSamples the list of monster samples to instantiate
      */
     public Competition(List<MonsterSample> monstersSamples) {
-        System.out.printf(ENTER_COMPETITION_FORMAT, monstersSamples.size());
+        Application.DEFAULT_OUTPUT_STREAM.printf(ENTER_COMPETITION_FORMAT, monstersSamples.size());
         monsters = new ArrayList<>();
         selectedActions = new LinkedList<>();
         MonsterSample.clearCreatedCounts();
@@ -156,7 +157,7 @@ public class Competition {
         int i = 0;
         for (Monster monster : monsters) {
             int healthCount = Utility.ceilDiv(HEALTH_BAR_LENGTH * monster.getHealth(), monster.getSample().getMaxHealth());
-            System.out.printf(MONSTER_TABLE_FORMAT,
+            Application.DEFAULT_OUTPUT_STREAM.printf(MONSTER_TABLE_FORMAT,
                     MONSTER_HEALTH_SIGN.repeat(healthCount),
                     MONSTER_EMPTY_HEALTH_SIGN.repeat(HEALTH_BAR_LENGTH - healthCount),
                     i + 1,

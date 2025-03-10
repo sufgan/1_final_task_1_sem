@@ -1,5 +1,6 @@
 package edu.kit.kastel.ui.handlers;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.ui.commands.CompetitionCreateCommand;
@@ -69,12 +70,12 @@ public class CompetitionCommandHandler extends CommandHandler {
         List<Monster> aliveMonsters = competition.getAliveMonsters();
         if (super.isRunning()) {
             if (aliveMonsters.size() > 1) {
-                System.out.printf(REQUEST_ACTION_MESSAGE_FORMAT, competition.getCurrentMonster().getName());
+                Application.DEFAULT_OUTPUT_STREAM.printf(REQUEST_ACTION_MESSAGE_FORMAT, competition.getCurrentMonster().getName());
                 return true;
             } else if (!aliveMonsters.isEmpty()) {
-                System.out.printf(COMPETITION_END_MESSAGE_FORMAT, aliveMonsters.get(0).getName());
+                Application.DEFAULT_OUTPUT_STREAM.printf(COMPETITION_END_MESSAGE_FORMAT, aliveMonsters.get(0).getName());
             } else {
-                System.out.printf(COMPETITION_END_DRAW_MESSAGE);
+                Application.DEFAULT_OUTPUT_STREAM.printf(COMPETITION_END_DRAW_MESSAGE);
             }
         }
         return false;

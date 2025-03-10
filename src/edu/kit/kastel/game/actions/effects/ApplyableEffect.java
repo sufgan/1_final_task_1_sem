@@ -118,4 +118,9 @@ public abstract class ApplyableEffect extends Effect {
      */
     public abstract ApplyableEffect copy();
 
+    @Override
+    public ApplyableEffect asApplyableEffect() {
+        return this;
+    }
+
 }

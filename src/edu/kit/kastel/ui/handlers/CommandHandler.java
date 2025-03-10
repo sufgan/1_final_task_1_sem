@@ -1,5 +1,6 @@
 package edu.kit.kastel.ui.handlers;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.Competition;
 import edu.kit.kastel.ui.commands.Command;
 import edu.kit.kastel.ui.commands.CommandException;
@@ -84,7 +85,7 @@ public abstract class CommandHandler {
             try {
                 handleCommand(scanner.nextLine());
             } catch (CommandException e) {
-                System.err.println(e.getMessage());
+                Application.DEFAULT_ERROR_STREAM.println(e.getMessage());
             }
         }
     }

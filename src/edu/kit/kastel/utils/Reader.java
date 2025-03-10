@@ -34,7 +34,7 @@ public final class Reader {
      * @return {@code true} if the user enters 'y'; {@code false} if the user enters 'n'
      */
     public static boolean readBoolean(String message) {
-        System.out.println(message);
+        Application.DEFAULT_OUTPUT_STREAM.println(message);
         String answer = Application.readInputLine();
         if (!answer.isEmpty()) {
             switch (answer) {
@@ -43,7 +43,7 @@ public final class Reader {
                 default: checkOnCommands(answer);
             }
         }
-        System.err.println(ERROR_MESSAGE);
+        Application.DEFAULT_ERROR_STREAM.println(ERROR_MESSAGE);
         return readBoolean(message);
     }
 
@@ -59,14 +59,14 @@ public final class Reader {
      * @return the double value entered by the user
      */
     public static double readDouble(String message) {
-        System.out.println(message);
+        Application.DEFAULT_OUTPUT_STREAM.println(message);
         String answer = Application.readInputLine();
         if (Pattern.matches(DOUBLE_REGEX, answer)) {
             return Double.parseDouble(answer);
         } else {
             checkOnCommands(answer);
         }
-        System.err.println(ERROR_MESSAGE);
+        Application.DEFAULT_ERROR_STREAM.println(ERROR_MESSAGE);
         return readDouble(message);
     }
 
@@ -81,14 +81,14 @@ public final class Reader {
      * @return the integer value entered by the user
      */
     public static int readInteger(String message) {
-        System.out.println(message);
+        Application.DEFAULT_OUTPUT_STREAM.println(message);
         String answer = Application.readInputLine();
         if (Pattern.matches(INTEGER_REGEX, answer)) {
             return Integer.parseInt(answer);
         } else {
             checkOnCommands(answer);
         }
-        System.err.println(ERROR_MESSAGE);
+        Application.DEFAULT_ERROR_STREAM.println(ERROR_MESSAGE);
         return readInteger(message);
     }
 

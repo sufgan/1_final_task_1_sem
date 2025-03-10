@@ -49,4 +49,17 @@ public abstract class Effect {
         return null;
     }
 
+    /**
+     * Converts the current effect into an {@link ApplyableEffect}.
+     * This method provides a way to cast or transform a base {@link Effect}
+     * to a representation that can be directly applied, if applicable.
+     *
+     * @return an instance of {@link ApplyableEffect} representing the current effect,
+     *         or {@code null} if the conversion is not supported.
+     */
+    public ApplyableEffect asApplyableEffect() {
+        return null;
+    }
+
+
 }

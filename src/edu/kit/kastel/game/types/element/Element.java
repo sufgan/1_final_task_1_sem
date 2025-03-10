@@ -1,5 +1,6 @@
 package edu.kit.kastel.game.types.element;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.utils.RegexConstructor;
 import edu.kit.kastel.utils.RegexProvider;
 
@@ -55,12 +56,12 @@ public enum Element implements RegexProvider {
     public ElementEfficiency getEfficiency(Element element, boolean printMessage) {
         if (element.name().equals(this.dominant)) {
             if (printMessage) {
-                System.out.println(ElementEfficiency.POWERLESS.getMessage());
+                Application.DEFAULT_OUTPUT_STREAM.println(ElementEfficiency.POWERLESS.getMessage());
             }
             return ElementEfficiency.POWERLESS;
         } else if (element.name().equals(this.yielding)) {
             if (printMessage) {
-                System.out.println(ElementEfficiency.POWERFUL.getMessage());
+                Application.DEFAULT_OUTPUT_STREAM.println(ElementEfficiency.POWERFUL.getMessage());
             }
             return ElementEfficiency.POWERFUL;
         }

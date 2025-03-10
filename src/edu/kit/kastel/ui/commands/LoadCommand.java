@@ -1,5 +1,6 @@
 package edu.kit.kastel.ui.commands;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.config.ConfigPatternException;
 import edu.kit.kastel.config.ConfigParser;
 import edu.kit.kastel.ui.handlers.CommandHandler;
@@ -33,7 +34,7 @@ public class LoadCommand extends Command {
                 handler.stop(1);
             }
         } catch (ConfigPatternException e) {
-            System.err.println(e.getMessage());
+            Application.DEFAULT_ERROR_STREAM.println(e.getMessage());
         }
     }
 

@@ -1,5 +1,6 @@
 package edu.kit.kastel.ui.commands;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
@@ -29,7 +30,7 @@ public class ActionCommand extends CompetitionCommand {
             String targetMonsterName = args.length == ARGS_COUNT_WITH_TARGET ? args[TARGET_NAME_INDEX] : null;
             handler.getCompetition().selectAction(action, targetMonsterName);
         } catch (GameRuntimeException e) {
-            System.err.println(e.getMessage());
+            Application.DEFAULT_ERROR_STREAM.println(e.getMessage());
         }
     }
 

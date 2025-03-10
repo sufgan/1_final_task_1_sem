@@ -1,5 +1,6 @@
 package edu.kit.kastel.ui.commands;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.monsters.MonsterSample;
 import edu.kit.kastel.ui.handlers.CommandHandler;
 
@@ -17,7 +18,7 @@ public class ShowMonstersCommand extends Command {
 
     @Override
     public void execute(CommandHandler handler, String[] args) {
-        System.out.println(MonsterSample.allToString());
+        Application.DEFAULT_OUTPUT_STREAM.println(MonsterSample.allToString());
     }
 
     @Override

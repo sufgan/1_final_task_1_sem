@@ -1,5 +1,6 @@
 package edu.kit.kastel.ui.commands;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.GameRuntimeException;
 import edu.kit.kastel.game.actions.Action;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
@@ -20,12 +21,12 @@ public class ShowActionsCommand extends CompetitionCommand {
 
     @Override
     public void execute(CompetitionCommandHandler handler, String[] args) {
-        System.out.printf(LABEL_FORMAT, handler.getCompetition().getCurrentMonster().getName());
+        Application.DEFAULT_OUTPUT_STREAM.printf(LABEL_FORMAT, handler.getCompetition().getCurrentMonster().getName());
         for (String actionName : handler.getCompetition().getCurrentMonster().getSample().getActions()) {
             try {
-                System.out.println(Action.find(actionName));
+                Application.DEFAULT_OUTPUT_STREAM.println(Action.find(actionName));
             } catch (GameRuntimeException e) {
-                System.err.println(e.getMessage());
+                Application.DEFAULT_ERROR_STREAM.println(e.getMessage());
             }
         }
     }

@@ -1,5 +1,6 @@
 package edu.kit.kastel.game.types.power;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.actions.effects.ValueType;
 import edu.kit.kastel.game.types.StatType;
@@ -56,7 +57,7 @@ public final class BasicPower extends Power {
         double criticalHitProbability = Math.pow(10, -target.getStat(StatType.SPD) / user.getStat(StatType.SPD)) * 100;
         int criticalHitFactor = DEFAULT_HIT_MULTIPLIER;
         if (RandomGenerator.probabilityGood(criticalHitProbability, CRITICAL_HIT_DEBUG_MESSAGE)) {
-            System.out.println(CRITICAL_HIT_MESSAGE);
+            Application.DEFAULT_OUTPUT_STREAM.println(CRITICAL_HIT_MESSAGE);
             criticalHitFactor = CRITICAL_HIT_MULTIPLIER;
         }
         double sameElementFactor = user.getSample().getElement() == actionElement ? SAME_ELEMENT_MULTIPLIER : DEFAULT_HIT_MULTIPLIER;
@@ -74,7 +75,7 @@ public final class BasicPower extends Power {
     /**
      * Next call of this class will print element efficiency.
      */
-    public static void printElementEfficiency() {
+    public static void printNextElementEfficiency() {
         printElementEfficiency = true;
     }
 

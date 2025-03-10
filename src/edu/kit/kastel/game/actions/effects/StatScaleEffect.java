@@ -1,5 +1,6 @@
 package edu.kit.kastel.game.actions.effects;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.StatType;
 
@@ -39,7 +40,7 @@ public final class StatScaleEffect extends ApplyableEffect {
     public void apply(Monster user, Monster targetMonster) {
         Monster target = isOnUser() ? user : targetMonster;
         target.shiftScale(state, scaleShift);
-        System.out.printf(MESSAGE_FORMAT,
+        Application.DEFAULT_OUTPUT_STREAM.printf(MESSAGE_FORMAT,
                 target.getName(),
                 state,
                 scaleShift < 0 ? NEGATIVE_SHIFT_MESSAGE_END : POSITIVE_SHIFT_MESSAGE_END);
@@ -48,7 +49,7 @@ public final class StatScaleEffect extends ApplyableEffect {
     @Override
     public boolean canBeApplied(Monster user, Monster target) {
         if (!this.isOnUser() && scaleShift < 0 && target.getProtectionType() == ProtectionType.STATS) {
-            System.out.printf(MASSAGE_PROTECTED_FORMAT, target.getName());
+            Application.DEFAULT_OUTPUT_STREAM.printf(MASSAGE_PROTECTED_FORMAT, target.getName());
             return false;
         }
         return super.canBeApplied(user, target);

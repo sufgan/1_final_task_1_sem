@@ -1,5 +1,6 @@
 package edu.kit.kastel.game.monsters;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.types.StatType;
 import edu.kit.kastel.game.types.Condition;
 import edu.kit.kastel.game.types.Protection;
@@ -116,11 +117,11 @@ public class Monster implements Comparable<Monster> {
         Condition lastCondition = condition;
         if (condition != null) {
             condition = condition.step();
-            System.out.printf(
+            Application.DEFAULT_OUTPUT_STREAM.printf(
                     lastCondition != condition ? lastCondition.getFinishingMessage() : lastCondition.getExistingMessage(),
                     sample.getName()
             );
-            System.out.println();
+            Application.DEFAULT_OUTPUT_STREAM.println();
         }
     }
 
@@ -130,8 +131,8 @@ public class Monster implements Comparable<Monster> {
      * @param condition a {@link Condition} (e.g., POISON, SLEEP)
      */
     public void setCondition(Condition condition) {
-        System.out.printf(condition.getCreationMessage(), getName());
-        System.out.println();
+        Application.DEFAULT_OUTPUT_STREAM.printf(condition.getCreationMessage(), getName());
+        Application.DEFAULT_OUTPUT_STREAM.println();
         this.condition = condition;
     }
 
@@ -151,7 +152,7 @@ public class Monster implements Comparable<Monster> {
         if (protection != null) {
             if (protection.step() == null) {
                 protection = null;
-                System.out.printf(PROTECTION_FADES_FORMAT, getName());
+                Application.DEFAULT_OUTPUT_STREAM.printf(PROTECTION_FADES_FORMAT, getName());
             }
         }
     }
@@ -164,7 +165,7 @@ public class Monster implements Comparable<Monster> {
      */
     public void setProtection(ProtectionType type, int duration) {
         this.protection = new Protection(type, duration);
-        System.out.printf(PROTECTION_ADDED_FORMAT, getName(), type.getMessage());
+        Application.DEFAULT_OUTPUT_STREAM.printf(PROTECTION_ADDED_FORMAT, getName(), type.getMessage());
     }
 
     /**

@@ -1,5 +1,6 @@
 package edu.kit.kastel.ui.commands;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.ui.handlers.CompetitionCommandHandler;
 
@@ -19,7 +20,7 @@ public class ShowStatsCommand extends CompetitionCommand {
     @Override
     public void execute(CompetitionCommandHandler handler, String[] args) throws CommandException {
         Monster currentMonster = handler.getCompetition().getCurrentMonster();
-        System.out.printf(LABEL_FORMAT,
+        Application.DEFAULT_OUTPUT_STREAM.printf(LABEL_FORMAT,
                 currentMonster.getName(),
                 currentMonster.toString()
         );

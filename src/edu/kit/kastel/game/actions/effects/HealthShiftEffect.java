@@ -1,5 +1,6 @@
 package edu.kit.kastel.game.actions.effects;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.monsters.Monster;
 import edu.kit.kastel.game.types.power.Power;
 import edu.kit.kastel.game.types.element.Element;
@@ -64,17 +65,17 @@ public abstract class HealthShiftEffect extends ApplyableEffect {
         int shiftValue = powerScale * power.getValue(userMonster, target, actionElement);
 
         target.shiftHealth(shiftValue);
-        System.out.printf((getMessageFormat(shiftValue)), target.getName(), Math.abs(shiftValue));
+        Application.DEFAULT_OUTPUT_STREAM.printf((getMessageFormat(shiftValue)), target.getName(), Math.abs(shiftValue));
 
         if (target.isFainted()) {
-            System.out.printf(MESSAGE_DEFEAT_FORMAT, target.getName());
+            Application.DEFAULT_OUTPUT_STREAM.printf(MESSAGE_DEFEAT_FORMAT, target.getName());
         }
     }
 
     @Override
     public boolean canBeApplied(Monster user, Monster target) {
         if (!isOnUser() && powerScale < 0 && target.getProtectionType() == ProtectionType.HEALTH) {
-            System.out.printf(MASSAGE_PROTECTED_FORMAT, target.getName());
+            Application.DEFAULT_OUTPUT_STREAM.printf(MASSAGE_PROTECTED_FORMAT, target.getName());
             return false;
         }
         return super.canBeApplied(user, target);

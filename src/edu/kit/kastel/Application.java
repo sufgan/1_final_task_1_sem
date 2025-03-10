@@ -20,6 +20,31 @@ import java.util.regex.Pattern;
  * @author uyqbd
  */
 public final class Application {
+    /**
+     * The default input stream used by the application for user input.
+     * <p>
+     * This constant is set to {@code System.in}, representing the standard input stream,
+     * typically associated with keyboard input in a console-based application.
+     * It serves as the primary input stream for reading user commands or input data.
+     */
+    public static final InputStream DEFAULT_INPUT_STREAM = System.in;
+    /**
+     * The default output stream for the application.
+     *
+     * This stream is used for printing standard output messages
+     * and is initialized to {@code System.out}.
+     */
+    public static final PrintStream DEFAULT_OUTPUT_STREAM = System.out;
+    /**
+     * The default error stream used for outputting error messages in the application.
+     * This stream is set to {@code System.err} by default, allowing error messages
+     * to be directed to the standard error output.
+     * It is primarily utilized by various components within the application to
+     * provide error feedback or debugging information to the user or developer.
+     */
+    public static final PrintStream DEFAULT_ERROR_STREAM = System.err;
+    private static final Scanner SCANNER = new Scanner(DEFAULT_INPUT_STREAM);
+
     private static final String COMMAND_LINE_ARGUMENTS_MESSAGE = "Error, wrong arguments count, 1 or 2 line arguments expected.";
     private static final String WRONG_SECOND_ARGUMENT_MESSAGE = "Error, wrong second argument, number or 'debug' expected.";
     private static final String DEBUG_MODE_FLAG = "debug";
@@ -34,10 +59,6 @@ public final class Application {
     private static final int RANDOM_INDEX = 1;
     private static final String SEED_REGEX = "-?\\d+";
 
-    private static final InputStream DEFAULT_INPUT_STREAM = System.in;
-    private static final PrintStream DEFAULT_OUTPUT_STREAM = System.out;
-    private static final PrintStream DEFAULT_ERROR_STREAM = System.err;
-    private static final Scanner SCANNER = new Scanner(DEFAULT_INPUT_STREAM);
 
     private Application() {
 
@@ -49,7 +70,7 @@ public final class Application {
      */
     public static void main(String[] args) {
         if (args.length != ARGS_COUNT && args.length != ARGS_COUNT_WITH_RANDOM) {
-            System.err.println(COMMAND_LINE_ARGUMENTS_MESSAGE);
+            Application.DEFAULT_ERROR_STREAM.println(COMMAND_LINE_ARGUMENTS_MESSAGE);
             return;
         }
 

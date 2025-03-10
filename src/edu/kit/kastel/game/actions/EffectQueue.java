@@ -1,5 +1,6 @@
 package edu.kit.kastel.game.actions;
 
+import edu.kit.kastel.Application;
 import edu.kit.kastel.game.actions.effects.ApplyableEffect;
 import edu.kit.kastel.game.actions.effects.BurnDamageEffect;
 import edu.kit.kastel.game.monsters.Monster;
@@ -57,7 +58,7 @@ public class EffectQueue implements Comparable<EffectQueue> {
             return;
         }
 
-        System.out.printf(MONSTERS_TURN_FORMAT, user.getName());
+        Application.DEFAULT_OUTPUT_STREAM.printf(MONSTERS_TURN_FORMAT, user.getName());
 
         List<ApplyableEffect> effects = action.createEffects();
 
@@ -82,22 +83,23 @@ public class EffectQueue implements Comparable<EffectQueue> {
 
     private void printMessage() {
         if (action.getName() != null) { // else is pass command
-            System.out.printf(USE_ACTION_MESSAGE_FORMAT, user.getName(), action.getName());
+            Application.DEFAULT_OUTPUT_STREAM.printf(USE_ACTION_MESSAGE_FORMAT, user.getName(), action.getName());
         } else {
-            System.out.printf(PASS_MESSAGE_FORMAT, user.getName());
+            Application.DEFAULT_OUTPUT_STREAM.printf(PASS_MESSAGE_FORMAT, user.getName());
         }
     }
 
     private void applyActionEffects(List<ApplyableEffect> effects) {
-        if (applyActionEffects && !effects.isEmpty() && !effects.get(0).hits(user, target)) {
-            System.out.println(ACTION_FAIL_MESSAGE);
-            return;
-        }
         if (!applyActionEffects) {
             return;
         }
 
-        BasicPower.printElementEfficiency();
+        if (!effects.isEmpty() && !effects.get(0).hits(user, target)) {
+            Application.DEFAULT_OUTPUT_STREAM.println(ACTION_FAIL_MESSAGE);
+            return;
+        }
+
+        BasicPower.printNextElementEfficiency();
         for (ApplyableEffect effect : effects) {
             if (effect.canBeApplied(user, target)) {
                 effect.apply(user, target);
